@@ -32,6 +32,9 @@ public class Artikelnummer implements Serializable {
     private long artnr;
 
     public Artikelnummer(long artnr) {
+        if (artnr <= 0) {
+            throw new IllegalArgumentException("Artikelnummer muss groesser 0 sein");
+        }
         this.artnr = artnr;
     }
 
@@ -42,5 +45,10 @@ public class Artikelnummer implements Serializable {
     public long getValue() {
         return this.artnr;
     }
-    //TODO hashcode/equals/toString
+
+    //TODO hashcode/equals
+    @Override
+    public String toString() {
+        return "Artikelnummer{" + "artnr=" + artnr + '}';
+    }
 }

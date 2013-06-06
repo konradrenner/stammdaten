@@ -20,10 +20,11 @@
 package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -47,24 +48,17 @@ import org.kore.runtime.validation.ConstructorValidator;
 @Entity
 @Table(name = "ADRESSE")
 @NamedQueries({
-    @NamedQuery(name = "Adresse.findAll", query = "SELECT a FROM Adresse a"),
-    @NamedQuery(name = "Adresse.findByOrt", query = "SELECT a FROM Adresse a WHERE a.ort = :ort"),
-    @NamedQuery(name = "Adresse.findByStrasse", query = "SELECT a FROM Adresse a WHERE a.strasse = :strasse"),
-    @NamedQuery(name = "Adresse.findByPostleitzahl", query = "SELECT a FROM Adresse a WHERE a.postleitzahl = :postleitzahl"),
-    @NamedQuery(name = "Adresse.findByHausnummer", query = "SELECT a FROM Adresse a WHERE a.hausnummer = :hausnummer"),
-    @NamedQuery(name = "Adresse.findByStiege", query = "SELECT a FROM Adresse a WHERE a.stiege = :stiege"),
-    @NamedQuery(name = "Adresse.findByTuer", query = "SELECT a FROM Adresse a WHERE a.tuer = :tuer"),
-    @NamedQuery(name = "Adresse.findByLand", query = "SELECT a FROM Adresse a WHERE a.land = :land"),
-    @NamedQuery(name = "Adresse.findByAdresszeile1", query = "SELECT a FROM Adresse a WHERE a.adresszeile1 = :adresszeile1"),
-    @NamedQuery(name = "Adresse.findByAdresszeile2", query = "SELECT a FROM Adresse a WHERE a.adresszeile2 = :adresszeile2")})
+    @NamedQuery(name = Adresse.FIND_ALL, query = "SELECT a FROM Adresse a"),
+    @NamedQuery(name = Adresse.SEARCH_BY_ADRESSZEILE1, query = "SELECT a FROM Adresse a WHERE a.adresszeile1 LIKE :adresszeile1")})
 public class Adresse implements Serializable {
+
+    public static final String FIND_ALL = "";
+    public static final String SEARCH_BY_ADRESSZEILE1 = "";
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 35)
-    @Column(name = "ADRESSID")
-    private String adressid;
+    @EmbeddedId
+    @AttributeOverride(name = "value", column =
+            @Column(name = "ADRESSID"))
+    private AdresseID adressId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -105,8 +99,8 @@ public class Adresse implements Serializable {
         //JPA
     }
 
-    protected Adresse(String adressid, String ort, String strasse, int postleitzahl, short hausnummer, Short stiege, Short tuer, String land, String adresszeile1, String adresszeile2) {
-        this.adressid = adressid;
+    protected Adresse(AdresseID adressid, String ort, String strasse, int postleitzahl, short hausnummer, Short stiege, Short tuer, String land, String adresszeile1, String adresszeile2) {
+        this.adressId = adressid;
         this.ort = ort;
         this.strasse = strasse;
         this.postleitzahl = postleitzahl;
@@ -179,13 +173,13 @@ public class Adresse implements Serializable {
                     .append(new NumericFormatter(this.tuer).withForerunZeros(3))
                     .append(new StringFormatter(this.ort).appendBlanks(10))
                     .append(new StringFormatter(this.ort).appendBlanks(9));
-            return new Adresse(adressId.toString(), ort, strasse, postleitzahl, hausnummer, stiege, tuer, land, adresszeile1, adresszeile2);
+            return new Adresse(new AdresseID(adressId.toString()), ort, strasse, postleitzahl, hausnummer, stiege, tuer, land, adresszeile1, adresszeile2);
         }
     }
 
 
-    public String getAdressid() {
-        return adressid;
+    public AdresseID getAdressid() {
+        return this.adressId;
     }
 
 
@@ -241,7 +235,7 @@ public class Adresse implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (adressid != null ? adressid.hashCode() : 0);
+        hash += (this.adressId != null ? this.adressId.hashCode() : 0);
         return hash;
     }
 
@@ -252,7 +246,7 @@ public class Adresse implements Serializable {
             return false;
         }
         Adresse other = (Adresse) object;
-        if ((this.adressid == null && other.adressid != null) || (this.adressid != null && !this.adressid.equals(other.adressid))) {
+        if ((this.adressId == null && other.adressId != null) || (this.adressId != null && !this.adressId.equals(other.adressId))) {
             return false;
         }
         return true;
@@ -260,6 +254,6 @@ public class Adresse implements Serializable {
 
     @Override
     public String toString() {
-        return "Adresse{" + "adressid=" + adressid + ", ort=" + ort + ", strasse=" + strasse + ", postleitzahl=" + postleitzahl + ", hausnummer=" + hausnummer + ", stiege=" + stiege + ", tuer=" + tuer + ", land=" + land + ", adresszeile1=" + adresszeile1 + ", adresszeile2=" + adresszeile2 + '}';
+        return "Adresse{" + "adressid=" + adressId + ", ort=" + ort + ", strasse=" + strasse + ", postleitzahl=" + postleitzahl + ", hausnummer=" + hausnummer + ", stiege=" + stiege + ", tuer=" + tuer + ", land=" + land + ", adresszeile1=" + adresszeile1 + ", adresszeile2=" + adresszeile2 + '}';
     }
 }

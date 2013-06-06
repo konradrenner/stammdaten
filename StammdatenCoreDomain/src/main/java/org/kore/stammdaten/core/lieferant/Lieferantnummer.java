@@ -35,11 +35,19 @@ public class Lieferantnummer implements Serializable {
     }
 
     public Lieferantnummer(long liefnr) {
+        if (liefnr <= 0) {
+            throw new IllegalArgumentException("Artikelnummer muss groesser 0 sein");
+        }
         this.liefnr = liefnr;
     }
 
     public long getValue() {
         return liefnr;
     }
-    //TODO hashcode/equals/toString
+
+    //TODO hashcode/equals
+    @Override
+    public String toString() {
+        return "Lieferantnummer{" + "liefnr=" + liefnr + '}';
+    }
 }

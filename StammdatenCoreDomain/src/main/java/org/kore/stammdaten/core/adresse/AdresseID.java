@@ -27,52 +27,47 @@ import org.kore.runtime.validation.ConstructorValidator;
  * @author Konrad Renner
  */
 @Embeddable
-public class EMail {
+public class AdresseID {
+
     private String value;
 
-    protected EMail() {
+    public AdresseID() {
         //JPA
     }
 
-    public EMail(String adress) {
-        if (new ConstructorValidator(adress).nullCheckFails()) {
-            throw new IllegalArgumentException("Es ist nicht moeglich eine EMail Adresse ohne Wert zu erstellen");
+    public AdresseID(String value) {
+        if (new ConstructorValidator(value).nullCheckFails()) {
+            throw new IllegalArgumentException("AdressID value darf nicht null sein");
         }
-        this.value = adress;
+        this.value = value;
     }
 
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    @Override
+    public String toString() {
+        return "AdresseID{" + "value=" + value + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + (this.value != null ? this.value.hashCode() : 0);
+        int hash = 0;
+        hash += (this.value != null ? this.value.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof AdresseID)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final EMail other = (EMail) obj;
-        if ((this.value == null) ? (other.value != null) : !this.value.equals(other.value)) {
+        AdresseID other = (AdresseID) object;
+        if ((this.value == null && other.value != null) || (this.value != null && !this.value.equals(other.value))) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "EMail{" + "value=" + value + '}';
     }
 }

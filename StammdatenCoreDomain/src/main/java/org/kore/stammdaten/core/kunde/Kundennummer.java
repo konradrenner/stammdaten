@@ -36,11 +36,19 @@ public class Kundennummer implements Serializable {
     }
 
     public Kundennummer(int kundnr) {
+        if (kundnr <= 0) {
+            throw new IllegalArgumentException("Kundennummer muss groesser 0 sein");
+        }
         this.kundnr = kundnr;
     }
 
     public long getValue() {
         return kundnr;
     }
-    //TODO hashcode/equals/toString
+
+    //TODO hashcode/equals
+    @Override
+    public String toString() {
+        return "Kundennummer{" + "kundnr=" + kundnr + '}';
+    }
 }
