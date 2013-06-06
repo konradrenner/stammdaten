@@ -20,7 +20,6 @@
 package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -52,7 +51,6 @@ import javax.validation.constraints.Size;
 public abstract class TelefonAdresse implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
     @Column(name = "ADRESSID")
@@ -60,15 +58,12 @@ public abstract class TelefonAdresse implements Serializable {
     @Size(max = 50)
     @Column(name = "BEZEICHNUNG")
     private String bezeichnung;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "VORWAHL_LAND")
     private short vorwahlLand;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "VORWAHL")
     private short vorwahl;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "NUMMER")
     private short nummer;

@@ -21,7 +21,6 @@ package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
 import javax.persistence.AttributeOverride;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -59,21 +58,17 @@ public class Adresse implements Serializable {
     @AttributeOverride(name = "value", column =
             @Column(name = "ADRESSID"))
     private AdresseID adressId;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "ORT")
     private String ort;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "STRASSE")
     private String strasse;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "POSTLEITZAHL")
     private int postleitzahl;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "HAUSNUMMER")
     private short hausnummer;
@@ -81,12 +76,10 @@ public class Adresse implements Serializable {
     private Short stiege;
     @Column(name = "TUER")
     private Short tuer;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "LAND")
     private String land;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "ADRESSZEILE1")
