@@ -51,8 +51,8 @@ import org.kore.runtime.validation.ConstructorValidator;
     @NamedQuery(name = Adresse.SEARCH_BY_ADRESSZEILE1, query = "SELECT a FROM Adresse a WHERE a.adresszeile1 LIKE :adresszeile1")})
 public class Adresse implements Serializable {
 
-    public static final String FIND_ALL = "";
-    public static final String SEARCH_BY_ADRESSZEILE1 = "";
+    public static final String FIND_ALL = "FIND_ALL_ADRESSEN";
+    public static final String SEARCH_BY_ADRESSZEILE1 = "FIND_BY_ADRESSEZEILE1";
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     @AttributeOverride(name = "value", column =
