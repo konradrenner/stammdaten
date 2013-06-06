@@ -21,6 +21,8 @@ package org.kore.stammdaten.domain.lager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,6 +31,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,6 +49,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Lagerraum.findByBezeichnung", query = "SELECT l FROM Lagerraum l WHERE l.bezeichnung = :bezeichnung"),
     @NamedQuery(name = "Lagerraum.findByVolumen", query = "SELECT l FROM Lagerraum l WHERE l.volumen = :volumen")})
 public class Lagerraum implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
+    private Collection<Lagerraumbestand> lagerraumbestandCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -144,6 +149,14 @@ public class Lagerraum implements Serializable {
     @Override
     public String toString() {
         return "org.kore.stammdaten.domain.lager.Lagerraum[ raumId=" + raumId + " ]";
+    }
+
+    public Collection<Lagerraumbestand> getLagerraumbestandCollection() {
+        return lagerraumbestandCollection;
+    }
+
+    public void setLagerraumbestandCollection(Collection<Lagerraumbestand> lagerraumbestandCollection) {
+        this.lagerraumbestandCollection = lagerraumbestandCollection;
     }
 
 }

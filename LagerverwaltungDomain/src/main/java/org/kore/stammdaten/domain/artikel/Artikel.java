@@ -21,7 +21,9 @@ package org.kore.stammdaten.domain.artikel;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,9 +34,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.kore.stammdaten.domain.lager.Lagerraumbestand;
 
 /**
  *
@@ -50,6 +54,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Artikel.findByPreis", query = "SELECT a FROM Artikel a WHERE a.preis = :preis"),
     @NamedQuery(name = "Artikel.findByWaehrung", query = "SELECT a FROM Artikel a WHERE a.waehrung = :waehrung")})
 public class Artikel implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
+    private Collection<Lagerraumbestand> lagerraumbestandCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @NotNull
@@ -172,6 +178,14 @@ public class Artikel implements Serializable {
     @Override
     public String toString() {
         return "org.kore.stammdaten.domain.lager.Artikel[ artikelId=" + artikelId + " ]";
+    }
+
+    public Collection<Lagerraumbestand> getLagerraumbestandCollection() {
+        return lagerraumbestandCollection;
+    }
+
+    public void setLagerraumbestandCollection(Collection<Lagerraumbestand> lagerraumbestandCollection) {
+        this.lagerraumbestandCollection = lagerraumbestandCollection;
     }
 
 }
