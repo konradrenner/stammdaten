@@ -20,7 +20,7 @@
 package org.kore.stammdaten.core.adresse;
 
 import javax.persistence.Embeddable;
-import org.kore.runtime.validation.ConstructorValidator;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,14 +31,11 @@ public class AdresseID {
 
     private String value;
 
-    public AdresseID() {
+    protected AdresseID() {
         //JPA
     }
 
-    public AdresseID(String value) {
-        if (new ConstructorValidator(value).nullCheckFails()) {
-            throw new IllegalArgumentException("AdressID value darf nicht null sein");
-        }
+    protected AdresseID(@NotNull(message = "org.kore.stammdaten.core.messages.notnull.AdressID") String value) {
         this.value = value;
     }
 

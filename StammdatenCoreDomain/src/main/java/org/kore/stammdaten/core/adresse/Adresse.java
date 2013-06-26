@@ -31,7 +31,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.runtime.format.NumericFormatter;
 import org.kore.runtime.format.StringFormatter;
-import org.kore.runtime.validation.ConstructorValidator;
 
 /**
  * Adresse
@@ -119,10 +118,6 @@ public class Adresse implements Serializable {
         private String adresszeile2;
 
         public Builder(String ort, String strasse, int postleitzahl, short hausnummer, String land, String adresszeile1) {
-
-            if (new ConstructorValidator(ort, strasse, land, adresszeile1).nullCheckFails()) {
-                throw new IllegalArgumentException("Es duerfen keine NULL-Values dem Konstruktor uebergeben werden");
-            }
 
             this.ort = ort;
             this.strasse = strasse;

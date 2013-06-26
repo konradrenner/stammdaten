@@ -20,7 +20,6 @@
 package org.kore.stammdaten.core.adresse;
 
 import javax.persistence.Embeddable;
-import org.kore.runtime.validation.ConstructorValidator;
 
 /**
  *
@@ -35,9 +34,6 @@ public class EMail {
     }
 
     public EMail(String adress) {
-        if (new ConstructorValidator(adress).nullCheckFails()) {
-            throw new IllegalArgumentException("Es ist nicht moeglich eine EMail Adresse ohne Wert zu erstellen");
-        }
         this.value = adress;
     }
 
