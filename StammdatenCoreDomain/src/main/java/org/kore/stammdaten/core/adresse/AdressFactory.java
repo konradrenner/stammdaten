@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.Set;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.executable.ExecutableValidator;
@@ -24,7 +25,7 @@ public class AdressFactory implements Serializable {
     }
 
     
-    public Adresse.Builder createAdressBuilder(String ort, String strasse, int postleitzahl, short hausnummer, String land, String adresszeile1){
+    public Adresse.Builder createAdressBuilder(String ort, String strasse, int postleitzahl, short hausnummer, Land land, String adresszeile1){
 //        ExecutableValidator forExecutables = validator.forExecutables();
 //        Set<ConstraintViolation<Adresse.Builder>> violations = forExecutables.validateConstructorParameters(adrBuilderConstructor, new Object[]{ort,strasse,postleitzahl,hausnummer,land,adresszeile1});
 //        

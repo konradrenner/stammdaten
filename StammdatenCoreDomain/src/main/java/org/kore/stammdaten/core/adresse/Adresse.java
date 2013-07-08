@@ -21,7 +21,9 @@ package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -75,11 +77,12 @@ public class Adresse implements Serializable {
     private Short stiege;
     @Column(name = "TUER")
     private Short tuer;
+    
     @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "LAND")
-    private String land;
-    @NotNull
+    @Embedded
+    @AttributeOverride(name = "iso3166Code", column = @Column(name = "LAND"))
+    private Land land;
+    
     @Size(min = 1, max = 100)
     @Column(name = "ADRESSZEILE1")
     private String adresszeile1;
@@ -91,7 +94,7 @@ public class Adresse implements Serializable {
         //JPA
     }
 
-    protected Adresse(AdresseID adressid, String ort, String strasse, int postleitzahl, short hausnummer, Short stiege, Short tuer, String land, String adresszeile1, String adresszeile2) {
+    protected Adresse(AdresseID adressid, String ort, String strasse, int postleitzahl, short hausnummer, Short stiege, Short tuer, Land land, String adresszeile1, String adresszeile2) {
         this.adressId = adressid;
         this.ort = ort;
         this.strasse = strasse;
@@ -113,11 +116,11 @@ public class Adresse implements Serializable {
         private final short hausnummer;
         private Short stiege;
         private Short tuer;
-        private final String land;
+        private final Land land;
         private final String adresszeile1;
         private String adresszeile2;
 
-        public Builder(String ort, String strasse, int postleitzahl, short hausnummer, String land, String adresszeile1) {
+        public Builder(String ort, String strasse, int postleitzahl, short hausnummer, Land land, String adresszeile1) {
 
             this.ort = ort;
             this.strasse = strasse;
@@ -154,7 +157,7 @@ public class Adresse implements Serializable {
          */
         public Adresse build() {
 
-            StringBuilder adressId = new StringBuilder(land)
+            StringBuilder adressId = new StringBuilder(land.getIso3166Code())
                     .append(new NumericFormatter(this.postleitzahl).withForerunZeros(4))
                     .append(new NumericFormatter(this.hausnummer).withForerunZeros(4))
                     .append(new NumericFormatter(this.stiege).withForerunZeros(3))
@@ -199,7 +202,7 @@ public class Adresse implements Serializable {
         return tuer;
     }
 
-    public String getLand() {
+    public Land getLand() {
         return land;
     }
 

@@ -8,6 +8,6 @@ package org.kore.stammdaten.core.adresse;
  *
  * @author koni
  */
-public enum AdressQueries {
+public class AdressRepository {
     
 }
