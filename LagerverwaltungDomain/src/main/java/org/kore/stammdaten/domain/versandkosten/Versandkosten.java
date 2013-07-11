@@ -21,14 +21,19 @@ package org.kore.stammdaten.domain.versandkosten;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Currency;
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 
 /**
  *
@@ -38,58 +43,71 @@ import javax.validation.constraints.Size;
 @Table(name = "VERSANDKOSTEN")
 @NamedQueries({
     @NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v"),
-    @NamedQuery(name = "Versandkosten.findByLand", query = "SELECT v FROM Versandkosten v WHERE v.land = :land"),
-    @NamedQuery(name = "Versandkosten.findByBetrag", query = "SELECT v FROM Versandkosten v WHERE v.betrag = :betrag"),
-    @NamedQuery(name = "Versandkosten.findByFreibetrag", query = "SELECT v FROM Versandkosten v WHERE v.freibetrag = :freibetrag")})
+    @NamedQuery(name = "Versandkosten.findByLand", query = "SELECT v FROM Versandkosten v WHERE v.land = :land")})
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
+    @EmbeddedId
+    @AttributeOverride(name = "iso3166Code", column =
+            @Column(name = "LAND"))
+    private Land land;
     @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "LAND")
-    private String land;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @NotNull
+    @Min(0)
     @Column(name = "BETRAG")
     private BigDecimal betrag;
+    @Min(0)
     @Column(name = "FREIBETRAG")
     private BigDecimal freibetrag;
+    @NotNull
+    @Column(name = "WAEHRUNG")
+    private String waehrung;
+    @Transient
+    private Money cachedBetrag;
+    @Transient
+    private Money cachedFreibetrag;
 
     public Versandkosten() {
     }
 
-    public Versandkosten(String land) {
+
+    public Versandkosten(Land land, Money betrag) {
         this.land = land;
+        this.cachedBetrag = betrag;
+        this.betrag = betrag.getAmount();
+        this.waehrung = betrag.getCurrency().getCurrencyCode();
     }
 
-    public Versandkosten(String land, BigDecimal betrag) {
-        this.land = land;
-        this.betrag = betrag;
-    }
-
-    public String getLand() {
+    public Land getLand() {
         return land;
     }
 
-    public void setLand(String land) {
-        this.land = land;
+    public Money getBetrag() {
+        if (this.cachedBetrag == null) {
+            this.cachedBetrag = new Money(betrag, Currency.getInstance(waehrung));
+        }
+        return this.cachedBetrag;
     }
 
-    public BigDecimal getBetrag() {
-        return betrag;
+    void setBetrag(Money betrag) {
+        this.cachedBetrag = betrag;
+        this.betrag = betrag.getAmount();
     }
 
-    public void setBetrag(BigDecimal betrag) {
-        this.betrag = betrag;
+    public Money getFreibetrag() {
+        if (this.cachedFreibetrag == null) {
+            this.cachedFreibetrag = new Money(freibetrag, Currency.getInstance(waehrung));
+        }
+        return this.cachedFreibetrag;
     }
 
-    public BigDecimal getFreibetrag() {
-        return freibetrag;
+    void setFreibetrag(Money freibetrag) {
+        this.cachedFreibetrag = freibetrag;
+        this.freibetrag = freibetrag.getAmount();
     }
 
-    public void setFreibetrag(BigDecimal freibetrag) {
-        this.freibetrag = freibetrag;
+    void setWaehrung(Currency waehrung) {
+        this.waehrung = waehrung.getCurrencyCode();
     }
+
 
     @Override
     public int hashCode() {
