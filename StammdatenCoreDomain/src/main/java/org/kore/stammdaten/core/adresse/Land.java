@@ -4,6 +4,7 @@
  */
 package org.kore.stammdaten.core.adresse;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
  * @author koni
  */
 @Embeddable
-public class Land {
+public class Land implements Serializable {
     @Size(min = 2, max = 2)
     private String iso3166Code;
     
