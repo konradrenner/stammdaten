@@ -15,12 +15,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.kore.runtime.currency.Money;
-import org.kore.runtime.currency.MoneyTranslator;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenService;
+import org.kore.stammdaten.lager.ejb.translator.LagerverwaltungUmrechner;
 
 /**
  *
@@ -39,9 +39,8 @@ public class VersandkostenBean {
     VersandkostenFactory factory;
     @Inject
     VersandkostenRepository repository;
-    //TODO producer erstellen
     @Inject
-    MoneyTranslator translator;
+    LagerverwaltungUmrechner translator;
 
     public VersandkostenDTO getVersandkosten() {
         VersandkostenDTO response = new VersandkostenDTO();
@@ -103,7 +102,7 @@ public class VersandkostenBean {
         em.remove(entity);
     }
     
-    private final void mapping(Versandkosten quelle, VersandkostenDTO ziel) {
+    private void mapping(Versandkosten quelle, VersandkostenDTO ziel) {
         ziel.setBetrag(quelle.getBetrag());
         ziel.setFreibetrag(quelle.getFreibetrag());
         ziel.setLand(quelle.getLand());
