@@ -30,7 +30,7 @@ import org.kore.stammdaten.domain.versandkosten.VersandkostenService;
 @Stateless
 public class VersandkostenBean {
 
-    @PersistenceContext(name = "jdbc/stammdaten")
+    @PersistenceContext(name = "jdbc/stammdatenDB")
     EntityManager em;
 
     @Inject
