@@ -3,13 +3,4 @@
     <persistence-unit name="stammdatenDB" transaction-type="JTA">
         <jta-data-source>jdbc/stammdatenDB</jta-data-source>
     </persistence-unit>
-    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/DemoDB"/>
-      <property name="javax.persistence.jdbc.password" value="demo"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.user" value="demo"/>
-    </properties>
-  </persistence-unit>
 </persistence>

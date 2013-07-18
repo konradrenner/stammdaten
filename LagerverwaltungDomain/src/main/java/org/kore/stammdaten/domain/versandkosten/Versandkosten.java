@@ -65,11 +65,12 @@ public class Versandkosten implements Serializable {
     @Transient
     private Money cachedFreibetrag;
 
-    public Versandkosten() {
+    protected Versandkosten() {
+        //JPA
     }
 
 
-    public Versandkosten(Land land, Money betrag) {
+    Versandkosten(Land land, Money betrag) {
         this.land = land;
         this.cachedBetrag = betrag;
         this.betrag = betrag.getAmount();
@@ -93,7 +94,7 @@ public class Versandkosten implements Serializable {
     }
 
     public Money getFreibetrag() {
-        if (this.cachedFreibetrag == null) {
+        if (this.cachedFreibetrag == null && freibetrag != null) {
             this.cachedFreibetrag = new Money(freibetrag, Currency.getInstance(waehrung));
         }
         return this.cachedFreibetrag;

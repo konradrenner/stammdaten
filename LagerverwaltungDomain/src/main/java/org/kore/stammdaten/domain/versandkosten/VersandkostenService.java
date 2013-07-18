@@ -5,8 +5,9 @@
 package org.kore.stammdaten.domain.versandkosten;
 
 import java.util.Currency;
+import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
-import org.kore.runtime.currency.MoneyTranslater;
+import org.kore.runtime.currency.MoneyTranslator;
 
 /**
  *
@@ -23,7 +24,7 @@ public class VersandkostenService {
      * @param newBetrag
      * @param umrechner
      */
-    public void changeBetrag(Versandkosten object, Money newBetrag, MoneyTranslater umrechner) {
+    public void changeBetrag(@NotNull Versandkosten object, @NotNull Money newBetrag, @NotNull MoneyTranslator umrechner) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
@@ -46,7 +47,7 @@ public class VersandkostenService {
      * @param newBetrag
      * @param umrechner
      */
-    public void changeFreibetrag(Versandkosten object, Money newBetrag, MoneyTranslater umrechner) {
+    public void changeFreibetrag(@NotNull Versandkosten object, @NotNull Money newBetrag, @NotNull MoneyTranslator umrechner) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
@@ -68,12 +69,16 @@ public class VersandkostenService {
      * @param newCurrency
      * @param umrechner
      */
-    public void changeCurrency(Versandkosten object, Currency newCurrency, MoneyTranslater umrechner) {
+    public void changeCurrency(@NotNull Versandkosten object, @NotNull Currency newCurrency, @NotNull MoneyTranslator umrechner) {
         Money newBetrag = umrechner.translate(object.getBetrag(), newCurrency);
-        Money newFreibetrag = umrechner.translate(object.getFreibetrag(), newCurrency);
+
+        Money newFreibetrag = object.getFreibetrag();
+        if (newFreibetrag != null) {
+            newFreibetrag = umrechner.translate(object.getFreibetrag(), newCurrency);
+            object.setFreibetrag(newFreibetrag);
+        }
         
         object.setWaehrung(newCurrency);
         object.setBetrag(newBetrag);
-        object.setFreibetrag(newFreibetrag);
     }
 }

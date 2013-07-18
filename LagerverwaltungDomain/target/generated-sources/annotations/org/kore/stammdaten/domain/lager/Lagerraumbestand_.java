@@ -8,7 +8,7 @@ import org.kore.stammdaten.domain.artikel.Artikel;
 import org.kore.stammdaten.domain.lager.Lagerraum;
 import org.kore.stammdaten.domain.lager.LagerraumbestandPK;
 
-@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-07-11T20:04:59")
+@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-07-18T19:28:59")
 @StaticMetamodel(Lagerraumbestand.class)
 public class Lagerraumbestand_ { 
 
