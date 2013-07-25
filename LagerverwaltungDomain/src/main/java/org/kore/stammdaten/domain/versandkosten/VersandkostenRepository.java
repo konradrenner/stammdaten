@@ -6,6 +6,7 @@ package org.kore.stammdaten.domain.versandkosten;
 
 import java.util.Collections;
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import org.kore.stammdaten.core.adresse.Land;
@@ -15,15 +16,22 @@ import org.kore.stammdaten.core.adresse.Land;
  * @author koni
  */
 public class VersandkostenRepository {
-    
-    public Versandkosten find(EntityManager em, Land land){
+
+    private final EntityManager em;
+
+    @Inject
+    public VersandkostenRepository(@org.kore.stammdaten.domain.Versandkosten EntityManager em) {
+        this.em = em;
+    }
+
+    public Versandkosten find(Land land){
         TypedQuery<Versandkosten> query = em.createNamedQuery("Versandkosten.findByLand",Versandkosten.class);
         query.setParameter("land", land.getIso3166Code());
         
         return query.getSingleResult();
     }
     
-    public List<Versandkosten> find(EntityManager em) {
+    public List<Versandkosten> find() {
         TypedQuery<Versandkosten> query = em.createNamedQuery("Versandkosten.findAll", Versandkosten.class);
         return Collections.unmodifiableList(query.getResultList());
     }
