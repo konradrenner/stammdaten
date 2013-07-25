@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -47,7 +48,7 @@ public class VersandkostenBean {
         //TODO Aus Request die Daten laden
         Land land = new Land("AT");
 
-        Versandkosten kosten = repository.find(em, land);
+        Versandkosten kosten = repository.find(land);
 
         mapping(kosten, response);
 
@@ -55,7 +56,7 @@ public class VersandkostenBean {
     }
 
     public Collection<VersandkostenDTO> getAllVersandkosten() {
-        List<Versandkosten> list = repository.find(em);
+        List<Versandkosten> list = repository.find();
         
         ArrayList<VersandkostenDTO> response = new ArrayList<>(list.size());
         
@@ -86,7 +87,7 @@ public class VersandkostenBean {
         Money betrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
         Money freibetrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
 
-        Versandkosten entity = repository.find(em, land);
+        Versandkosten entity = repository.find(land);
         service.changeBetrag(entity, betrag, translator);
         service.changeFreibetrag(entity, freibetrag, translator);
 
@@ -98,7 +99,7 @@ public class VersandkostenBean {
         //TODO aus request auslesen
         Land land = new Land("AT");
         
-        Versandkosten entity = repository.find(em, land);
+        Versandkosten entity = repository.find(land);
         em.remove(entity);
     }
     
@@ -106,5 +107,11 @@ public class VersandkostenBean {
         ziel.setBetrag(quelle.getBetrag());
         ziel.setFreibetrag(quelle.getFreibetrag());
         ziel.setLand(quelle.getLand());
+    }
+
+    @Produces
+    @org.kore.stammdaten.domain.Versandkosten
+    public EntityManager getVersandkostenEntityManager() {
+        return this.em;
     }
 }
