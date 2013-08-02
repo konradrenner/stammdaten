@@ -9,8 +9,8 @@
   <modules>
     <module>Lagerverwaltung-ear</module>
     <module>../LagerverwaltungDomain</module>
-    <module>../LagerverwaltungEJB</module>
-    <module>../LagerverwaltungWeb</module>
     <module>../StammdatenCoreDomain</module>
+    <module>../Lagerverwaltung-web</module>
+    <module>../Lagerverwaltung-ejb</module>
   </modules>
 </project>
