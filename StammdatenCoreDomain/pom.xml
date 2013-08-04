@@ -11,6 +11,9 @@
       <url>http://repository.jboss.org/nexus/content/groups/public</url>
     </repository>
   </repositories>
+  <properties>
+      <netbeans.hint.license>lgpl21</netbeans.hint.license>
+  </properties>
   <build>
     <finalName>StammdatenCoreDomain</finalName>
     <plugins>
