@@ -16,6 +16,9 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <properties>
+      <netbeans.hint.license>lgpl21</netbeans.hint.license>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>

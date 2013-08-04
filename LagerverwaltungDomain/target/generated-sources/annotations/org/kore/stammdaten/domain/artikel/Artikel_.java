@@ -10,7 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import org.kore.stammdaten.domain.artikel.Artikelgruppe;
 import org.kore.stammdaten.domain.lager.Lagerraumbestand;
 
-@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-07-25T19:46:47")
+@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-08-02T17:54:41")
 @StaticMetamodel(Artikel.class)
 public class Artikel_ { 
 
