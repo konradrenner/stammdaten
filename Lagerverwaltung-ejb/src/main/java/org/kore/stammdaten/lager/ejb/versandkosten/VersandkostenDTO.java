@@ -5,6 +5,7 @@
 package org.kore.stammdaten.lager.ejb.versandkosten;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
 
@@ -14,9 +15,29 @@ import org.kore.stammdaten.core.adresse.Land;
  */
 public class VersandkostenDTO implements Serializable {
 
+    private final boolean newVersandkosten;
+    @NotNull
     Land land;
+    @NotNull
     Money betrag;
+    @NotNull
     Money freibetrag;
+
+    public VersandkostenDTO() {
+        this(false);
+    }
+
+    private VersandkostenDTO(boolean newone) {
+        newVersandkosten = false;
+    }
+
+    public static VersandkostenDTO createForJPAPersist() {
+        return new VersandkostenDTO(true);
+    }
+
+    public boolean isNewVersandkosten() {
+        return newVersandkosten;
+    }
 
     public Land getLand() {
         return land;
