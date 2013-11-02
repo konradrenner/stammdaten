@@ -4,10 +4,8 @@
  */
 package org.kore.stammdaten.lager.ejb.versandkosten;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Currency;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
@@ -19,7 +17,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenFactory;
@@ -52,13 +49,15 @@ public class VersandkostenBean {
     private VersandkostenDTO dto;
 
     public VersandkostenDTO getVersandkosten() {
-        VersandkostenDTO response = new VersandkostenDTO();
+        if (dto == null) {
+            dto = new VersandkostenDTO();
+        }
 
         Versandkosten kosten = repository.find(actualAuswahl);
 
-        mapping(kosten, response);
+        mapping(kosten, dto);
 
-        return response;
+        return dto;
     }
 
     public Collection<VersandkostenDTO> getAllVersandkosten() {
@@ -67,46 +66,61 @@ public class VersandkostenBean {
         ArrayList<VersandkostenDTO> response = new ArrayList<>(list.size());
         
         for (Versandkosten entity : list) {
-            VersandkostenDTO dto = new VersandkostenDTO();
+            VersandkostenDTO newdto = new VersandkostenDTO();
             
-            mapping(entity, dto);
+            mapping(entity, newdto);
             
-            response.add(dto);
+            response.add(newdto);
         }
         
         return response;
     }
 
     public void createVersandkosten() {
-        //TODO aus request auslesen
-        Land land = new Land("AT");
-        Money betrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
-        Money freibetrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
+        Versandkosten kosten = repository.find(dto.getLand());
         
-        Versandkosten entity = factory.create(land, betrag, freibetrag);
-        em.persist(entity);
+        if (kosten == null) {
+            Versandkosten entity = factory.create(dto.getLand(), dto.getBetrag(), dto.getFreibetrag());
+            
+            dto = VersandkostenDTO.createForJPAPersist();
+            dto.setBetrag(entity.getBetrag());
+            dto.setFreibetrag(entity.getFreibetrag());
+            dto.setLand(entity.getLand());
+        } else {
+            changeVersandkosten();
+        }
     }
 
     public void changeVersandkosten() {
-        //TODO aus request auslesen
-        Land land = new Land("AT");
-        Money betrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
-        Money freibetrag = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
-
-        Versandkosten entity = repository.find(land);
-        service.changeBetrag(entity, betrag, translator);
-        service.changeFreibetrag(entity, freibetrag, translator);
+        Versandkosten entity = repository.find(dto.getLand());
+        service.changeBetrag(entity, dto.getBetrag(), translator);
+        service.changeFreibetrag(entity, dto.getFreibetrag(), translator);
 
         em.merge(entity);
 
     }
 
     public void removeVersandkosten() {
-        //TODO aus request auslesen
-        Land land = new Land("AT");
-        
-        Versandkosten entity = repository.find(land);
+        Versandkosten entity = repository.find(dto.getLand());
         em.remove(entity);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void save() {
+        if (dto.isNewVersandkosten()) {
+            em.persist(dto);
+        } else {
+            em.merge(dto);
+        }
+
+    }
+    
+    public void cancel() {
+        Versandkosten entity = repository.find(dto.getLand());
+        
+        if (entity != null) {
+            em.refresh(entity);
+        }
     }
 
     public Land getActualAuswahl() {
@@ -117,16 +131,11 @@ public class VersandkostenBean {
         this.actualAuswahl = actualAuswahl;
     }
 
-    public VersandkostenDTO getDto() {
-        this.dto = getVersandkosten();
-        return dto;
-    }
-
-    public void setDto(VersandkostenDTO dto) {
-        this.dto = dto;
-    }
-
     private void mapping(Versandkosten quelle, VersandkostenDTO ziel) {
+        if (quelle == null) {
+            return;
+        }
+
         ziel.setBetrag(quelle.getBetrag());
         ziel.setFreibetrag(quelle.getFreibetrag());
         ziel.setLand(quelle.getLand());
