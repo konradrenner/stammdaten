@@ -37,7 +37,7 @@ import org.kore.stammdaten.domain.artikel.Artikel;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "ARTIKEL_LAGERRAUM")
+@Table(name = "ARTIKEL_LAGERRAUM", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = "Lagerraumbestand.findAll", query = "SELECT l FROM Lagerraumbestand l")})
 public class Lagerraumbestand implements Serializable {

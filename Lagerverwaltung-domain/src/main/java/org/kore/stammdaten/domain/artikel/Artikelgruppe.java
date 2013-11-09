@@ -19,7 +19,6 @@
 
 package org.kore.stammdaten.domain.artikel;
 
-import org.kore.stammdaten.domain.artikel.Artikel;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
@@ -38,7 +37,7 @@ import javax.validation.constraints.Size;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "ARTIKELGRUPPE")
+@Table(name = "ARTIKELGRUPPE", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = "Artikelgruppe.findAll", query = "SELECT a FROM Artikelgruppe a"),
     @NamedQuery(name = "Artikelgruppe.findByBezeichnung", query = "SELECT a FROM Artikelgruppe a WHERE a.bezeichnung = :bezeichnung"),

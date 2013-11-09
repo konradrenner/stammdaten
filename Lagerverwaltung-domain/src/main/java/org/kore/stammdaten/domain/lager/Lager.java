@@ -38,7 +38,7 @@ import javax.validation.constraints.Size;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "LAGER")
+@Table(name = "LAGER", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = "Lager.findAll", query = "SELECT l FROM Lager l"),
     @NamedQuery(name = "Lager.findByLagerId", query = "SELECT l FROM Lager l WHERE l.lagerId = :lagerId"),

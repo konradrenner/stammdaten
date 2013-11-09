@@ -40,7 +40,7 @@ import org.kore.stammdaten.core.adresse.Land;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "VERSANDKOSTEN")
+@Table(name = "VERSANDKOSTEN", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v"),
     @NamedQuery(name = "Versandkosten.findByLand", query = "SELECT v FROM Versandkosten v WHERE v.land = :land")})

@@ -45,7 +45,7 @@ import org.kore.stammdaten.domain.lager.Lagerraumbestand;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "ARTIKEL")
+@Table(name = "ARTIKEL", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a"),
     @NamedQuery(name = "Artikel.findByArtikelId", query = "SELECT a FROM Artikel a WHERE a.artikelId = :artikelId"),
