@@ -21,7 +21,6 @@ package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
 import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
@@ -46,7 +45,7 @@ import org.kore.runtime.format.StringFormatter;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "ADRESSE")
+@Table(name = "ADRESSE", schema = "STAMMDATEN")
 @NamedQueries({
     @NamedQuery(name = Adresse.FIND_ALL, query = "SELECT a FROM Adresse a"),
     @NamedQuery(name = Adresse.SEARCH_BY_ADRESSZEILE1, query = "SELECT a FROM Adresse a WHERE a.adresszeile1 LIKE :adresszeile1")})

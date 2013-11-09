@@ -36,7 +36,7 @@ import javax.validation.constraints.Size;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "TELEFON_ADRESSE")
+@Table(name = "TELEFON_ADRESSE", schema = "STAMMDATEN")
 @DiscriminatorColumn(name = "TYP")
 @Inheritance
 @NamedQueries({
