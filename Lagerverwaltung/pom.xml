@@ -8,11 +8,5 @@
   <name>Lagerverwaltung</name>
   <modules>
     <module>Lagerverwaltung-ear</module>
-    <module>../LagerverwaltungDomain</module>
-    <module>../StammdatenCoreDomain</module>
-    <module>../Lagerverwaltung-web</module>
-    <module>../Lagerverwaltung-ejb</module>
-    <module>../Lagerverwaltung-domain</module>
-    <module>../Stammdaten-coredomain</module>
   </modules>
 </project>
