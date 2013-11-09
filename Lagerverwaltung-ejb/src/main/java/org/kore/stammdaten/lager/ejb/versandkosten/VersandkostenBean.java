@@ -37,7 +37,7 @@ import org.kore.stammdaten.lager.ejb.translator.LagerverwaltungUmrechner;
 @ConversationScoped
 public class VersandkostenBean {
 
-    @PersistenceContext(name = "jdbc/stammdatenDB", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(name = "stammdatenDB", type = PersistenceContextType.EXTENDED)
     EntityManager em;
 
     @Inject
