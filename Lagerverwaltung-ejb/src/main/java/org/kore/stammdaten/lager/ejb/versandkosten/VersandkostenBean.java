@@ -17,11 +17,14 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import org.kore.menu.api.EntryUIDFactory;
+import org.kore.menu.api.Menu;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenService;
+import org.kore.stammdaten.lager.ejb.menu.VersandkostenItems;
 import org.kore.stammdaten.lager.ejb.translator.LagerverwaltungUmrechner;
 
 /**
@@ -45,6 +48,10 @@ public class VersandkostenBean {
     VersandkostenRepository repository;
     @Inject
     LagerverwaltungUmrechner translator;
+    @Inject
+    Menu versandkostenMenu;
+    @Inject
+    EntryUIDFactory uidFactory;
     private Land actualAuswahl;
     private VersandkostenDTO dto;
 
@@ -76,7 +83,7 @@ public class VersandkostenBean {
         return response;
     }
 
-    public void createVersandkosten() {
+    public String createVersandkosten() {
         Versandkosten kosten = repository.find(dto.getLand());
         
         if (kosten == null) {
@@ -89,6 +96,8 @@ public class VersandkostenBean {
         } else {
             changeVersandkosten();
         }
+
+        return VersandkostenItems.getEntry(VersandkostenItems.DETAIL_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
     }
 
     public void changeVersandkosten() {
@@ -106,21 +115,24 @@ public class VersandkostenBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void save() {
+    public String save() {
         if (dto.isNewVersandkosten()) {
             em.persist(dto);
         } else {
             em.merge(dto);
         }
 
+        return VersandkostenItems.getEntry(VersandkostenItems.SAVE_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
     }
     
-    public void cancel() {
+    public String cancel() {
         Versandkosten entity = repository.find(dto.getLand());
         
         if (entity != null) {
             em.refresh(entity);
         }
+
+        return VersandkostenItems.getEntry(VersandkostenItems.CANCEL_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
     }
 
     public Land getActualAuswahl() {

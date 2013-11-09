@@ -23,12 +23,15 @@ import org.kore.menu.api.EntryGroup;
 import org.kore.menu.api.EntryUID;
 import org.kore.menu.api.Menu;
 import org.kore.menu.api.Namespace;
+import org.kore.menu.ri.NamespaceImpl;
 
 /**
  *
  * @author Konrad Renner
  */
 public class VersandkostenMenu implements Menu {
+
+    public static final Namespace VERSANDKOSTEN_NAMESPACE = new NamespaceImpl("VERSANDKOSTEN");
 
     @Override
     public EntryGroup getMainGroup(Namespace nmspc) {
@@ -47,6 +50,6 @@ public class VersandkostenMenu implements Menu {
 
     @Override
     public Namespace getCurrentNamespace() {
-        return null;
+        return VERSANDKOSTEN_NAMESPACE;
     }
 }
