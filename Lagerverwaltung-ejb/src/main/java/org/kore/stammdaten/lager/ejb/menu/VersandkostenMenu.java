@@ -18,6 +18,8 @@
  */
 package org.kore.stammdaten.lager.ejb.menu;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import org.kore.menu.api.Entry;
 import org.kore.menu.api.EntryGroup;
 import org.kore.menu.api.EntryUID;
@@ -29,9 +31,15 @@ import org.kore.menu.ri.NamespaceImpl;
  *
  * @author Konrad Renner
  */
+@ApplicationScoped
 public class VersandkostenMenu implements Menu {
 
-    public static final Namespace VERSANDKOSTEN_NAMESPACE = new NamespaceImpl("VERSANDKOSTEN");
+    private Namespace namespace;
+
+    @PostConstruct
+    void init() {
+        namespace = new NamespaceImpl("VERSANDKOSTEN");
+    }
 
     @Override
     public EntryGroup getMainGroup(Namespace nmspc) {
@@ -49,7 +57,23 @@ public class VersandkostenMenu implements Menu {
     }
 
     @Override
+    public EntryGroup getMainGroup() {
+        return getMainGroup(getCurrentNamespace());
+    }
+
+    @Override
+    public EntryGroup getGroup(EntryUID euid) {
+        return getGroup(getCurrentNamespace(), euid);
+    }
+
+    @Override
+    public Entry getEntry(EntryUID euid) {
+        return getEntry(getCurrentNamespace(), euid);
+    }
+
+
+    @Override
     public Namespace getCurrentNamespace() {
-        return VERSANDKOSTEN_NAMESPACE;
+        return this.namespace;
     }
 }

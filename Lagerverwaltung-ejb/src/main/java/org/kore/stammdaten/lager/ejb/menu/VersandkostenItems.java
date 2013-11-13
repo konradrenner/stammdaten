@@ -18,10 +18,6 @@
  */
 package org.kore.stammdaten.lager.ejb.menu;
 
-import org.kore.menu.api.Entry;
-import org.kore.menu.api.EntryUIDFactory;
-import org.kore.menu.api.Menu;
-
 /**
  *
  * @author Konrad Renner
@@ -33,7 +29,4 @@ public enum VersandkostenItems {
     UEBERSICHT_VERSANDKOSTEN,
     DETAIL_VERSANDKOSTEN;
 
-    public static Entry getEntry(VersandkostenItems item, EntryUIDFactory factory, Menu menu) {
-        return menu.getEntry(VersandkostenMenu.VERSANDKOSTEN_NAMESPACE, factory.createUID(VersandkostenMenu.VERSANDKOSTEN_NAMESPACE, item.toString(), item.toString()));
-    }
 }

@@ -97,7 +97,7 @@ public class VersandkostenBean {
             changeVersandkosten();
         }
 
-        return VersandkostenItems.getEntry(VersandkostenItems.DETAIL_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.DETAIL_VERSANDKOSTEN.toString())).getNavigationPath().asString();
     }
 
     public void changeVersandkosten() {
@@ -122,7 +122,7 @@ public class VersandkostenBean {
             em.merge(dto);
         }
 
-        return VersandkostenItems.getEntry(VersandkostenItems.SAVE_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.SAVE_VERSANDKOSTEN.toString())).getNavigationPath().asString();
     }
     
     public String cancel() {
@@ -132,7 +132,7 @@ public class VersandkostenBean {
             em.refresh(entity);
         }
 
-        return VersandkostenItems.getEntry(VersandkostenItems.CANCEL_VERSANDKOSTEN, uidFactory, versandkostenMenu).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.CANCEL_VERSANDKOSTEN.toString())).getNavigationPath().asString();
     }
 
     public Land getActualAuswahl() {
