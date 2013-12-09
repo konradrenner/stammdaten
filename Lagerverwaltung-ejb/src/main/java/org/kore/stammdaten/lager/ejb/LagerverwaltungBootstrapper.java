@@ -16,26 +16,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.ejb.menu;
+package org.kore.stammdaten.lager.ejb;
 
-import org.kore.menu.api.AbstractEntryUIDFactory;
-import org.kore.menu.api.EntryUID;
-import org.kore.menu.api.Namespace;
-import org.kore.menu.ri.EntryUIDImpl;
-import org.kore.menu.ri.NamespaceImpl;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
+import org.kore.stammdaten.lager.ejb.menu.LagerverwaltungMenu;
 
 /**
+ * Dieses Bean kemmert sich darum, das Dienste (zB Menu) beim Startup
+ * initialisiert werden
  *
  * @author Konrad Renner
  */
-public class VersandkostenEntryUIDFactory extends AbstractEntryUIDFactory {
+@Singleton
+@Startup
+public class LagerverwaltungBootstrapper {
 
-    public VersandkostenEntryUIDFactory() {
-        super(new NamespaceImpl("VERSANDKOSTEN"));
-    }
+    @Inject
+    LagerverwaltungMenu menu;
 
-    @Override
-    public EntryUID createUID(Namespace nmspc, String id, String sorting) {
-        return new EntryUIDImpl(nmspc, id, sorting);
+    @PostConstruct
+    public void loadServices() {
+        menu.init();
     }
 }

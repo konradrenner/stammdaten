@@ -16,17 +16,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.ejb.menu;
+package org.kore.stammdaten.lager.ejb.menu.versandkosten;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.kore.stammdaten.lager.ejb.menu.LagerverwaltungEntryUIDFactory;
+import org.kore.stammdaten.lager.ejb.menu.LagerverwaltungMenu;
 
 /**
  *
  * @author Konrad Renner
  */
-public enum VersandkostenItems {
+@RequestScoped
+@Named
+public class VersandkostenNavigation {
 
-    SAVE_VERSANDKOSTEN,
-    CANCEL_VERSANDKOSTEN,
-    UEBERSICHT_VERSANDKOSTEN,
-    DETAIL_VERSANDKOSTEN;
+    @Inject
+    LagerverwaltungMenu menu;
+    @Inject
+    LagerverwaltungEntryUIDFactory uidFactory;
 
+    public String getUebersicht() {
+        return menu.getEntry(uidFactory.createUID(VersandkostenEntries.UEBERSICHT.getUIDString())).getNavigationPath().asString();
+    }
+
+    public String getDetail() {
+        return menu.getEntry(uidFactory.createUID(VersandkostenEntries.DETAIL.getUIDString())).getNavigationPath().asString();
+    }
 }

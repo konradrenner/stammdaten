@@ -24,7 +24,7 @@ import org.kore.stammdaten.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.domain.versandkosten.VersandkostenService;
-import org.kore.stammdaten.lager.ejb.menu.VersandkostenItems;
+import org.kore.stammdaten.lager.ejb.menu.versandkosten.VersandkostenEntries;
 import org.kore.stammdaten.lager.ejb.translator.LagerverwaltungUmrechner;
 
 /**
@@ -97,7 +97,7 @@ public class VersandkostenBean {
             changeVersandkosten();
         }
 
-        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.DETAIL_VERSANDKOSTEN.toString())).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenEntries.DETAIL.getUIDString())).getNavigationPath().asString();
     }
 
     public void changeVersandkosten() {
@@ -122,7 +122,7 @@ public class VersandkostenBean {
             em.merge(dto);
         }
 
-        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.SAVE_VERSANDKOSTEN.toString())).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenEntries.SAVE.getUIDString())).getNavigationPath().asString();
     }
     
     public String cancel() {
@@ -132,7 +132,7 @@ public class VersandkostenBean {
             em.refresh(entity);
         }
 
-        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenItems.CANCEL_VERSANDKOSTEN.toString())).getNavigationPath().asString();
+        return versandkostenMenu.getEntry(uidFactory.createUID(VersandkostenEntries.CANCEL.getUIDString())).getNavigationPath().asString();
     }
 
     public Land getActualAuswahl() {
