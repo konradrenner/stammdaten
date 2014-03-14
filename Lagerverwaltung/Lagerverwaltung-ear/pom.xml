@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+    <artifactId>Lagerverwaltung</artifactId>
+    <groupId>org.kore.stammdaten.lager</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+    <groupId>org.kore.stammdaten.lager</groupId>
+    <artifactId>Lagerverwaltung-ear</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>ear</packaging>
+
+    <name>Lagerverwaltung-ear</name>
+
+    <properties>
+        <netbeans.hint.license>lgpl21</netbeans.hint.license>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+    </properties>
+  
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.kore.stammdaten.lager</groupId>
+            <artifactId>Lagerverwaltung-ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>KoreMenuAPI</artifactId>
+                    <groupId>org.kore.menu.api</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>KoreMenuRI</artifactId>
+                    <groupId>org.kore.menu.ri</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>KoreRuntime</artifactId>
+                    <groupId>org.kore.runtime</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>LagerverwaltungDomain</artifactId>
+                    <groupId>org.kore.stammdaten.lager</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.kore.stammdaten.lager</groupId>
+            <artifactId>Lagerverwaltung-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+</project>
