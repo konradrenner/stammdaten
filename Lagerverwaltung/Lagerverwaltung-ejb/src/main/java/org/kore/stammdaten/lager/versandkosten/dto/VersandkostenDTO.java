@@ -16,29 +16,31 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.versandkosten;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import org.kore.stammdaten.lager.versandkosten.dto.VersandkostenDTO;
+package org.kore.stammdaten.lager.versandkosten.dto;
 
 /**
  *
  * @author Konrad Renner
  */
-@Stateful
-@SessionScoped
-@Named( "versandkosten")
-public class VersandkostenBean {
+public class VersandkostenDTO {
 
-    public Collection<VersandkostenDTO> getAll() {
-        VersandkostenDTO test = new VersandkostenDTO();
-        test.setName("HalliHallo");
-        ArrayList<VersandkostenDTO> dto = new ArrayList<>();
-        dto.add(test);
-        return dto;
+    private String name;
+    private int zaehler;
+
+    public int getZaehler() {
+        return zaehler;
+    }
+
+    public void setZaehler(int zaehler) {
+        this.zaehler = zaehler;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
