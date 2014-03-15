@@ -16,29 +16,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.versandkosten;
+package org.kore.stammdaten.lager.application;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import org.kore.stammdaten.lager.versandkosten.dto.VersandkostenDTO;
+import java.io.Serializable;
+import java.util.Currency;
+import org.kore.runtime.currency.Money;
+import org.kore.runtime.currency.MoneyTranslator;
 
 /**
  *
  * @author Konrad Renner
  */
-@Stateful
-@SessionScoped
-@Named( "versandkosten")
-public class VersandkostenBean {
+public class DefaultMoneyTranslator implements MoneyTranslator, Serializable {
 
-    public Collection<VersandkostenDTO> getAll() {
-        VersandkostenDTO test = new VersandkostenDTO();
-        test.setName("HalliHallo");
-        ArrayList<VersandkostenDTO> dto = new ArrayList<>();
-        dto.add(test);
-        return dto;
+    @Override
+    public Money translate(Money money, Currency crnc) {
+        //TODO Service Anbinden
+        return money;
     }
 }

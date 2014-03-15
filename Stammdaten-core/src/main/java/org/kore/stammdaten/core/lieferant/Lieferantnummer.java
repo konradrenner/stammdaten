@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Konrad Renner.
+ * Copyright (C) 2013 Free Software Foundation.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,31 +16,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.versandkosten.dto;
+
+package org.kore.stammdaten.core.lieferant;
+
+import java.io.Serializable;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Konrad Renner
  */
-public class VersandkostenDTO {
+@Embeddable
+public class Lieferantnummer implements Serializable {
 
-    private String name;
-    private int zaehler;
+    private long liefnr;
 
-    public int getZaehler() {
-        return zaehler;
+    public Lieferantnummer() {
     }
 
-    public void setZaehler(int zaehler) {
-        this.zaehler = zaehler;
+    public Lieferantnummer(long liefnr) {
+        if (liefnr <= 0) {
+            throw new IllegalArgumentException("Artikelnummer muss groesser 0 sein");
+        }
+        this.liefnr = liefnr;
     }
 
-
-    public String getName() {
-        return name;
+    public long getValue() {
+        return liefnr;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    //TODO hashcode/equals
+    @Override
+    public String toString() {
+        return "Lieferantnummer{" + "liefnr=" + liefnr + '}';
     }
 }

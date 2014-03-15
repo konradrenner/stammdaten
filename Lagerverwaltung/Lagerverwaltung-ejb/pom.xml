@@ -4,12 +4,12 @@
     <parent>
     <artifactId>Lagerverwaltung</artifactId>
     <groupId>org.kore.stammdaten.lager</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
   </parent>
 
     <groupId>org.kore.stammdaten.lager</groupId>
     <artifactId>Lagerverwaltung-ejb</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>ejb</packaging>
 
     <name>Lagerverwaltung-ejb</name>
@@ -21,6 +21,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.kore.stammdaten.core</groupId>
+            <artifactId>Stammdaten-core</artifactId>
+            <version>1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Lagerverwaltung-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -49,6 +59,11 @@
                 <version>2.3</version>
                 <configuration>
                     <ejbVersion>3.1</ejbVersion>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
