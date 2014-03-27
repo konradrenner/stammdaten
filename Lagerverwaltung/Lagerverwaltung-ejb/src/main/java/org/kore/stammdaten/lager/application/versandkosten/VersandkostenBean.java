@@ -30,7 +30,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.kore.runtime.currency.MoneyTranslator;
-import org.kore.stammdaten.lager.application.DefaultMoneyTranslator;
 import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
@@ -49,7 +48,7 @@ public class VersandkostenBean {
     @PersistenceContext(name = "lager")
     EntityManager em;
     @Inject
-    DefaultMoneyTranslator translator;
+    MoneyTranslator translator;
     @Inject
     VersandkostenRepository repository;
 

@@ -7,7 +7,7 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.validation.constraints.NotNull;
 import org.kore.stammdaten.core.adresse.Land;
 
@@ -15,7 +15,7 @@ import org.kore.stammdaten.core.adresse.Land;
  *
  * @author koni
  */
-@RequestScoped
+@Dependent
 public class VersandkostenRepository implements Serializable {
 
 //    private final EntityManager em;

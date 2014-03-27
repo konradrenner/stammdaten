@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.application;
 
 import java.io.Serializable;
 import java.util.Currency;
+import javax.enterprise.context.SessionScoped;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.currency.MoneyTranslator;
 
@@ -27,6 +28,7 @@ import org.kore.runtime.currency.MoneyTranslator;
  *
  * @author Konrad Renner
  */
+@SessionScoped
 public class DefaultMoneyTranslator implements MoneyTranslator, Serializable {
 
     @Override
