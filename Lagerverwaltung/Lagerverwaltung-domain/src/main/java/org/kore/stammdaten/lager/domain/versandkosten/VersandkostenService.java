@@ -6,7 +6,6 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
 import java.util.Currency;
-import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.currency.MoneyTranslator;
@@ -15,12 +14,17 @@ import org.kore.runtime.currency.MoneyTranslator;
  *
  * @author koni
  */
-@RequestScoped
 public class VersandkostenService implements Serializable {
 
+    private MoneyTranslator umrechner;
 
-    public VersandkostenService() {
+    VersandkostenService() {
         //CDI
+    }
+
+
+    public VersandkostenService(MoneyTranslator translator) {
+        umrechner = translator;
     }
 
     /**
@@ -32,7 +36,7 @@ public class VersandkostenService implements Serializable {
      * @param newBetrag
      * @param umrechner
      */
-    public void changeBetrag(@NotNull Versandkosten object, @NotNull Money newBetrag, @NotNull MoneyTranslator umrechner) {
+    public void changeBetrag(@NotNull Versandkosten object, @NotNull Money newBetrag) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
@@ -55,7 +59,7 @@ public class VersandkostenService implements Serializable {
      * @param newBetrag
      * @param umrechner
      */
-    public void changeFreibetrag(@NotNull Versandkosten object, @NotNull Money newBetrag, @NotNull MoneyTranslator umrechner) {
+    public void changeFreibetrag(@NotNull Versandkosten object, @NotNull Money newBetrag) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
@@ -77,7 +81,7 @@ public class VersandkostenService implements Serializable {
      * @param newCurrency
      * @param umrechner
      */
-    public void changeCurrency(@NotNull Versandkosten object, @NotNull Currency newCurrency, @NotNull MoneyTranslator umrechner) {
+    public void changeCurrency(@NotNull Versandkosten object, @NotNull Currency newCurrency) {
         Money newBetrag = umrechner.translate(object.getBetrag(), newCurrency);
 
         Money newFreibetrag = object.getFreibetrag();

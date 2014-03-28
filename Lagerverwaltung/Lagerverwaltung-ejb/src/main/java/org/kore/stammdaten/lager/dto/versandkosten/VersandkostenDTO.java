@@ -18,7 +18,7 @@
  */
 package org.kore.stammdaten.lager.dto.versandkosten;
 
-import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
+import java.math.BigDecimal;
 
 /**
  *
@@ -26,31 +26,54 @@ import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
  */
 public class VersandkostenDTO {
 
-    private String name;
-    private int zaehler;
+    private String land;
+    private BigDecimal betrag;
+    private String waehrung;
+    private BigDecimal freibetrag;
+    private String waehrungFreibetrag;
 
-    public VersandkostenDTO() {
-        //nothing
+    public String getLand() {
+        return land;
     }
 
-    public VersandkostenDTO(Versandkosten kost) {
-        //TODO mapping
+    public void setLand(String land) {
+        this.land = land;
     }
 
-    public int getZaehler() {
-        return zaehler;
+    public BigDecimal getBetrag() {
+        return betrag;
     }
 
-    public void setZaehler(int zaehler) {
-        this.zaehler = zaehler;
+    public void setBetrag(BigDecimal betrag) {
+        this.betrag = betrag;
     }
 
-
-    public String getName() {
-        return name;
+    public String getWaehrung() {
+        return waehrung;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWaehrung(String waehrung) {
+        this.waehrung = waehrung;
+    }
+
+    public BigDecimal getFreibetrag() {
+        return freibetrag;
+    }
+
+    public void setFreibetrag(BigDecimal freibetrag) {
+        this.freibetrag = freibetrag;
+    }
+
+    public String getWaehrungFreibetrag() {
+        return waehrungFreibetrag;
+    }
+
+    public void setWaehrungFreibetrag(String waehrungFreibetrag) {
+        this.waehrungFreibetrag = waehrungFreibetrag;
+    }
+
+    @Override
+    public String toString() {
+        return "VersandkostenDTO{" + "land=" + land + ", betrag=" + betrag + ", waehrung=" + waehrung + ", freibetrag=" + freibetrag + ", waehrungFreibetrag=" + waehrungFreibetrag + '}';
     }
 }

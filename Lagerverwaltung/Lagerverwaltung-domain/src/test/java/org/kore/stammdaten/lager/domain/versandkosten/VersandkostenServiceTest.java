@@ -27,7 +27,7 @@ public class VersandkostenServiceTest {
     @Before
     public void setUp() {
         translator = new TestMoneyTranslator();
-        service = new VersandkostenService();
+        service = new VersandkostenService(translator);
         Money money = new Money(BigDecimal.ZERO, Currency.getInstance("EUR"));
         Land land = new Land("AT");
         testObject = new Versandkosten(land, money);
@@ -36,7 +36,7 @@ public class VersandkostenServiceTest {
     @Test
     public void testChangeBetrag() {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("EUR"));
-        service.changeBetrag(testObject, newmoney, translator);
+        service.changeBetrag(testObject, newmoney);
         
         assertEquals(newmoney, testObject.getBetrag());
     }
@@ -44,7 +44,7 @@ public class VersandkostenServiceTest {
     @Test
     public void testChangeBetragWithDifferentCurrency() {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("USD"));
-        service.changeBetrag(testObject, newmoney, translator);
+        service.changeBetrag(testObject, newmoney);
         
         assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("EUR")), testObject.getBetrag());
     }
@@ -52,7 +52,7 @@ public class VersandkostenServiceTest {
     @Test
     public void testChangeFreibetrag() {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("EUR"));
-        service.changeFreibetrag(testObject, newmoney, translator);
+        service.changeFreibetrag(testObject, newmoney);
 
         assertEquals(newmoney, testObject.getFreibetrag());
     }
@@ -60,14 +60,14 @@ public class VersandkostenServiceTest {
     @Test
     public void testChangeFreibetragWithDifferentCurrency() {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("USD"));
-        service.changeFreibetrag(testObject, newmoney, translator);
+        service.changeFreibetrag(testObject, newmoney);
 
         assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("EUR")), testObject.getFreibetrag());
     }
 
     @Test
     public void testChangeCurrencyFreibetragNull() {
-        service.changeCurrency(testObject, Currency.getInstance("USD"), translator);
+        service.changeCurrency(testObject, Currency.getInstance("USD"));
 
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());
         assertNull(testObject.getFreibetrag());
@@ -76,7 +76,7 @@ public class VersandkostenServiceTest {
     @Test
     public void testChangeCurrency() {
         testObject.setFreibetrag(new Money(BigDecimal.TEN, Currency.getInstance("EUR")).getAmount());
-        service.changeCurrency(testObject, Currency.getInstance("USD"), translator);
+        service.changeCurrency(testObject, Currency.getInstance("USD"));
         
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());
         assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("USD")), testObject.getFreibetrag());
@@ -84,7 +84,7 @@ public class VersandkostenServiceTest {
 
     @Test
     public void testChangeCurrencyNoChange() {
-        service.changeCurrency(testObject, Currency.getInstance("EUR"), translator);
+        service.changeCurrency(testObject, Currency.getInstance("EUR"));
 
         assertEquals(new Money(BigDecimal.ZERO, Currency.getInstance("EUR")), testObject.getBetrag());
     }

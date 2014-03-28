@@ -24,7 +24,6 @@ import java.util.Currency;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -37,13 +36,8 @@ import org.kore.stammdaten.core.adresse.Land;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "VERSANDKOSTEN")
-@NamedQueries({
-    @NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v"),
-    @NamedQuery(name = "Versandkosten.findByLand", query = "SELECT v FROM Versandkosten v WHERE v.land = :land"),
-    @NamedQuery(name = "Versandkosten.findByBetrag", query = "SELECT v FROM Versandkosten v WHERE v.betrag = :betrag"),
-    @NamedQuery(name = "Versandkosten.findByFreibetrag", query = "SELECT v FROM Versandkosten v WHERE v.freibetrag = :freibetrag"),
-    @NamedQuery(name = "Versandkosten.findByWaehrung", query = "SELECT v FROM Versandkosten v WHERE v.waehrung = :waehrung")})
+@Table(name = "VERSANDKOSTEN", schema = "STAMMDATEN")
+@NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v")
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

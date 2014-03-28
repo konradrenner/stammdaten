@@ -8,10 +8,14 @@
     <ui:define name="content">
         <h:dataTable value="#{versandkosten.all}" var="vkosten">
             <h:column>
-                <f:facet name="header">Versandkosten</f:facet>
-                <h:link value="#{vkosten.name}" outcome="versandkostenDetail">
-                    <f:param name="id" value="#{vkosten.name}"/>
+                <f:facet name="header">Land</f:facet>
+                <h:link value="#{vkosten.land}" outcome="versandkostenDetail">
+                    <f:param name="id" value="#{vkosten.land}"/>
                 </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Betrag</f:facet>
+                #{vkosten.betrag}
             </h:column>
         </h:dataTable>
     </ui:define>

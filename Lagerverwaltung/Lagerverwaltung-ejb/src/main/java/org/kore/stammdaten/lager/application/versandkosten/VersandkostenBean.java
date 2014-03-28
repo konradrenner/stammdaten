@@ -24,13 +24,9 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import org.kore.runtime.currency.MoneyTranslator;
-import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
@@ -45,32 +41,27 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 @Named( "versandkosten")
 public class VersandkostenBean {
 
-    @PersistenceContext(name = "lager")
-    EntityManager em;
-    @Inject
-    MoneyTranslator translator;
     @Inject
     VersandkostenRepository repository;
 
     public Collection<VersandkostenDTO> getAll() {
         List<Versandkosten> vkosten = repository.find();
+        Versandkosten find = repository.find(new Land("AT"));
 
-        ArrayList<VersandkostenDTO> dto = new ArrayList<>();
+        ArrayList<VersandkostenDTO> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
-            dto.add(new VersandkostenDTO(kost));
+            VersandkostenDTO dto = new VersandkostenDTO();
+
+            dto.setBetrag(kost.getBetrag().getAmount());
+            dto.setWaehrung(kost.getBetrag().getCurrency().getDisplayName());
+
+            dto.setFreibetrag(kost.getFreibetrag().getAmount());
+            dto.setWaehrungFreibetrag(kost.getFreibetrag().getCurrency().getDisplayName());
+
+            dto.setLand(kost.getLand().getIso3166Code());
+
+            response.add(dto);
         }
-        return dto;
-    }
-
-    @Produces
-    @DomainVersandkosten
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
-
-    @Produces
-    @DomainVersandkosten
-    public MoneyTranslator getMoneyTranslator() {
-        return translator;
+        return response;
     }
 }
