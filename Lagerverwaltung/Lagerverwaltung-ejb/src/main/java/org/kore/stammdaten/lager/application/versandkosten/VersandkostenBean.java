@@ -26,7 +26,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.kore.stammdaten.core.adresse.Land;
+import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
@@ -42,11 +42,11 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 public class VersandkostenBean {
 
     @Inject
+    @DomainVersandkosten
     VersandkostenRepository repository;
 
     public Collection<VersandkostenDTO> getAll() {
         List<Versandkosten> vkosten = repository.find();
-        Versandkosten find = repository.find(new Land("AT"));
 
         ArrayList<VersandkostenDTO> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {

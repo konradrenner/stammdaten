@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.kore.runtime.currency.MoneyTranslator;
+import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
 
@@ -43,12 +44,14 @@ public class VersandkostenController {
     MoneyTranslator translator;
 
     @Produces
+    @DomainVersandkosten
     @RequestScoped
     public VersandkostenRepository getVersandkostenRepository() {
         return new VersandkostenRepository(em);
     }
 
     @Produces
+    @DomainVersandkosten
     @RequestScoped
     public VersandkostenService getVersandkostenService() {
         return new VersandkostenService(translator);
