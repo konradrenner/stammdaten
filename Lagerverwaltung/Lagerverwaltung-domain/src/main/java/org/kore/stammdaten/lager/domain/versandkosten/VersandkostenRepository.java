@@ -51,4 +51,9 @@ public class VersandkostenRepository implements Serializable {
         TypedQuery<Versandkosten> query = em.createNamedQuery("Versandkosten.findAll", Versandkosten.class);
         return Collections.unmodifiableList(query.getResultList());
     }
+
+    public void save(Versandkosten kosten) {
+        em.merge(kosten);
+        em.flush();
+    }
 }

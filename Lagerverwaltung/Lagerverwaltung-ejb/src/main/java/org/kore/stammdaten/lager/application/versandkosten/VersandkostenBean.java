@@ -18,16 +18,21 @@
  */
 package org.kore.stammdaten.lager.application.versandkosten;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
+import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 
@@ -38,12 +43,15 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 @Stateful
 @LocalBean
 @ConversationScoped
-@Named( "versandkosten")
+@Named("versandkosten")
 public class VersandkostenBean {
 
     @Inject
     @DomainVersandkosten
     VersandkostenRepository repository;
+    @Inject
+    @DomainVersandkosten
+    VersandkostenFactory factory;
 
     public Collection<VersandkostenDTO> getAll() {
         List<Versandkosten> vkosten = repository.find();
@@ -63,5 +71,10 @@ public class VersandkostenBean {
             response.add(dto);
         }
         return response;
+    }
+
+    public void create() {
+        Versandkosten create = factory.create(new Land("AT"), new Money(BigDecimal.ZERO, Currency.getInstance("EUR")));
+        repository.save(create);
     }
 }
