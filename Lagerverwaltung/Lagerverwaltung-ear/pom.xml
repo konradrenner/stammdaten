@@ -48,24 +48,6 @@
             <artifactId>Lagerverwaltung-ejb</artifactId>
             <version>1.1-SNAPSHOT</version>
             <type>ejb</type>
-            <exclusions>
-                <exclusion>
-                    <artifactId>KoreMenuAPI</artifactId>
-                    <groupId>org.kore.menu.api</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>KoreMenuRI</artifactId>
-                    <groupId>org.kore.menu.ri</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>KoreRuntime</artifactId>
-                    <groupId>org.kore.runtime</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>LagerverwaltungDomain</artifactId>
-                    <groupId>org.kore.stammdaten.lager</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.kore.stammdaten.lager</groupId>
@@ -82,6 +64,11 @@
             <groupId>org.kore.stammdaten.core</groupId>
             <artifactId>Stammdaten-core</artifactId>
             <version>1.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Lagerverwaltung-domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

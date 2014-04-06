@@ -24,8 +24,8 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.runtime.currency.Money;
@@ -40,9 +40,9 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
  *
  * @author Konrad Renner
  */
-@Stateful
+@Stateless
 @LocalBean
-@ConversationScoped
+@Dependent
 @Named("versandkosten")
 public class VersandkostenBean {
 

@@ -18,8 +18,10 @@
  */
 package org.kore.stammdaten.lager.application.versandkosten;
 
-import javax.ejb.Singleton;
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -35,9 +37,10 @@ import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
  *
  * @author Konrad Renner
  */
-@Singleton
-@ApplicationScoped
-public class VersandkostenController {
+@Stateful
+@LocalBean
+@ConversationScoped
+public class VersandkostenController implements Serializable {
 
     @PersistenceContext(name = "lager")
     EntityManager em;
