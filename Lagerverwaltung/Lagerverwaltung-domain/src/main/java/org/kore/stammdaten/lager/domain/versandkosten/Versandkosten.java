@@ -36,7 +36,7 @@ import org.kore.stammdaten.core.adresse.Land;
  * @author Konrad Renner
  */
 @Entity
-@Table(name = "VERSANDKOSTEN", schema = "STAMMDATEN")
+@Table(name = "VERSANDKOSTEN")
 @NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v")
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
