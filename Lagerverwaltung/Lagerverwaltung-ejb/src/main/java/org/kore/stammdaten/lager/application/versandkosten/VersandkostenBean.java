@@ -22,10 +22,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
@@ -36,9 +37,9 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
  *
  * @author Konrad Renner
  */
-@Stateless
+@Stateful
 @LocalBean
-@Dependent
+@SessionScoped
 @Named("versandkosten")
 public class VersandkostenBean {
 
@@ -48,6 +49,7 @@ public class VersandkostenBean {
     @Inject
     @DomainVersandkosten
     VersandkostenFactory factory;
+    private VersandkostenDTO currentDTO;
 
     public Collection<VersandkostenDTO> getAll() {
         List<Versandkosten> vkosten = repository.find();
@@ -56,11 +58,9 @@ public class VersandkostenBean {
         for (Versandkosten kost : vkosten) {
             VersandkostenDTO dto = new VersandkostenDTO();
 
-            dto.setBetrag(kost.getBetrag().getAmount());
-            dto.setWaehrung(kost.getBetrag().getCurrency().getDisplayName());
+            dto.setBetrag(kost.getBetrag());
 
-            dto.setFreibetrag(kost.getFreibetrag().getAmount());
-            dto.setWaehrungFreibetrag(kost.getFreibetrag().getCurrency().getDisplayName());
+            dto.setFreibetrag(kost.getFreibetrag());
 
             dto.setLand(kost.getLand().getIso3166Code());
 
@@ -69,4 +69,23 @@ public class VersandkostenBean {
         return response;
     }
 
+    public String loadLand(String land) {
+        Versandkosten kost = repository.find(new Land(land));
+
+        VersandkostenDTO dto = new VersandkostenDTO();
+
+        dto.setBetrag(kost.getBetrag());
+
+        dto.setFreibetrag(kost.getFreibetrag());
+
+        dto.setLand(kost.getLand().getIso3166Code());
+
+        currentDTO = dto;
+
+        return "versandkostenDetail";
+    }
+
+    public VersandkostenDTO getDetail() {
+        return currentDTO;
+    }
 }

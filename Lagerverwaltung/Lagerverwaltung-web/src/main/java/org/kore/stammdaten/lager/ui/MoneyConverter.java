@@ -16,45 +16,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.dto.versandkosten;
+package org.kore.stammdaten.lager.ui;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import org.kore.runtime.currency.Money;
 
 /**
  *
  * @author Konrad Renner
  */
-public class VersandkostenDTO {
+@FacesConverter(value = "MoneyConverter", forClass = Money.class)
+public class MoneyConverter implements Converter {
 
-    private String land;
-    private Money betrag;
-    private Money freibetrag;
-    public String getLand() {
-        return land;
-    }
-
-    public void setLand(String land) {
-        this.land = land;
-    }
-
-    public Money getBetrag() {
-        return betrag;
-    }
-
-    public void setBetrag(Money betrag) {
-        this.betrag = betrag;
-    }
-
-    public Money getFreibetrag() {
-        return freibetrag;
-    }
-
-    public void setFreibetrag(Money freibetrag) {
-        this.freibetrag = freibetrag;
+    @Override
+    public Money getAsObject(FacesContext context, UIComponent component, String value) {
+        String[] splitted = value.split(" ");
+        return new Money(new BigDecimal(splitted[0]), Currency.getInstance(splitted[1]));
     }
 
     @Override
-    public String toString() {
-        return "VersandkostenDTO{" + "land=" + land + ", betrag=" + betrag + ", freibetrag=" + freibetrag + '}';
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        Money money = (Money) value;
+        return money.getAmount() + " " + money.getCurrency();
     }
 }

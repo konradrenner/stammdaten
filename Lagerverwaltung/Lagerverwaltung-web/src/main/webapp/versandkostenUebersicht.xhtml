@@ -6,19 +6,27 @@
                 xmlns:f="http://java.sun.com/jsf/core" >
 
     <ui:define name="content">
-        <h:dataTable value="#{versandkosten.all}" var="vkosten">
-            <h:column>
-                <f:facet name="header">Land</f:facet>
-                <h:link value="#{vkosten.land}" outcome="versandkostenDetail">
-                    <f:param name="id" value="#{vkosten.land}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Betrag</f:facet>
-                #{vkosten.betrag}
-            </h:column>
-        </h:dataTable>
-
+        <h:form>
+            <h:dataTable value="#{versandkosten.all}" var="vkosten">
+                <h:column>
+                    <f:facet name="header">Land</f:facet>
+                    <h:commandLink id="land" value="#{vkosten.land}" action="#{versandkosten.loadLand(vkosten.land)}">
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Betrag</f:facet>
+                    <h:outputText value="#{vkosten.betrag}" >
+                        <f:converter converterId="MoneyConverter" ></f:converter>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Freibetrag</f:facet>
+                    <h:outputText value="#{vkosten.freibetrag}" >
+                        <f:converter converterId="MoneyConverter" ></f:converter>
+                    </h:outputText>
+                </h:column>
+            </h:dataTable>
+        </h:form>
     </ui:define>
 
 </ui:composition>
