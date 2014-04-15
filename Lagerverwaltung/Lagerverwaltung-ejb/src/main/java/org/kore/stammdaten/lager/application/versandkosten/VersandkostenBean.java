@@ -31,6 +31,7 @@ import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
+import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
 import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 
 /**
@@ -49,6 +50,9 @@ public class VersandkostenBean {
     @Inject
     @DomainVersandkosten
     VersandkostenFactory factory;
+    @Inject
+    @DomainVersandkosten
+    VersandkostenService service;
     private VersandkostenDTO currentDTO;
 
     public Collection<VersandkostenDTO> getAll() {
@@ -87,5 +91,20 @@ public class VersandkostenBean {
 
     public VersandkostenDTO getDetail() {
         return currentDTO;
+    }
+
+    public String loadUebersicht() {
+        return "versandkostenUebersicht";
+    }
+    
+    public String save() {
+        Versandkosten kto = repository.find(new Land(currentDTO.getLand()));
+        
+        service.changeBetrag(kto, currentDTO.getBetrag());
+        service.changeFreibetrag(kto, currentDTO.getFreibetrag());
+        
+        repository.save(kto);
+        
+        return "versandkostenUebersicht";
     }
 }

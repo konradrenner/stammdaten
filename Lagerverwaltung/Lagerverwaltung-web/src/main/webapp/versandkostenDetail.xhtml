@@ -11,16 +11,19 @@
             Land
             <h:outputText value="#{versandkosten.detail.land}" >
             </h:outputText>
-            <br></br>
+            <br/>
             Betrag
-            <h:outputText value="#{versandkosten.detail.betrag}" >
+            <h:inputText value="#{versandkosten.detail.betrag}" >
                 <f:converter converterId="MoneyConverter" ></f:converter>
-            </h:outputText>
-            <br></br>
+            </h:inputText>
+            <br/>
             Freibetrag
-            <h:outputText value="#{versandkosten.detail.freibetrag}" >
+            <h:inputText value="#{versandkosten.detail.freibetrag}" >
                 <f:converter converterId="MoneyConverter" ></f:converter>
-            </h:outputText>
+            </h:inputText>
+            <br/>
+            <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" />
+            <h:commandButton value="Speichern" action="#{versandkosten.save()}" />
         </h:form>
     </ui:define>
 
