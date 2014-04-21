@@ -27,7 +27,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.stammdaten.core.adresse.Land;
-import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
+import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
@@ -45,13 +45,13 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 public class VersandkostenBean {
 
     @Inject
-    @DomainVersandkosten
+    @AggregateVersandkosten
     VersandkostenRepository repository;
     @Inject
-    @DomainVersandkosten
+    @AggregateVersandkosten
     VersandkostenFactory factory;
     @Inject
-    @DomainVersandkosten
+    @AggregateVersandkosten
     VersandkostenService service;
     private VersandkostenDTO currentDTO;
 
@@ -99,12 +99,29 @@ public class VersandkostenBean {
     
     public String save() {
         Versandkosten kto = repository.find(new Land(currentDTO.getLand()));
+
+        if (kto == null) {
+            kto = factory.create(new Land(currentDTO.getLand()), currentDTO.getBetrag());
+        } else {
         
         service.changeBetrag(kto, currentDTO.getBetrag());
-        service.changeFreibetrag(kto, currentDTO.getFreibetrag());
+            service.changeFreibetrag(kto, currentDTO.getFreibetrag());
+        }
         
         repository.save(kto);
         
         return "versandkostenUebersicht";
+    }
+    
+    public String delete(String land) {
+        repository.delete(repository.find(new Land(land)));
+
+        return "versandkostenUebersicht";
+    }
+
+    public String create() {
+        this.currentDTO = new VersandkostenDTO();
+
+        return "versandkostenDetail";
     }
 }

@@ -25,7 +25,14 @@
                         <f:converter converterId="MoneyConverter" ></f:converter>
                     </h:outputText>
                 </h:column>
+                <h:column>
+                    <f:facet name="header">Land</f:facet>
+                    <h:commandButton id="delete" value="Entfernen" action="#{versandkosten.delete(vkosten.land)}" >
+                    </h:commandButton>
+                </h:column>
             </h:dataTable>
+            <h:commandButton id="create" value="Neu" action="#{versandkosten.create()}" >
+            </h:commandButton>
         </h:form>
     </ui:define>
 

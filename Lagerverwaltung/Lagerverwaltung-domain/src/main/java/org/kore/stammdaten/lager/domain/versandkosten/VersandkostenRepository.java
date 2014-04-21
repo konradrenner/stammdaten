@@ -54,6 +54,9 @@ public class VersandkostenRepository implements Serializable {
 
     public void save(Versandkosten kosten) {
         em.merge(kosten);
-        em.flush();
+    }
+
+    public void delete(Versandkosten kosten) {
+        em.remove(kosten);
     }
 }

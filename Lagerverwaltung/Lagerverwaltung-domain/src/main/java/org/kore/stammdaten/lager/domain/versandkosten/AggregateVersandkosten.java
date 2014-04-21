@@ -31,5 +31,5 @@ import javax.inject.Qualifier;
 @Qualifier
 @Target({ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DomainVersandkosten {
+public @interface AggregateVersandkosten {
 }

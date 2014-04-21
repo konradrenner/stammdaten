@@ -35,12 +35,20 @@ public class MoneyConverter implements Converter {
 
     @Override
     public Money getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value == null || value.toString().length() == 0) {
+            return null;
+        }
+
         String[] splitted = value.split(" ");
         return new Money(new BigDecimal(splitted[0]), Currency.getInstance(splitted[1]));
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
+        if (value == null || value.toString().length() == 0) {
+            return "";
+        }
+
         Money money = (Money) value;
         return money.getAmount() + " " + money.getCurrency();
     }

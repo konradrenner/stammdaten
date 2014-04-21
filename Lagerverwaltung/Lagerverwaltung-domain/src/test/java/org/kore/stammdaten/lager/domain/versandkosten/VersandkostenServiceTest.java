@@ -58,6 +58,13 @@ public class VersandkostenServiceTest {
     }
 
     @Test
+    public void testChangeFreibetragNull() {
+        service.changeFreibetrag(testObject, null);
+
+        assertNull(testObject.getFreibetrag());
+    }
+
+    @Test
     public void testChangeFreibetragWithDifferentCurrency() {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("USD"));
         service.changeFreibetrag(testObject, newmoney);

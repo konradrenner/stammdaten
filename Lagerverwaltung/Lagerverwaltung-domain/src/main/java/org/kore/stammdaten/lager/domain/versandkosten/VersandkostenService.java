@@ -73,7 +73,12 @@ public class VersandkostenService implements Serializable {
      * @param newBetrag
      * @param umrechner
      */
-    public void changeFreibetrag(@NotNull Versandkosten object, @NotNull Money newBetrag) {
+    public void changeFreibetrag(@NotNull Versandkosten object, Money newBetrag) {
+        if (newBetrag == null) {
+            object.setFreibetrag(null);
+            return;
+        }
+        
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 

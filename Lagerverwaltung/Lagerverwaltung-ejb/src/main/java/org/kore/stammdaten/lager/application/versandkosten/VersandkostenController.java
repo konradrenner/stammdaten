@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.kore.runtime.currency.MoneyTranslator;
-import org.kore.stammdaten.lager.domain.versandkosten.DomainVersandkosten;
+import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
@@ -48,21 +48,21 @@ public class VersandkostenController implements Serializable {
     MoneyTranslator translator;
 
     @Produces
-    @DomainVersandkosten
+    @AggregateVersandkosten
     @RequestScoped
     public VersandkostenRepository getVersandkostenRepository() {
         return new VersandkostenRepository(em);
     }
 
     @Produces
-    @DomainVersandkosten
+    @AggregateVersandkosten
     @RequestScoped
     public VersandkostenService getVersandkostenService() {
         return new VersandkostenService(translator);
     }
 
     @Produces
-    @DomainVersandkosten
+    @AggregateVersandkosten
     @RequestScoped
     public VersandkostenFactory getVersandkostenFactory() {
         return new VersandkostenFactory();
