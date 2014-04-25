@@ -1,0 +1,15 @@
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "iMNB80Ug9CEHaWOhPl5sQQ"
+
+addons:
+  coverity_scan:
+    project:
+      name: "konradrenner/stammdaten"
+      description: "Your project description here"
+    notification_email: koni.renner@gmail.com
+    build_command_prepend:
+    build_command:
+    branch_pattern: coverity_scan
