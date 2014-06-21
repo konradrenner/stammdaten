@@ -19,16 +19,18 @@
 
 package org.kore.stammdaten.core.adresse;
 
-import java.io.Serializable;
+import java.util.Formatter;
+import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import org.kore.runtime.base.Scalar;
 
 /**
  *
  * @author Konrad Renner
  */
 @Embeddable
-public class AdresseID implements Serializable {
+public class AdresseID extends Scalar<String> {
 
     private String value;
 
@@ -40,32 +42,72 @@ public class AdresseID implements Serializable {
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return value;
     }
 
-    @Override
-    public String toString() {
-        return "AdresseID{" + "value=" + value + '}';
-    }
+    public static class Builder {
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (this.value != null ? this.value.hashCode() : 0);
-        return hash;
-    }
+        private final String ort;
+        private final String strasse;
+        private final int postleitzahl;
+        private final short hausnummer;
+        private Short stiege;
+        private Short tuer;
+        private final Land land;
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdresseID)) {
-            return false;
+        public Builder(Land land, String ort, String strasse, int postleitzahl, short hausnummer) {
+            Objects.requireNonNull(land, "land must not be null");
+            Objects.requireNonNull(ort, "ort must not be null");
+            Objects.requireNonNull(strasse, "strasse must not be null");
+
+            this.ort = ort;
+            this.strasse = strasse;
+            this.postleitzahl = postleitzahl;
+            this.hausnummer = hausnummer;
+            this.land = land;
         }
-        AdresseID other = (AdresseID) object;
-        if ((this.value == null && other.value != null) || (this.value != null && !this.value.equals(other.value))) {
-            return false;
+
+        public Builder stiege(Short var) {
+            Objects.requireNonNull(var, "stiege must not be null");
+            this.stiege = var;
+            return this;
         }
-        return true;
+
+        public Builder tuer(Short var) {
+            Objects.requireNonNull(var, "tuer must not be null");
+            this.tuer = var;
+            return this;
+        }
+
+        /**
+         * build
+         *
+         * Die AdressID der Adresse wird generiert und ist wie folgt aufgebaut:
+         *
+         * 2 Stellen Laendercode, 4 Stellen Postleitzahl, 4 Stellen Hausnummer,
+         * 3 Stellen Stiege, 3 Stellen Tuer, 10 Stellen Ort, 9 Stellen Strasse
+         *
+         * @author Konrad Renner
+         * @return Adresse
+         */
+        public AdresseID build() {
+
+            short stiegeNonNull = this.stiege == null ? 0 : this.stiege;
+            short tuerNonNull = this.tuer == null ? 0 : this.tuer;
+            String strasseCorrectLength = this.strasse.length() > 9 ? this.strasse.substring(0, 9) : this.strasse;
+            String ortCorrectLength = this.ort.length() > 9 ? this.ort.substring(0, 9) : this.ort;
+
+            Formatter formattedID = new Formatter(new StringBuilder(land.getValue()));
+            formattedID.format("%04d", this.postleitzahl)
+                    .format("%04d", this.hausnummer)
+                    .format("%03d", stiegeNonNull)
+                    .format("%03d", tuerNonNull)
+                    .format("%-10s", ortCorrectLength)
+                    .format("%-9s", strasseCorrectLength);
+
+            return new AdresseID(formattedID.toString());
+        }
     }
 }

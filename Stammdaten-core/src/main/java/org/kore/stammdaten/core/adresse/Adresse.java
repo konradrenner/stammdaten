@@ -20,6 +20,7 @@
 package org.kore.stammdaten.core.adresse;
 
 import java.io.Serializable;
+import java.util.Formatter;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -30,8 +31,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.kore.runtime.format.NumericFormatter;
-import org.kore.runtime.format.StringFormatter;
 
 /**
  * Adresse
@@ -119,7 +118,7 @@ public class Adresse implements Serializable {
         private final String adresszeile1;
         private String adresszeile2;
 
-        public Builder(String ort, String strasse, int postleitzahl, short hausnummer, Land land, String adresszeile1) {
+        public Builder(Land land, String ort, String strasse, int postleitzahl, short hausnummer, String adresszeile1) {
 
             this.ort = ort;
             this.strasse = strasse;
@@ -153,17 +152,24 @@ public class Adresse implements Serializable {
          * 3 Stellen Stiege, 3 Stellen Tuer, 10 Stellen Ort, 9 Stellen Strasse
          *
          * @author Konrad Renner
+         * @return Adresse
          */
         public Adresse build() {
 
-            StringBuilder adressId = new StringBuilder(land.getIso3166Code())
-                    .append(new NumericFormatter(this.postleitzahl).withForerunZeros(4))
-                    .append(new NumericFormatter(this.hausnummer).withForerunZeros(4))
-                    .append(new NumericFormatter(this.stiege).withForerunZeros(3))
-                    .append(new NumericFormatter(this.tuer).withForerunZeros(3))
-                    .append(new StringFormatter(this.ort).appendBlanks(10))
-                    .append(new StringFormatter(this.ort).appendBlanks(9));
-            return new Adresse(new AdresseID(adressId.toString()), ort, strasse, postleitzahl, hausnummer, stiege, tuer, land, adresszeile1, adresszeile2);
+            short stiegeNonNull = this.stiege == null ? 0 : this.stiege;
+            short tuerNonNull = this.tuer == null ? 0 : this.tuer;
+
+            Formatter formattedID = new Formatter(new StringBuilder(land.getValue()));
+            formattedID.format("%1$04d", this.postleitzahl)
+                    .format("%1$04d", this.hausnummer)
+                    .format("%1$03d", stiegeNonNull)
+                    .format("%1$03d", tuerNonNull)
+                    .format("%1$- 10s", this.ort)
+                    .format("%1$- 9s", this.strasse);
+
+            AdresseID.Builder id = new AdresseID.Builder(land, ort, strasse, postleitzahl, hausnummer).stiege(stiege).tuer(tuer);
+
+            return new Adresse(id.build(), ort, strasse, postleitzahl, hausnummer, stiege, tuer, land, adresszeile1, adresszeile2);
         }
     }
 

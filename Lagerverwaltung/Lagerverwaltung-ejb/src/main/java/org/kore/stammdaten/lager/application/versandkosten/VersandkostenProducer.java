@@ -40,7 +40,7 @@ import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
 @Stateful
 @LocalBean
 @ConversationScoped
-public class VersandkostenController implements Serializable {
+public class VersandkostenProducer implements Serializable {
 
     @PersistenceContext(name = "lager")
     EntityManager em;

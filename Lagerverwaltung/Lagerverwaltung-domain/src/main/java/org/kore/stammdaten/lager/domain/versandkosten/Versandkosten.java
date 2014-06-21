@@ -59,7 +59,7 @@ public class Versandkosten implements Serializable {
 
 
     public Versandkosten(Land land, Money betrag) {
-        this.land = land.getIso3166Code();
+        this.land = land.getValue();
         this.betrag = betrag.getAmount();
         this.waehrung = betrag.getCurrency().getCurrencyCode();
     }

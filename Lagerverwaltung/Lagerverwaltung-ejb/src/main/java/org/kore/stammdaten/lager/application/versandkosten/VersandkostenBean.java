@@ -22,10 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
@@ -38,10 +37,9 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
  *
  * @author Konrad Renner
  */
-@Stateful
+@Stateless
 @LocalBean
-@SessionScoped
-@Named("versandkosten")
+@Dependent
 public class VersandkostenBean {
 
     @Inject
@@ -53,7 +51,6 @@ public class VersandkostenBean {
     @Inject
     @AggregateVersandkosten
     VersandkostenService service;
-    private VersandkostenDTO currentDTO;
 
     public Collection<VersandkostenDTO> getAll() {
         List<Versandkosten> vkosten = repository.find();
@@ -66,15 +63,15 @@ public class VersandkostenBean {
 
             dto.setFreibetrag(kost.getFreibetrag());
 
-            dto.setLand(kost.getLand().getIso3166Code());
+            dto.setLand(kost.getLand().getValue());
 
             response.add(dto);
         }
         return response;
     }
 
-    public String loadLand(String land) {
-        Versandkosten kost = repository.find(new Land(land));
+    public VersandkostenDTO getDetail(Land land) {
+        Versandkosten kost = repository.find(land);
 
         VersandkostenDTO dto = new VersandkostenDTO();
 
@@ -82,22 +79,11 @@ public class VersandkostenBean {
 
         dto.setFreibetrag(kost.getFreibetrag());
 
-        dto.setLand(kost.getLand().getIso3166Code());
-
-        currentDTO = dto;
-
-        return "versandkostenDetail";
+        dto.setLand(kost.getLand().getValue());
+        return dto;
     }
 
-    public VersandkostenDTO getDetail() {
-        return currentDTO;
-    }
-
-    public String loadUebersicht() {
-        return "versandkostenUebersicht";
-    }
-    
-    public String save() {
+    public void update(VersandkostenDTO currentDTO) {
         Versandkosten kto = repository.find(new Land(currentDTO.getLand()));
 
         if (kto == null) {
@@ -109,19 +95,9 @@ public class VersandkostenBean {
         }
         
         repository.save(kto);
-        
-        return "versandkostenUebersicht";
     }
     
-    public String delete(String land) {
-        repository.delete(repository.find(new Land(land)));
-
-        return "versandkostenUebersicht";
-    }
-
-    public String create() {
-        this.currentDTO = new VersandkostenDTO();
-
-        return "versandkostenDetail";
+    public void delete(Land land) {
+        repository.delete(repository.find(land));
     }
 }

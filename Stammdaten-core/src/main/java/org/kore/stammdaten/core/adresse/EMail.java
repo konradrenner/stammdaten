@@ -19,15 +19,15 @@
 
 package org.kore.stammdaten.core.adresse;
 
-import java.io.Serializable;
 import javax.persistence.Embeddable;
+import org.kore.runtime.base.Scalar;
 
 /**
  *
  * @author Konrad Renner
  */
 @Embeddable
-public class EMail implements Serializable {
+public class EMail extends Scalar<String> {
     private String value;
 
     protected EMail() {
@@ -38,38 +38,8 @@ public class EMail implements Serializable {
         this.value = adress;
     }
 
+    @Override
     public String getValue() {
         return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + (this.value != null ? this.value.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final EMail other = (EMail) obj;
-        if ((this.value == null) ? (other.value != null) : !this.value.equals(other.value)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "EMail{" + "value=" + value + '}';
     }
 }

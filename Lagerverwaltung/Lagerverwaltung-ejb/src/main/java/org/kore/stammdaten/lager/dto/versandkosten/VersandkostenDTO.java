@@ -18,13 +18,14 @@
  */
 package org.kore.stammdaten.lager.dto.versandkosten;
 
+import java.io.Serializable;
 import org.kore.runtime.currency.Money;
 
 /**
  *
  * @author Konrad Renner
  */
-public class VersandkostenDTO {
+public class VersandkostenDTO implements Serializable {
 
     private String land;
     private Money betrag;
