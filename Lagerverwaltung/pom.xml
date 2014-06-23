@@ -12,5 +12,6 @@
     <module>Lagerverwaltung-ejb</module>
     <module>Lagerverwaltung-domain</module>
     <module>../Stammdaten-core</module>
+    <module>Lagerverwaltung-rest</module>
   </modules>
 </project>
