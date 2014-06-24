@@ -30,7 +30,7 @@ import org.kore.runtime.currency.Money;
  *
  * @author Konrad Renner
  */
-@FacesConverter(value = "MoneyConverter", forClass = Money.class)
+@FacesConverter(value = "MoneyConverter")
 public class MoneyConverter implements Converter {
 
     @Override
