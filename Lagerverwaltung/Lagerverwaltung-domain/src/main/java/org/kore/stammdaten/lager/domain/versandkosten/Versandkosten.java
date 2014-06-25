@@ -69,14 +69,14 @@ public class Versandkosten implements Serializable {
     }
 
     public Money getBetrag() {
-        return new Money(this.betrag, Currency.getInstance(this.waehrung));
+        return new Money(this.betrag, Currency.getInstance(this.waehrung.trim()));
     }
 
     public Money getFreibetrag() {
         if (this.freibetrag == null) {
             return null;
         }
-        return new Money(this.freibetrag, Currency.getInstance(this.waehrung));
+        return new Money(this.freibetrag, Currency.getInstance(this.waehrung.trim()));
     }
 
     void setFreibetrag(BigDecimal freibetrag) {
