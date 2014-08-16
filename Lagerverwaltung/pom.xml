@@ -13,5 +13,6 @@
     <module>Lagerverwaltung-domain</module>
     <module>../Stammdaten-core</module>
     <module>Lagerverwaltung-rest</module>
+    <module>Lagerverwaltung-rest-api</module>
   </modules>
 </project>
