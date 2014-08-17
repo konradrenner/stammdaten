@@ -6,9 +6,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="777.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kore.stammdaten.lager.fx.FXMLController">
-    <children>
-        <Button fx:id="button" layoutX="350.0" layoutY="50.0" onAction="#handleButtonAction" text="Click Me!" />
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" prefHeight="16.0" prefWidth="575.0" />
-    </children>
+<AnchorPane id="AnchorPane" prefHeight="903.0" prefWidth="1182.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kore.stammdaten.lager.fx.FXMLController">
+   <children>
+      <SplitPane dividerPositions="0.1635593220338983" layoutX="-1.0" prefHeight="903.0" prefWidth="1182.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="ladeDaten" layoutX="48.0" layoutY="31.0" mnemonicParsing="false" onAction="#callWebService" text="Lade Daten" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.4460511679644049" orientation="VERTICAL" prefHeight="901.0" prefWidth="983.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <ListView prefHeight="397.0" prefWidth="983.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="981.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" text="Land" />
+                              <Label layoutX="14.0" layoutY="47.0" text="Betrag" />
+                              <Label layoutX="12.0" layoutY="80.0" text="Freibetrag" />
+                              <TextField layoutX="126.0" layoutY="9.0" prefHeight="25.0" prefWidth="59.0" />
+                              <TextField layoutX="126.0" layoutY="42.0" />
+                              <TextField layoutX="126.0" layoutY="75.0" />
+                              <Button layoutX="14.0" layoutY="128.0" mnemonicParsing="false" text="Übernehmen" />
+                              <Button layoutX="154.0" layoutY="128.0" mnemonicParsing="false" text="Löschen" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
 </AnchorPane>
