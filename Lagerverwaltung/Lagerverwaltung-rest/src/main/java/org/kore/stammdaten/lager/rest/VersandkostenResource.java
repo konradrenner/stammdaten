@@ -26,8 +26,10 @@ import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
  * @author Konrad Renner
  */
 @Path("versandkostenService")
-@Consumes({"application/json", "application/xml"})
-@Produces({"application/json", "application/xml"})
+//@Consumes({"application/xml"})
+//@Produces({"application/xml"})
+@Consumes({"application/json"})
+@Produces({"application/json"})
 @RequestScoped
 public class VersandkostenResource{
 

@@ -41,7 +41,7 @@ public class Versandkosten {
 
     @XmlElement(required = true)
     @NotNull
-    @Size(min = 2, max = 2)
+    @Size(min = 3, max = 3)
     private String waehrung;
 
     Versandkosten() {
@@ -60,6 +60,11 @@ public class Versandkosten {
             return null;
         }
         return new Money(freibetrag, Currency.getInstance(waehrung));
+    }
+
+    //Jackson ignoriert die Einstellung auf FIELD und nimmt die getter
+    public Currency getWaehrung() {
+        return Currency.getInstance(waehrung);
     }
 
     @Override
