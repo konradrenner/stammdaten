@@ -1,7 +1,9 @@
 package org.kore.stammdaten.lager.fx;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,12 +14,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.lager.fx.rest.VersandkostenClient;
+import org.kore.stammdaten.lager.rest.Versandkosten;
 
 public class FXMLController implements Initializable {
     
     @FXML
     private Button ladeDaten;
+
+    @FXML
+    private Button uebernehmen;
+
+    @FXML
+    private Button loeschen;
 
     @FXML
     private ListView<VersandkostenModel> kosten;
@@ -49,12 +59,12 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void callWebService() {
-        ArrayList all = new VersandkostenClient().getAll(ArrayList.class);
+        VersandkostenClient versandkostenClient = new VersandkostenClient();
+        ArrayList all = versandkostenClient.getAll(ArrayList.class);
 
         daten.clear();
         for (Object o : all) {
             Map map = (Map) o;
-            System.out.println("Akutelles Item:" + o);
             VersandkostenModel model = new VersandkostenModel();
             model.setLand(map.get("land").toString());
             model.setBetrag(map.get("betrag").toString());
@@ -66,6 +76,42 @@ public class FXMLController implements Initializable {
 
             daten.add(model);
         }
+
+        versandkostenClient.close();
     }
 
+    @FXML
+    public void callUebernehmenWebService() {
+        String sland = this.land.getText();
+        if (sland != null && sland.trim().length() > 0 && this.betrag.getText() != null && this.betrag.getText().trim().length() > 0) {
+            String[] split = this.betrag.getText().split(" ");
+            String swaehrung = split[1];
+            String sbetrag = split[0];
+            Versandkosten.Builder vkostenBuilder = new Versandkosten.Builder(sland, new Money(new BigDecimal(sbetrag), Currency.getInstance(swaehrung)));
+            if (this.freibetrag.getText() != null && this.freibetrag.getText().trim().length() > 0) {
+                vkostenBuilder.withFreibetrag(new BigDecimal(this.freibetrag.getText().split(" ")[0]));
+            }
+
+
+            VersandkostenClient versandkostenClient = new VersandkostenClient();
+            versandkostenClient.updateDetail(sland, vkostenBuilder.build());
+            versandkostenClient.close();
+
+            callWebService();
+        }
+    }
+
+    @FXML
+    public void callLoeschenWebService() {
+        String sland = this.land.getText();
+
+        if (sland != null && sland.trim().length() > 0) {
+
+            VersandkostenClient versandkostenClient = new VersandkostenClient();
+            versandkostenClient.deleteDetail(sland);
+            versandkostenClient.close();
+
+            callWebService();
+        }
+    }
 }

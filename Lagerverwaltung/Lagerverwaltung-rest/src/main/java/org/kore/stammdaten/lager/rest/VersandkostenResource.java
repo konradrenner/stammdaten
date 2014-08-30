@@ -73,10 +73,9 @@ public class VersandkostenResource{
     }
 
     @PUT
-    @Path("/land/{land}")
-    public void updateDetail(@PathParam("land") String land, Versandkosten vkosten) {
+    public void updateDetail(Versandkosten vkosten) {
         VersandkostenDTO dto = new VersandkostenDTO();
-        dto.setLand(land);
+        dto.setLand(vkosten.getLand());
         dto.setBetrag(vkosten.getBetrag());
         dto.setFreibetrag(vkosten.getFreibetrag());
 

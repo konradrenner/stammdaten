@@ -162,12 +162,13 @@
             <version>3.0.8.Final</version>
         </dependency>
         
-        <!--
-        <dependency> => Bring aktuell nix, kanns ned registieren...
+        
+        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>2.4.2</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>

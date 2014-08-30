@@ -36,8 +36,8 @@
                               <TextField fx:id="land" layoutX="126.0" layoutY="9.0" prefHeight="25.0" prefWidth="59.0" />
                               <TextField fx:id="betrag" layoutX="126.0" layoutY="42.0" />
                               <TextField fx:id="freibetrag" layoutX="126.0" layoutY="75.0" />
-                              <Button layoutX="14.0" layoutY="128.0" mnemonicParsing="false" text="Übernehmen" />
-                              <Button layoutX="154.0" layoutY="128.0" mnemonicParsing="false" text="Löschen" />
+                              <Button fx:id="uebernehmen" layoutX="14.0" layoutY="128.0" mnemonicParsing="false" onAction="#callUebernehmenWebService" text="Übernehmen" />
+                              <Button fx:id="loeschen" layoutX="154.0" layoutY="128.0" mnemonicParsing="false" onAction="#callLoeschenWebService" text="Löschen" />
                            </children>
                         </AnchorPane>
                     </items>

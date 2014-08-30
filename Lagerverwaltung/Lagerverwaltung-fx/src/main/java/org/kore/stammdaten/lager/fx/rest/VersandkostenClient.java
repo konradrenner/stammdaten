@@ -6,7 +6,9 @@
 
 package org.kore.stammdaten.lager.fx.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -32,9 +34,13 @@ public class VersandkostenClient {
     private static final String BASE_URI = "http://localhost:8080/Lagerverwaltung-rest/webresources";
 
     public VersandkostenClient() {
+        ObjectMapper mapper = new ObjectMapper();
+        JaxbAnnotationModule module = new JaxbAnnotationModule();
+        mapper.registerModule(module);
 
-        client = javax.ws.rs.client.ClientBuilder.newClient().register(JacksonJsonProvider.class);
-        boolean registered = client.getConfiguration().isRegistered(JacksonJsonProvider.class);
+        JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
+
+        client = javax.ws.rs.client.ClientBuilder.newClient().register(provider);
         webTarget = client.target(BASE_URI).path("versandkostenService");
     }
 
@@ -44,7 +50,8 @@ public class VersandkostenClient {
     }
 
     public void updateDetail(String land, Versandkosten kto) throws javax.ws.rs.ClientErrorException {
-        webTarget.path(java.text.MessageFormat.format("land/{0}", new Object[]{land})).request(MediaType.APPLICATION_JSON).put(Entity.json(kto));
+        Entity<Versandkosten> json = Entity.json(kto);
+        webTarget.request(MediaType.APPLICATION_JSON).put(json);
     }
 
     public <T> T getDetail(Class<T> responseType, String land) throws javax.ws.rs.ClientErrorException {

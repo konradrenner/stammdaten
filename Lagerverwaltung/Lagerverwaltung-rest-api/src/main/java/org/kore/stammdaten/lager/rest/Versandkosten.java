@@ -45,6 +45,7 @@ public class Versandkosten {
     private String waehrung;
 
     Versandkosten() {
+        //for frameworks
     }
 
     public String getLand() {
@@ -60,11 +61,6 @@ public class Versandkosten {
             return null;
         }
         return new Money(freibetrag, Currency.getInstance(waehrung));
-    }
-
-    //Jackson ignoriert die Einstellung auf FIELD und nimmt die getter
-    public Currency getWaehrung() {
-        return Currency.getInstance(waehrung);
     }
 
     @Override
