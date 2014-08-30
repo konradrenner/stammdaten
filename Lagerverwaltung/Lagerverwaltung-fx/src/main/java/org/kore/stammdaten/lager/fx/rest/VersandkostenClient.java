@@ -31,7 +31,8 @@ import org.kore.stammdaten.lager.rest.Versandkosten;
 public class VersandkostenClient {
     private javax.ws.rs.client.WebTarget webTarget;
     private javax.ws.rs.client.Client client;
-    private static final String BASE_URI = "http://localhost:8080/Lagerverwaltung-rest/webresources";
+    private static final String LOCALHOST_URI = "http://localhost:8080/Lagerverwaltung-rest/webresources";
+    private static final String OPENSHIFT_URI = "http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources";
 
     public VersandkostenClient() {
         ObjectMapper mapper = new ObjectMapper();
@@ -41,7 +42,7 @@ public class VersandkostenClient {
         JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
 
         client = javax.ws.rs.client.ClientBuilder.newClient().register(provider);
-        webTarget = client.target(BASE_URI).path("versandkostenService");
+        webTarget = client.target(OPENSHIFT_URI).path("versandkostenService");
     }
 
     public <T> T getAll(Class<T> responseType) throws javax.ws.rs.ClientErrorException {
