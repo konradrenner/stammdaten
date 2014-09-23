@@ -32,7 +32,7 @@ public class VersandkostenClient {
     private javax.ws.rs.client.WebTarget webTarget;
     private javax.ws.rs.client.Client client;
     private static final String LOCALHOST_URI = "http://localhost:8080/Lagerverwaltung-rest/webresources";
-    private static final String OPENSHIFT_URI = "http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources";
+    private static final String OPENSHIFT_URI = "http://stammdt-kuk.rhcloud.com/Lagerverwaltung-rest/webresources";
 
     public VersandkostenClient() {
         ObjectMapper mapper = new ObjectMapper();
