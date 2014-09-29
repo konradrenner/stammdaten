@@ -16,65 +16,63 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-
 package org.kore.stammdaten.lager.model;
 
-import java.io.Serializable;
-import java.util.Collection;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import org.kore.stammdaten.core.adresse.Land;
-import org.kore.stammdaten.lager.application.versandkosten.VersandkostenBean;
-import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
+import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
 
 /**
  *
  * @author Konrad Renner
  */
-@Named("versandkosten")
-@SessionScoped
-public class VersandkostenModel implements Serializable {
+public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> {
 
-    @Inject
-    VersandkostenBean bean;
+    private String land;
+    private Money betrag;
+    private Money freibetrag;
 
-    private VersandkostenDTO currentDTO;
-
-    public Collection<VersandkostenDTO> getAll() {
-       
-        return bean.getAll();
+    @Override
+    public String getLand() {
+        return land;
     }
 
-    public String loadLand(String land) {
-        currentDTO = bean.getDetail(new Land(land));
-
-        return "versandkostenDetail";
+    @Override
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setLand(String land) {
+        this.land = land;
+        return this;
     }
 
-    public String loadUebersicht() {
-        return "versandkostenUebersicht";
+    @Override
+    public Money getBetrag() {
+        return betrag;
     }
 
-    public String save() {
-        bean.update(currentDTO);
-
-        return "versandkostenUebersicht";
+    @Override
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setBetrag(Money betrag) {
+        this.betrag = betrag;
+        return this;
     }
 
-    public String delete(String land) {
-        bean.delete(new Land(land));
-
-        return "versandkostenUebersicht";
+    @Override
+    public Money getFreibetrag() {
+        return freibetrag;
     }
 
-    public String create() {
-        this.currentDTO = new VersandkostenDTO();
-
-        return "versandkostenDetail";
+    @Override
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setFreibetrag(Money freibetrag) {
+        this.freibetrag = freibetrag;
+        return this;
     }
 
-    public VersandkostenDTO getDetail() {
-        return currentDTO;
+    @Override
+    public String toString() {
+        return "VersandkostenDTO{" + "land=" + land + ", betrag=" + betrag + ", freibetrag=" + freibetrag + '}';
     }
+
+    @Override
+    public VersandkostenModel build() {
+        return this;
+    }
+
 }

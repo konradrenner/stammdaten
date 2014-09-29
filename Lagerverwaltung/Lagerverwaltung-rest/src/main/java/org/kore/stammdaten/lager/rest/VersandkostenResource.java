@@ -18,8 +18,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.kore.stammdaten.core.adresse.Land;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.application.versandkosten.VersandkostenBean;
-import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 
 /**
  *
@@ -36,13 +36,16 @@ public class VersandkostenResource{
     @Inject
     VersandkostenBean bean;
 
+    @Inject
+    DefaultVersandkostenAdapterFactory adapterFactory;
+
     @GET
     public Collection<Versandkosten> getAll() {
-        Collection<VersandkostenDTO> all = bean.getAll();
+        Collection<VersandkostenAdapter> all = bean.getAll(adapterFactory);
 
         ArrayList<Versandkosten> ret = new ArrayList<>(all.size());
 
-        for (VersandkostenDTO dto : all) {
+        for (VersandkostenAdapter dto : all) {
             Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand(), dto.getBetrag());
             if (dto.getFreibetrag() != null) {
                 builder.withFreibetrag(dto.getFreibetrag().getAmount());
@@ -57,7 +60,7 @@ public class VersandkostenResource{
     @GET
     @Path("/land/{land}")
     public Versandkosten getDetail(@PathParam("land") String land) {
-        VersandkostenDTO dto = bean.getDetail(new Land(land));
+        VersandkostenDTO dto = bean.getDetail(adapterFactory, new Land(land));
 
         Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand(), dto.getBetrag());
         if (dto.getFreibetrag() != null) {

@@ -26,12 +26,13 @@ import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.kore.stammdaten.core.adresse.Land;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
-import org.kore.stammdaten.lager.dto.versandkosten.VersandkostenDTO;
 
 /**
  *
@@ -52,45 +53,41 @@ public class VersandkostenBean {
     @AggregateVersandkosten
     VersandkostenService service;
 
-    public Collection<VersandkostenDTO> getAll() {
+    public <T extends VersandkostenAdapter> Collection<VersandkostenAdapter> getAll(VersandkostenAdapterFactory<T> factory) {
         List<Versandkosten> vkosten = repository.find();
 
-        ArrayList<VersandkostenDTO> response = new ArrayList<>();
+        ArrayList<VersandkostenAdapter> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
-            VersandkostenDTO dto = new VersandkostenDTO();
-
-            dto.setBetrag(kost.getBetrag());
-
-            dto.setFreibetrag(kost.getFreibetrag());
-
-            dto.setLand(kost.getLand().getValue());
+            VersandkostenAdapter dto = factory.createBuilder()
+                    .setLand(kost.getLand().getValue())
+                    .setFreibetrag(kost.getFreibetrag())
+                    .setBetrag(kost.getBetrag())
+                    .build();
 
             response.add(dto);
         }
         return response;
     }
 
-    public VersandkostenDTO getDetail(Land land) {
+    public <T extends VersandkostenAdapter> T getDetail(VersandkostenAdapterFactory<T> factory, Land land) {
         Versandkosten kost = repository.find(land);
 
-        VersandkostenDTO dto = new VersandkostenDTO();
-
-        dto.setBetrag(kost.getBetrag());
-
-        dto.setFreibetrag(kost.getFreibetrag());
-
-        dto.setLand(kost.getLand().getValue());
-        return dto;
+        return factory.createBuilder()
+                .setLand(kost.getLand().getValue())
+                .setFreibetrag(kost.getFreibetrag())
+                .setBetrag(kost.getBetrag())
+                .build();
     }
 
-    public void update(VersandkostenDTO currentDTO) {
+    public void update(VersandkostenAdapter currentDTO) {
         Versandkosten kto = repository.find(new Land(currentDTO.getLand()));
 
         if (kto == null) {
             kto = factory.create(new Land(currentDTO.getLand()), currentDTO.getBetrag());
+            service.changeFreibetrag(kto, currentDTO.getFreibetrag());
         } else {
         
-        service.changeBetrag(kto, currentDTO.getBetrag());
+            service.changeBetrag(kto, currentDTO.getBetrag());
             service.changeFreibetrag(kto, currentDTO.getFreibetrag());
         }
         

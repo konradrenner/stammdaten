@@ -42,7 +42,7 @@ public class VersandkostenClient {
         JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
 
         client = javax.ws.rs.client.ClientBuilder.newClient().register(provider);
-        webTarget = client.target(OPENSHIFT_URI).path("versandkostenService");
+        webTarget = client.target(LOCALHOST_URI).path("versandkostenService");
     }
 
     public <T> T getAll(Class<T> responseType) throws javax.ws.rs.ClientErrorException {
