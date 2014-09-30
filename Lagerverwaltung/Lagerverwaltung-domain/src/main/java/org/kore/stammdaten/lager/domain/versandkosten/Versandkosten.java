@@ -21,9 +21,10 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -40,9 +41,9 @@ import org.kore.stammdaten.core.adresse.Land;
 @NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v")
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Column(name = "LAND")
-    private String land;
+    @EmbeddedId
+    @AttributeOverride(name = "iso3166Code", column = @Column(name = "LAND"))
+    private Land land;
     @Min(0)
     @Column(name = "BETRAG")
     @NotNull
@@ -59,13 +60,13 @@ public class Versandkosten implements Serializable {
 
 
     public Versandkosten(Land land, Money betrag) {
-        this.land = land.getValue();
+        this.land = land;
         this.betrag = betrag.getAmount();
         this.waehrung = betrag.getCurrency().getCurrencyCode();
     }
 
     public Land getLand() {
-        return new Land(this.land);
+        return this.land;
     }
 
     public Money getBetrag() {

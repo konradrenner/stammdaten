@@ -5,6 +5,7 @@
         <properties>
             <property name="wildfly.jpa.twophasebootstrap" value="false"/>
         </properties> -->
-        <jta-data-source>jdbc/stammdaten</jta-data-source>                     
+        <jta-data-source>jdbc/stammdaten</jta-data-source>  
+        <!-- <mapping-file>META-INF/orm.xml</mapping-file>-->
     </persistence-unit>
 </persistence>

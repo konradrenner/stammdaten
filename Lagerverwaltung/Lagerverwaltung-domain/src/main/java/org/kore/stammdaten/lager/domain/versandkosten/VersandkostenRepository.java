@@ -44,7 +44,7 @@ public class VersandkostenRepository implements Serializable {
 
 
     public Versandkosten find(@NotNull Land land) {
-        return em.find(Versandkosten.class, land.getValue());
+        return em.find(Versandkosten.class, land);
     }
     
     public List<Versandkosten> find() {
