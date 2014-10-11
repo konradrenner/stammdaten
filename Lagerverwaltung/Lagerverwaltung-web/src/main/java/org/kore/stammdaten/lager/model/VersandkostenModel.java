@@ -40,9 +40,21 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
         return land;
     }
 
-    @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setLand(String land) {
+    public void setLand(String land) {
         this.land = land;
+    }
+    
+    public void setBetrag(Money betrag) {
+        this.betrag = betrag;
+    }
+    
+    public void setFreibetrag(Money freibetrag) {
+        this.freibetrag = freibetrag;
+    }
+    
+    @Override
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> land(String land) {
+        setLand(land);
         return this;
     }
 
@@ -52,8 +64,8 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setBetrag(Money betrag) {
-        this.betrag = betrag;
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> betrag(Money betrag) {
+        setBetrag(betrag);
         return this;
     }
 
@@ -63,8 +75,8 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> setFreibetrag(Money freibetrag) {
-        this.freibetrag = freibetrag;
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> freibetrag(Money freibetrag) {
+        setFreibetrag(freibetrag);
         return this;
     }
 

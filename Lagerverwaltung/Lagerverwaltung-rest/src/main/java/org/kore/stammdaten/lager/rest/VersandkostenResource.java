@@ -78,9 +78,9 @@ public class VersandkostenResource{
     @PUT
     public void updateDetail(Versandkosten vkosten) {
         VersandkostenDTO dto = new VersandkostenDTO();
-        dto.setLand(vkosten.getLand());
-        dto.setBetrag(vkosten.getBetrag());
-        dto.setFreibetrag(vkosten.getFreibetrag());
+        dto.land(vkosten.getLand());
+        dto.betrag(vkosten.getBetrag());
+        dto.freibetrag(vkosten.getFreibetrag());
 
         bean.update(dto);
     }

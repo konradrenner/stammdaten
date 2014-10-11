@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
@@ -52,7 +53,8 @@ public class Versandkosten implements Serializable {
     private BigDecimal freibetrag;
     @NotNull
     @Column(name = "WAEHRUNG")
-    private String waehrung;
+    @Convert(converter = CurrencyConverter.class)
+    private Currency waehrung;
 
     protected Versandkosten() {
         //JPA
@@ -62,7 +64,7 @@ public class Versandkosten implements Serializable {
     public Versandkosten(Land land, Money betrag) {
         this.land = land;
         this.betrag = betrag.getAmount();
-        this.waehrung = betrag.getCurrency().getCurrencyCode();
+        this.waehrung = betrag.getCurrency();
     }
 
     public Land getLand() {
@@ -70,14 +72,14 @@ public class Versandkosten implements Serializable {
     }
 
     public Money getBetrag() {
-        return new Money(this.betrag, Currency.getInstance(this.waehrung.trim()));
+        return new Money(this.betrag, this.waehrung);
     }
 
     public Money getFreibetrag() {
         if (this.freibetrag == null) {
             return null;
         }
-        return new Money(this.freibetrag, Currency.getInstance(this.waehrung.trim()));
+        return new Money(this.freibetrag, this.waehrung);
     }
 
     void setFreibetrag(BigDecimal freibetrag) {
@@ -85,7 +87,7 @@ public class Versandkosten implements Serializable {
     }
 
     void setWaehrung(Currency curr) {
-        this.waehrung = curr.getCurrencyCode();
+        this.waehrung = curr;
     }
 
     void setBetrag(BigDecimal betr) {

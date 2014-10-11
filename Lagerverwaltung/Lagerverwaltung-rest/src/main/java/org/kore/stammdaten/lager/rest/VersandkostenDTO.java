@@ -38,7 +38,7 @@ public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdap
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> setLand(String land) {
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> land(String land) {
         this.land = land;
         return this;
     }
@@ -49,7 +49,7 @@ public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdap
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> setBetrag(Money betrag) {
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> betrag(Money betrag) {
         this.betrag = betrag;
         return this;
     }
@@ -60,7 +60,7 @@ public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdap
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> setFreibetrag(Money freibetrag) {
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> freibetrag(Money freibetrag) {
         this.freibetrag = freibetrag;
         return this;
     }

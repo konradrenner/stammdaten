@@ -30,11 +30,11 @@ public interface VersandkostenAdapterFactory<T extends VersandkostenAdapter> {
     public AdapterBuilder<T> createBuilder();
 
     interface AdapterBuilder<T extends VersandkostenAdapter> {
-        AdapterBuilder<T> setLand(String value);
+        AdapterBuilder<T> land(String value);
 
-        AdapterBuilder<T> setBetrag(Money value);
+        AdapterBuilder<T> betrag(Money value);
 
-        AdapterBuilder<T> setFreibetrag(Money value);
+        AdapterBuilder<T> freibetrag(Money value);
 
         T build();
     }

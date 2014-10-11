@@ -42,7 +42,7 @@ public class CurrencyConverter implements AttributeConverter<Currency, String> {
         if (dbData == null) {
             return null;
         }
-        return Currency.getInstance(dbData);
+        return Currency.getInstance(dbData.trim());
     }
 
 }

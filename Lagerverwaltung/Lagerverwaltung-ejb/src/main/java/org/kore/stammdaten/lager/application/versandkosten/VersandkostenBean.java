@@ -59,9 +59,9 @@ public class VersandkostenBean {
         ArrayList<VersandkostenAdapter> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
             VersandkostenAdapter dto = factory.createBuilder()
-                    .setLand(kost.getLand().getValue())
-                    .setFreibetrag(kost.getFreibetrag())
-                    .setBetrag(kost.getBetrag())
+                    .land(kost.getLand().getValue())
+                    .freibetrag(kost.getFreibetrag())
+                    .betrag(kost.getBetrag())
                     .build();
 
             response.add(dto);
@@ -73,9 +73,9 @@ public class VersandkostenBean {
         Versandkosten kost = repository.find(land);
 
         return factory.createBuilder()
-                .setLand(kost.getLand().getValue())
-                .setFreibetrag(kost.getFreibetrag())
-                .setBetrag(kost.getBetrag())
+                .land(kost.getLand().getValue())
+                .freibetrag(kost.getFreibetrag())
+                .betrag(kost.getBetrag())
                 .build();
     }
 
