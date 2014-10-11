@@ -18,6 +18,7 @@
  */
 package org.kore.stammdaten.lager.model;
 
+import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
@@ -28,7 +29,9 @@ import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
  */
 public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> {
 
+    @NotNull
     private String land;
+    @NotNull
     private Money betrag;
     private Money freibetrag;
 
