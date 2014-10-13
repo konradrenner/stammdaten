@@ -13,7 +13,7 @@
         <dependency>
             <groupId>org.kore.runtime</groupId>
             <artifactId>KoreRuntime</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
