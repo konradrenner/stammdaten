@@ -4,7 +4,7 @@
                  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
     
-    <!--<converter class="org.kore.runtime.jpa.converter.CurrencyConverter" auto-apply="true"></converter> -->
+    <!-- <converter class="org.kore.runtime.jpa.converter.CurrencyConverter" auto-apply="true"></converter> -->
     <embeddable class="org.kore.stammdaten.core.adresse.Land">
         <attributes>
             <basic name="iso3166Code">

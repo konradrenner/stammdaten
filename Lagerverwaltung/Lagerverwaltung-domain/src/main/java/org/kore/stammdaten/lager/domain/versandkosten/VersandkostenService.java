@@ -65,7 +65,7 @@ public class VersandkostenService implements Serializable {
         Money freibetrag = object.getFreibetrag();
         if (freibetrag != null) {
             correctBetrag = umrechner.translate(freibetrag, actualCurrency);
-            object.setFreibetrag(correctBetrag);
+            object.setFreibetrag(correctBetrag.getAmount());
         }
     }
 
@@ -87,13 +87,13 @@ public class VersandkostenService implements Serializable {
         Currency actualCurrency = object.getBetrag().getCurrency();
 
         if (actualCurrency.equals(correctBetrag.getCurrency())) {
-            object.setFreibetrag(correctBetrag);
+            object.setFreibetrag(correctBetrag.getAmount());
             return;
         }
 
         correctBetrag = umrechner.translate(newBetrag, actualCurrency);
 
-        object.setFreibetrag(correctBetrag);
+        object.setFreibetrag(correctBetrag.getAmount());
 
         Money betrag = object.getBetrag();
         correctBetrag = umrechner.translate(betrag, actualCurrency);
@@ -113,7 +113,7 @@ public class VersandkostenService implements Serializable {
         Money newFreibetrag = object.getFreibetrag();
         if (newFreibetrag != null) {
             newFreibetrag = umrechner.translate(object.getFreibetrag(), newCurrency);
-            object.setFreibetrag(newFreibetrag);
+            object.setFreibetrag(newFreibetrag.getAmount());
         }
         
         object.setBetrag(newBetrag);

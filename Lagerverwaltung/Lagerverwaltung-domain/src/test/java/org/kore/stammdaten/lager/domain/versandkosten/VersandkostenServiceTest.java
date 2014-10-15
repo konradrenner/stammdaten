@@ -83,7 +83,7 @@ public class VersandkostenServiceTest {
     
     @Test
     public void testChangeCurrency() {
-        testObject.setFreibetrag(new Money(BigDecimal.TEN, Currency.getInstance("EUR")));
+        testObject.setFreibetrag(BigDecimal.TEN);
         service.changeCurrency(testObject, Currency.getInstance("USD"));
         
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());

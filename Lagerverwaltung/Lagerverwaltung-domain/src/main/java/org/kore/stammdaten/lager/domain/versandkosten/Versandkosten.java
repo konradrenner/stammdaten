@@ -19,14 +19,14 @@
 package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
@@ -45,11 +45,11 @@ public class Versandkosten implements Serializable {
     @Embedded
     @NotNull
     private Money betrag;
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(column = @Column(name = "FREIBETRAG"), name = "amount"),
-        @AttributeOverride(column = @Column(name = "WAEHRUNG", insertable = false, updatable = false), name = "currency")})
-    private Money freibetrag;
+
+    @Column(name = "FREIBETRAG")
+    @Min(0)
+    //Eclipselink kann insertable vom orm.xml mit der AttributeOverride nicht uebersteuern, deshalb nur der Betrag hier
+    private BigDecimal freibetrag;
 
     protected Versandkosten() {
         //JPA
@@ -70,10 +70,13 @@ public class Versandkosten implements Serializable {
     }
 
     public Money getFreibetrag() {
-        return this.freibetrag;
+        if (this.freibetrag == null) {
+            return null;
+        }
+        return new Money(this.freibetrag, this.betrag.getCurrency());
     }
 
-    void setFreibetrag(Money freibetrag) {
+    void setFreibetrag(BigDecimal freibetrag) {
         this.freibetrag = freibetrag;
     }
 
