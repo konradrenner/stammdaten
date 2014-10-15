@@ -48,20 +48,25 @@ public class VersandkostenService implements Serializable {
      *
      * @param object
      * @param newBetrag
-     * @param umrechner
      */
     public void changeBetrag(@NotNull Versandkosten object, @NotNull Money newBetrag) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
         if (actualCurrency.equals(correctBetrag.getCurrency())) {
-            object.setBetrag(correctBetrag.getAmount());
+            object.setBetrag(correctBetrag);
             return;
         }
 
         correctBetrag = umrechner.translate(newBetrag, actualCurrency);
 
-        object.setBetrag(correctBetrag.getAmount());
+        object.setBetrag(correctBetrag);
+        
+        Money freibetrag = object.getFreibetrag();
+        if (freibetrag != null) {
+            correctBetrag = umrechner.translate(freibetrag, actualCurrency);
+            object.setFreibetrag(correctBetrag);
+        }
     }
 
     /**
@@ -71,7 +76,6 @@ public class VersandkostenService implements Serializable {
      *
      * @param object
      * @param newBetrag
-     * @param umrechner
      */
     public void changeFreibetrag(@NotNull Versandkosten object, Money newBetrag) {
         if (newBetrag == null) {
@@ -83,13 +87,17 @@ public class VersandkostenService implements Serializable {
         Currency actualCurrency = object.getBetrag().getCurrency();
 
         if (actualCurrency.equals(correctBetrag.getCurrency())) {
-            object.setFreibetrag(correctBetrag.getAmount());
+            object.setFreibetrag(correctBetrag);
             return;
         }
 
         correctBetrag = umrechner.translate(newBetrag, actualCurrency);
 
-        object.setFreibetrag(correctBetrag.getAmount());
+        object.setFreibetrag(correctBetrag);
+
+        Money betrag = object.getBetrag();
+        correctBetrag = umrechner.translate(betrag, actualCurrency);
+        object.setBetrag(correctBetrag);
     }
 
     /**
@@ -98,7 +106,6 @@ public class VersandkostenService implements Serializable {
      *
      * @param object
      * @param newCurrency
-     * @param umrechner
      */
     public void changeCurrency(@NotNull Versandkosten object, @NotNull Currency newCurrency) {
         Money newBetrag = umrechner.translate(object.getBetrag(), newCurrency);
@@ -106,10 +113,9 @@ public class VersandkostenService implements Serializable {
         Money newFreibetrag = object.getFreibetrag();
         if (newFreibetrag != null) {
             newFreibetrag = umrechner.translate(object.getFreibetrag(), newCurrency);
-            object.setFreibetrag(newFreibetrag.getAmount());
+            object.setFreibetrag(newFreibetrag);
         }
         
-        object.setWaehrung(newCurrency);
-        object.setBetrag(newBetrag.getAmount());
+        object.setBetrag(newBetrag);
     }
 }

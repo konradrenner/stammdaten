@@ -19,16 +19,14 @@
 package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Currency;
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
@@ -43,18 +41,15 @@ import org.kore.stammdaten.core.adresse.Land;
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    @AttributeOverride(name = "iso3166Code", column = @Column(name = "LAND"))
     private Land land;
-    @Min(0)
-    @Column(name = "BETRAG")
+    @Embedded
     @NotNull
-    private BigDecimal betrag;
-    @Column(name = "FREIBETRAG")
-    private BigDecimal freibetrag;
-    @NotNull
-    @Column(name = "WAEHRUNG")
-    @Convert(converter = CurrencyConverter.class)
-    private Currency waehrung;
+    private Money betrag;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(column = @Column(name = "FREIBETRAG"), name = "amount"),
+        @AttributeOverride(column = @Column(name = "WAEHRUNG", insertable = false, updatable = false), name = "currency")})
+    private Money freibetrag;
 
     protected Versandkosten() {
         //JPA
@@ -63,8 +58,7 @@ public class Versandkosten implements Serializable {
 
     public Versandkosten(Land land, Money betrag) {
         this.land = land;
-        this.betrag = betrag.getAmount();
-        this.waehrung = betrag.getCurrency();
+        this.betrag = betrag;
     }
 
     public Land getLand() {
@@ -72,25 +66,19 @@ public class Versandkosten implements Serializable {
     }
 
     public Money getBetrag() {
-        return new Money(this.betrag, this.waehrung);
+        return this.betrag;
     }
 
     public Money getFreibetrag() {
-        if (this.freibetrag == null) {
-            return null;
-        }
-        return new Money(this.freibetrag, this.waehrung);
+        return this.freibetrag;
     }
 
-    void setFreibetrag(BigDecimal freibetrag) {
+    void setFreibetrag(Money freibetrag) {
         this.freibetrag = freibetrag;
     }
 
-    void setWaehrung(Currency curr) {
-        this.waehrung = curr;
-    }
 
-    void setBetrag(BigDecimal betr) {
+    void setBetrag(Money betr) {
         this.betrag = betr;
     }
 

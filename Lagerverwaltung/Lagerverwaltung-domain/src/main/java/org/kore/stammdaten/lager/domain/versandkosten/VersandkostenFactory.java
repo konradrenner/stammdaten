@@ -40,7 +40,7 @@ public class VersandkostenFactory implements Serializable {
         }
 
         Versandkosten kosten = new Versandkosten(land, betrag);
-        kosten.setFreibetrag(freibetrag.getAmount());
+        kosten.setFreibetrag(freibetrag);
 
         return kosten;
     }

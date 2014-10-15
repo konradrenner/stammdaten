@@ -6,7 +6,8 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.math.BigDecimal;
 import java.util.Currency;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.kore.runtime.currency.Money;
@@ -82,7 +83,7 @@ public class VersandkostenServiceTest {
     
     @Test
     public void testChangeCurrency() {
-        testObject.setFreibetrag(new Money(BigDecimal.TEN, Currency.getInstance("EUR")).getAmount());
+        testObject.setFreibetrag(new Money(BigDecimal.TEN, Currency.getInstance("EUR")));
         service.changeCurrency(testObject, Currency.getInstance("USD"));
         
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());

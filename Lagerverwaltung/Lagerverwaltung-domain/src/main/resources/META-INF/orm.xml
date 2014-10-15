@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+    
+    <!--<converter class="org.kore.runtime.jpa.converter.CurrencyConverter" auto-apply="true"></converter> -->
+    <embeddable class="org.kore.stammdaten.core.adresse.Land">
+        <attributes>
+            <basic name="iso3166Code">
+                <column name="LAND" nullable="false"></column>
+            </basic>
+        </attributes>
+    </embeddable>
+    <embeddable class="org.kore.runtime.currency.Money">
+        <attributes>
+            <basic name="amount">
+                <column name="BETRAG" nullable="false"></column>
+            </basic>
+            <basic name="currency">
+                <column name="WAEHRUNG" nullable="false" length="3"></column>
+                <convert converter="org.kore.runtime.jpa.converter.CurrencyConverter" ></convert>
+            </basic>
+        </attributes>
+    </embeddable>
+</entity-mappings>
