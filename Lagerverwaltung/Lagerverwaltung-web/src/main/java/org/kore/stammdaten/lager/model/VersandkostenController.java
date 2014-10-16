@@ -20,12 +20,14 @@
 package org.kore.stammdaten.lager.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
+import java.util.Set;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.stammdaten.core.adresse.Land;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.application.versandkosten.VersandkostenBean;
 
 /**
@@ -45,7 +47,7 @@ public class VersandkostenController implements Serializable {
     private VersandkostenModel model;
 
 
-    public Collection<VersandkostenAdapter> getAll() {
+    public Collection<VersandkostenModel> getAll() {
        
         return bean.getAll(adapterFactory);
     }
@@ -58,6 +60,15 @@ public class VersandkostenController implements Serializable {
 
     public String loadUebersicht() {
         return "versandkostenUebersicht";
+    }
+
+    public Collection<String> getCurrencies() {
+        Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();
+        ArrayList<String> ret = new ArrayList<>(availableCurrencies.size());
+        for (Currency curr : availableCurrencies) {
+            ret.add(curr.getCurrencyCode());
+        }
+        return ret;
     }
 
     public String save() {

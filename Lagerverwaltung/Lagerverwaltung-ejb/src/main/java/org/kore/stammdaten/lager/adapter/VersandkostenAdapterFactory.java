@@ -19,6 +19,7 @@
 package org.kore.stammdaten.lager.adapter;
 
 import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 
 /**
  *
@@ -30,7 +31,7 @@ public interface VersandkostenAdapterFactory<T extends VersandkostenAdapter> {
     public AdapterBuilder<T> createBuilder();
 
     interface AdapterBuilder<T extends VersandkostenAdapter> {
-        AdapterBuilder<T> land(String value);
+        AdapterBuilder<T> land(Land value);
 
         AdapterBuilder<T> betrag(Money value);
 

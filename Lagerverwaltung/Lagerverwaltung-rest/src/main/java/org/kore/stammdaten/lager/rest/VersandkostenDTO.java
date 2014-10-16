@@ -19,6 +19,7 @@
 package org.kore.stammdaten.lager.rest;
 
 import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
 
@@ -28,17 +29,17 @@ import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
  */
 public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> {
 
-    private String land;
+    private Land land;
     private Money betrag;
     private Money freibetrag;
 
     @Override
-    public String getLand() {
+    public Land getLand() {
         return land;
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> land(String land) {
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> land(Land land) {
         this.land = land;
         return this;
     }

@@ -53,13 +53,13 @@ public class VersandkostenBean {
     @AggregateVersandkosten
     VersandkostenService service;
 
-    public <T extends VersandkostenAdapter> Collection<VersandkostenAdapter> getAll(VersandkostenAdapterFactory<T> factory) {
+    public <T extends VersandkostenAdapter> Collection<T> getAll(VersandkostenAdapterFactory<T> factory) {
         List<Versandkosten> vkosten = repository.find();
 
-        ArrayList<VersandkostenAdapter> response = new ArrayList<>();
+        Collection<T> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
-            VersandkostenAdapter dto = factory.createBuilder()
-                    .land(kost.getLand().getValue())
+            T dto = factory.createBuilder()
+                    .land(kost.getLand())
                     .freibetrag(kost.getFreibetrag())
                     .betrag(kost.getBetrag())
                     .build();
@@ -73,17 +73,17 @@ public class VersandkostenBean {
         Versandkosten kost = repository.find(land);
 
         return factory.createBuilder()
-                .land(kost.getLand().getValue())
+                .land(kost.getLand())
                 .freibetrag(kost.getFreibetrag())
                 .betrag(kost.getBetrag())
                 .build();
     }
 
     public void update(VersandkostenAdapter currentDTO) {
-        Versandkosten kto = repository.find(new Land(currentDTO.getLand()));
+        Versandkosten kto = repository.find(currentDTO.getLand());
 
         if (kto == null) {
-            kto = factory.create(new Land(currentDTO.getLand()), currentDTO.getBetrag());
+            kto = factory.create(currentDTO.getLand(), currentDTO.getBetrag());
             service.changeFreibetrag(kto, currentDTO.getFreibetrag());
         } else {
         

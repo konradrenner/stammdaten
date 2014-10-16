@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.adapter;
 
 import java.io.Serializable;
 import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 
 /**
  *
@@ -27,7 +28,7 @@ import org.kore.runtime.currency.Money;
  */
 public interface VersandkostenAdapter extends Serializable {
 
-    public String getLand();
+    public Land getLand();
 
     public Money getBetrag();
 

@@ -10,24 +10,26 @@
             <h:dataTable value="#{versandkosten.all}" var="vkosten">
                 <h:column>
                     <f:facet name="header">Land</f:facet>
-                    <h:commandLink id="land" value="#{vkosten.land}" action="#{versandkosten.loadLand(vkosten.land)}">
+                    <h:commandLink id="land" value="#{vkosten.landforView}" action="#{versandkosten.loadLand(vkosten.landforView)}">
                     </h:commandLink>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Betrag</f:facet>
-                    <h:outputText value="#{vkosten.betrag}" >
-                        <f:converter converterId="MoneyConverter" ></f:converter>
+                    <h:outputText value="#{vkosten.betragForView}" >
                     </h:outputText>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Freibetrag</f:facet>
-                    <h:outputText value="#{vkosten.freibetrag}" >
-                        <f:converter converterId="MoneyConverter" ></f:converter>
+                    <h:outputText value="#{vkosten.freibetragForView}">
                     </h:outputText>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Land</f:facet>
-                    <h:commandButton id="delete" value="Entfernen" action="#{versandkosten.delete(vkosten.land)}" >
+                    <f:facet name="header">Waehrung</f:facet>
+                    <h:outputText value="#{vkosten.waehrungForView}" >
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <h:commandButton id="delete" value="Entfernen" action="#{versandkosten.delete(vkosten.landforView)}" >
                     </h:commandButton>
                 </h:column>
             </h:dataTable>

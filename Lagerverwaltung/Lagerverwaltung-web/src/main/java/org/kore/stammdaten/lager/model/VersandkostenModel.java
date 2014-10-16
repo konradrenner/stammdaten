@@ -18,8 +18,12 @@
  */
 package org.kore.stammdaten.lager.model;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
 
@@ -30,59 +34,91 @@ import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
 public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> {
 
     @NotNull
-    private String land;
+    private String landforView;
     @NotNull
-    private Money betrag;
-    private Money freibetrag;
+    @Min(0)
+    private BigDecimal betragForView;
+    @Min(1)
+    private BigDecimal freibetragForView;
+
+    @NotNull
+    private String waehrungForView;
 
     @Override
-    public String getLand() {
-        return land;
+    public Land getLand() {
+        return new Land(landforView);
     }
 
-    public void setLand(String land) {
-        this.land = land;
+    public String getWaehrungForView() {
+        return waehrungForView;
     }
-    
-    public void setBetrag(Money betrag) {
-        this.betrag = betrag;
+
+    public void setWaehrungForView(String waehrungForView) {
+        this.waehrungForView = waehrungForView;
     }
-    
-    public void setFreibetrag(Money freibetrag) {
-        this.freibetrag = freibetrag;
+
+    public String getLandforView() {
+        return landforView;
     }
-    
+
+    public void setLandforView(String landforView) {
+        this.landforView = landforView;
+    }
+
+    public BigDecimal getBetragForView() {
+        return betragForView;
+    }
+
+    public void setBetragForView(BigDecimal betragForView) {
+        this.betragForView = betragForView;
+    }
+
+    public BigDecimal getFreibetragForView() {
+        return freibetragForView;
+    }
+
+    public void setFreibetragForView(BigDecimal freibetragForView) {
+        this.freibetragForView = freibetragForView;
+    }
+
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> land(String land) {
-        setLand(land);
+    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> land(Land land) {
+        setLandforView(land.getValue());
         return this;
     }
 
     @Override
     public Money getBetrag() {
-        return betrag;
+        return new Money(betragForView, Currency.getInstance(this.waehrungForView));
     }
 
     @Override
     public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> betrag(Money betrag) {
-        setBetrag(betrag);
+        setBetragForView(betrag.getAmount());
+        setWaehrungForView(betrag.getCurrency().getCurrencyCode());
         return this;
     }
 
     @Override
     public Money getFreibetrag() {
-        return freibetrag;
+        if (this.freibetragForView == null) {
+            return null;
+        }
+        return new Money(freibetragForView, Currency.getInstance(this.waehrungForView));
     }
 
     @Override
     public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> freibetrag(Money freibetrag) {
-        setFreibetrag(freibetrag);
+        if (freibetrag != null) {
+            setFreibetragForView(freibetrag.getAmount());
+        }
+        
         return this;
     }
 
     @Override
     public String toString() {
-        return "VersandkostenDTO{" + "land=" + land + ", betrag=" + betrag + ", freibetrag=" + freibetrag + '}';
+        return "VersandkostenModel{" + "landforView=" + landforView + ", betragForView=" + betragForView + ", freibetragForView=" + freibetragForView + ", waehrungForView=" + waehrungForView + '}';
     }
 
     @Override

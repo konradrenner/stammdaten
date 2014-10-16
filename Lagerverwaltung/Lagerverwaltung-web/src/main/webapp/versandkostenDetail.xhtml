@@ -9,18 +9,23 @@
     <ui:define name="content">
         <h:form>
             Land
-            <h:inputText value="#{versandkosten.detail.land}" >
+            <h:inputText value="#{versandkosten.detail.landforView}" >
             </h:inputText>
             <br/>
             Betrag
-            <h:inputText value="#{versandkosten.detail.betrag}" >
-                <f:converter converterId="MoneyConverter" ></f:converter>
+            <h:inputText value="#{versandkosten.detail.betragForView}" >
             </h:inputText>
             <br/>
             Freibetrag
-            <h:inputText value="#{versandkosten.detail.freibetrag}" >
-                <f:converter converterId="MoneyConverter" ></f:converter>
+            <h:inputText value="#{versandkosten.detail.freibetragForView}" >
             </h:inputText>
+            <br/>
+            Waehrung
+            <br/>
+            <h:selectOneMenu value="#{versandkosten.detail.waehrungForView}">
+                <f:selectItems value="#{versandkosten.currencies}">
+                </f:selectItems>
+            </h:selectOneMenu>
             <br/>
             <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" />
             <h:commandButton value="Speichern" action="#{versandkosten.save()}" />

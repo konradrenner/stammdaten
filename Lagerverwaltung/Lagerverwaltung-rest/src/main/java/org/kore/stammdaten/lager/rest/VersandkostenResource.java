@@ -41,12 +41,12 @@ public class VersandkostenResource{
 
     @GET
     public Collection<Versandkosten> getAll() {
-        Collection<VersandkostenAdapter> all = bean.getAll(adapterFactory);
+        Collection<VersandkostenDTO> all = bean.getAll(adapterFactory);
 
         ArrayList<Versandkosten> ret = new ArrayList<>(all.size());
 
         for (VersandkostenAdapter dto : all) {
-            Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand(), dto.getBetrag());
+            Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand().getValue(), dto.getBetrag());
             if (dto.getFreibetrag() != null) {
                 builder.withFreibetrag(dto.getFreibetrag().getAmount());
             }
@@ -62,7 +62,7 @@ public class VersandkostenResource{
     public Versandkosten getDetail(@PathParam("land") String land) {
         VersandkostenDTO dto = bean.getDetail(adapterFactory, new Land(land));
 
-        Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand(), dto.getBetrag());
+        Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand().getValue(), dto.getBetrag());
         if (dto.getFreibetrag() != null) {
             builder.withFreibetrag(dto.getFreibetrag().getAmount());
         }
@@ -78,7 +78,7 @@ public class VersandkostenResource{
     @PUT
     public void updateDetail(Versandkosten vkosten) {
         VersandkostenDTO dto = new VersandkostenDTO();
-        dto.land(vkosten.getLand());
+        dto.land(new Land(vkosten.getLand()));
         dto.betrag(vkosten.getBetrag());
         dto.freibetrag(vkosten.getFreibetrag());
 
