@@ -37,7 +37,7 @@ import org.kore.stammdaten.core.adresse.Land;
  */
 @Entity
 @Table(name = "VERSANDKOSTEN")
-@NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v")
+@NamedQuery(name = "Versandkosten.findAll", query = "SELECT v FROM Versandkosten v order by v.land")
 public class Versandkosten implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

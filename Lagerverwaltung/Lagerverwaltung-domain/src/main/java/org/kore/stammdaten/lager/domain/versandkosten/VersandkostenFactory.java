@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
+import org.kore.stammdaten.lager.domain.versandkosten.validation.ConsistentMoneyCurrencies;
 
 /**
  *
@@ -33,12 +34,8 @@ public class VersandkostenFactory implements Serializable {
         return new Versandkosten(land, betrag);
     }
 
+    @ConsistentMoneyCurrencies
     public Versandkosten create(@NotNull Land land, @NotNull Money betrag, @NotNull Money freibetrag) {
-        //TODO mit Bean-Validation ersetzen
-        if (!betrag.getCurrency().equals(freibetrag.getCurrency())) {
-            throw new IllegalStateException("Die Betraege haben verschiedene Waehrungen");
-        }
-
         Versandkosten kosten = new Versandkosten(land, betrag);
         kosten.setFreibetrag(freibetrag.getAmount());
 
