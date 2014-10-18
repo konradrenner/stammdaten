@@ -7,25 +7,27 @@
 
     <ui:define name="content">
         <h:form>
-            <h:dataTable value="#{versandkosten.all}" var="vkosten">
+            <h:dataTable value="#{versandkosten.all}" var="vkosten" border="0">
                 <h:column>
-                    <f:facet name="header">Land</f:facet>
+                    <f:facet name="header"><h:outputLabel for="land" value="#{lagerBundle.land}"></h:outputLabel></f:facet>
                     <h:commandLink id="land" value="#{vkosten.landforView}" action="#{versandkosten.loadLand(vkosten.landforView)}">
                     </h:commandLink>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Betrag</f:facet>
-                    <h:outputText value="#{vkosten.betragForView}" >
+                    <f:facet name="header"><h:outputLabel for="betrag" value="#{lagerBundle.betrag}"></h:outputLabel></f:facet>
+                    <h:outputText id="betrag" value="#{vkosten.betragForView}" style="float: right" >
+                        <f:convertNumber></f:convertNumber>
                     </h:outputText>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Freibetrag</f:facet>
-                    <h:outputText value="#{vkosten.freibetragForView}">
+                    <f:facet name="header"><h:outputLabel for="freibetrag" value="#{lagerBundle.freibetrag}"></h:outputLabel></f:facet>
+                    <h:outputText id="freibetrag" value="#{vkosten.freibetragForView}"  style="float: right">
+                        <f:convertNumber></f:convertNumber>
                     </h:outputText>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Waehrung</f:facet>
-                    <h:outputText value="#{vkosten.waehrungForView}" >
+                    <f:facet name="header"><h:outputLabel for="waehrung" value="#{lagerBundle.waehrung}"></h:outputLabel></f:facet>
+                    <h:outputText id="waehrung" value="#{vkosten.waehrungForView}" >
                     </h:outputText>
                 </h:column>
                 <h:column>

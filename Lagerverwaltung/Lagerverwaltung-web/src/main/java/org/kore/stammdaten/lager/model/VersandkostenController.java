@@ -22,7 +22,9 @@ package org.kore.stammdaten.lager.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Currency;
+import java.util.Locale;
 import java.util.Set;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -62,12 +64,18 @@ public class VersandkostenController implements Serializable {
         return "versandkostenUebersicht";
     }
 
+    public String[] getCountries() {
+        return Locale.getISOCountries();
+    }
+
     public Collection<String> getCurrencies() {
         Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();
         ArrayList<String> ret = new ArrayList<>(availableCurrencies.size());
         for (Currency curr : availableCurrencies) {
             ret.add(curr.getCurrencyCode());
         }
+        
+        Collections.sort(ret);
         return ret;
     }
 

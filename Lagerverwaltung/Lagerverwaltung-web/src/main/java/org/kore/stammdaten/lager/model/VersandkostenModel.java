@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.model;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
@@ -37,8 +38,10 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     private String landforView;
     @NotNull
     @Min(0)
+    @Max(999999)
     private BigDecimal betragForView;
     @Min(1)
+    @Max(999999)
     private BigDecimal freibetragForView;
 
     @NotNull

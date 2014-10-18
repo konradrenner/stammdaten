@@ -8,24 +8,50 @@
 
     <ui:define name="content">
         <h:form>
-            Land
-            <h:inputText value="#{versandkosten.detail.landforView}" >
-            </h:inputText>
-            <br/>
-            Betrag
-            <h:inputText value="#{versandkosten.detail.betragForView}" >
-            </h:inputText>
-            <br/>
-            Freibetrag
-            <h:inputText value="#{versandkosten.detail.freibetragForView}" >
-            </h:inputText>
-            <br/>
-            Waehrung
-            <br/>
-            <h:selectOneMenu value="#{versandkosten.detail.waehrungForView}">
-                <f:selectItems value="#{versandkosten.currencies}">
-                </f:selectItems>
-            </h:selectOneMenu>
+            <table>
+                <tr>
+                    <td>
+                        <h:outputLabel for="land" value="#{lagerBundle.land}"></h:outputLabel>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="land" value="#{versandkosten.detail.landforView}">
+                            <f:selectItems value="#{versandkosten.countries}">
+                            </f:selectItems>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel for="betrag" value="#{lagerBundle.betrag}"></h:outputLabel>
+                    </td>
+                    <td>
+                        <h:inputText id="betrag" value="#{versandkosten.detail.betragForView}" style="text-align: right; width: 80px">
+                            <f:convertNumber></f:convertNumber>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel for="freibetrag" value="#{lagerBundle.freibetrag}"></h:outputLabel>
+                    </td>
+                    <td>
+                        <h:inputText id="freibetrag" value="#{versandkosten.detail.freibetragForView}" style="text-align: right; width: 80px">
+                            <f:convertNumber></f:convertNumber>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel for="waehrung" value="#{lagerBundle.waehrung}"></h:outputLabel>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="waehrung" value="#{versandkosten.detail.waehrungForView}">
+                            <f:selectItems value="#{versandkosten.currencies}">
+                            </f:selectItems>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+            </table>
             <br/>
             <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" />
             <h:commandButton value="Speichern" action="#{versandkosten.save()}" />
