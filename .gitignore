@@ -6,3 +6,10 @@
 /Stammdaten-coredomain/target/
 /Lagerverwaltung/Lagerverwaltung-ejb/target/
 /Lagerverwaltung/Lagerverwaltung-web/target/
+/Lagerverwaltung/Lagerverwaltung-domain/target/
+/Stammdaten-core/target/
+/Lagerverwaltung/Lagerverwaltung-rest/target/
+/Lagerverwaltung/SinglePageSite/nbproject/private/
+/Lagerverwaltung/Lagerverwaltung-rest-api/target/
+/Lagerverwaltung/Lagerverwaltung-fx/target/
+/Lagerverwaltung/Lagerverwaltung-droid/.nb-gradle/private/

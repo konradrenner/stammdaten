@@ -1,4 +1,0 @@
-stammdaten
-==========
-
-Stammdatenverwaltungssoftware (Architektur poc)

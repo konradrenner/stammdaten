@@ -1,4 +1,4 @@
-package org.kore.stammdaten.lager.droid;
+package org.kore.stammdaten.lager;
 
 
 import android.app.Activity;

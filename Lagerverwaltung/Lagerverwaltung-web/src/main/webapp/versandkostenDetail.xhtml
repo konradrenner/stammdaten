@@ -29,6 +29,9 @@
                             <f:convertNumber></f:convertNumber>
                         </h:inputText>
                     </td>
+                    <td>
+                        <h:message for="betrag" errorStyle="color: red" ></h:message>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -37,7 +40,11 @@
                     <td>
                         <h:inputText id="freibetrag" value="#{versandkosten.detail.freibetragForView}" style="text-align: right; width: 80px">
                             <f:convertNumber></f:convertNumber>
+                            <f:validateBean for="freibetrag" ></f:validateBean>
                         </h:inputText>
+                    </td>
+                    <td>
+                        <h:message for="betrag" errorStyle="color: red" ></h:message>
                     </td>
                 </tr>
                 <tr>
