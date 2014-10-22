@@ -40,11 +40,10 @@
                     <td>
                         <h:inputText id="freibetrag" value="#{versandkosten.detail.freibetragForView}" style="text-align: right; width: 80px">
                             <f:convertNumber></f:convertNumber>
-                            <f:validateBean for="freibetrag" ></f:validateBean>
                         </h:inputText>
                     </td>
                     <td>
-                        <h:message for="betrag" errorStyle="color: red" ></h:message>
+                        <h:message for="freibetrag" errorStyle="color: red" ></h:message>
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +59,7 @@
                 </tr>
             </table>
             <br/>
-            <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" />
+            <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" immediate="true" />
             <h:commandButton value="Speichern" action="#{versandkosten.save()}" />
         </h:form>
     </ui:define>
