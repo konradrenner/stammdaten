@@ -37,7 +37,7 @@ public class VersandkostenResource{
     VersandkostenBean bean;
 
     @Inject
-    DefaultVersandkostenAdapterFactory adapterFactory;
+    DefaultVersandkostenAdapterBuilder adapterFactory;
 
     @GET
     public Collection<Versandkosten> getAll() {
@@ -77,9 +77,7 @@ public class VersandkostenResource{
 
     @PUT
     public void updateDetail(Versandkosten vkosten) {
-        VersandkostenDTO dto = new VersandkostenDTO();
-        dto.land(new Land(vkosten.getLand()));
-        dto.betrag(vkosten.getBetrag());
+        VersandkostenDTO dto = new VersandkostenDTO(new Land(vkosten.getLand()), vkosten.getBetrag());
         dto.freibetrag(vkosten.getFreibetrag());
 
         bean.update(dto);

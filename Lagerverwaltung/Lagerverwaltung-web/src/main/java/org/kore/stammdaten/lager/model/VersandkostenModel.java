@@ -26,13 +26,13 @@ import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
 
 /**
  *
  * @author Konrad Renner
  */
-public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> {
+public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAdapterBuilder.Properties<VersandkostenModel> {
 
     @NotNull
     private String landforView;
@@ -85,21 +85,8 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> land(Land land) {
-        setLandforView(land.getValue());
-        return this;
-    }
-
-    @Override
     public Money getBetrag() {
         return new Money(betragForView, Currency.getInstance(this.waehrungForView));
-    }
-
-    @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> betrag(Money betrag) {
-        setBetragForView(betrag.getAmount());
-        setWaehrungForView(betrag.getCurrency().getCurrencyCode());
-        return this;
     }
 
     @Override
@@ -111,7 +98,7 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenModel> freibetrag(Money freibetrag) {
+    public VersandkostenAdapterBuilder.Properties<VersandkostenModel> freibetrag(Money freibetrag) {
         if (freibetrag != null) {
             setFreibetragForView(freibetrag.getAmount());
         }

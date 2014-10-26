@@ -44,7 +44,7 @@ public class VersandkostenController implements Serializable {
     VersandkostenBean bean;
 
     @Inject
-    DefaultVersandkostenAdapterFactory adapterFactory;
+    DefaultVersandkostenAdapterBuilder adapterFactory;
 
     private VersandkostenModel model;
 

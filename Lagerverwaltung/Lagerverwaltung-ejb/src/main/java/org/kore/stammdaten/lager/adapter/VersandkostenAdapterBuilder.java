@@ -26,16 +26,13 @@ import org.kore.stammdaten.core.adresse.Land;
  * @author Konrad Renner
  * @param <T>
  */
-public interface VersandkostenAdapterFactory<T extends VersandkostenAdapter> {
+public interface VersandkostenAdapterBuilder<T extends VersandkostenAdapter> {
 
-    public AdapterBuilder<T> createBuilder();
+    public Properties<T> newInstance(Land value, Money betrag);
 
-    interface AdapterBuilder<T extends VersandkostenAdapter> {
-        AdapterBuilder<T> land(Land value);
+    interface Properties<T extends VersandkostenAdapter> {
 
-        AdapterBuilder<T> betrag(Money value);
-
-        AdapterBuilder<T> freibetrag(Money value);
+        Properties<T> freibetrag(Money value);
 
         T build();
     }

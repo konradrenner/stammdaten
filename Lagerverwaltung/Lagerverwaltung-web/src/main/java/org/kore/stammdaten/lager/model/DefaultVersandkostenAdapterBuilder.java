@@ -16,21 +16,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.rest;
+package org.kore.stammdaten.lager.model;
 
 import javax.enterprise.context.RequestScoped;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
+import org.kore.runtime.currency.Money;
+import org.kore.stammdaten.core.adresse.Land;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
 
 /**
  *
  * @author Konrad Renner
  */
 @RequestScoped
-public class DefaultVersandkostenAdapterFactory implements VersandkostenAdapterFactory<VersandkostenDTO> {
+public class DefaultVersandkostenAdapterBuilder implements VersandkostenAdapterBuilder<VersandkostenModel> {
 
     @Override
-    public AdapterBuilder<VersandkostenDTO> createBuilder() {
-        return new VersandkostenDTO();
+    public Properties<VersandkostenModel> newInstance(Land value, Money betrag) {
+        VersandkostenModel model = new VersandkostenModel();
+        model.setLandforView(value.getValue());
+        model.setBetragForView(betrag.getAmount());
+        model.setWaehrungForView(betrag.getCurrency().getCurrencyCode());
+        return model;
     }
 
 }

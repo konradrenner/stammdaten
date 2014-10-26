@@ -21,27 +21,26 @@ package org.kore.stammdaten.lager.rest;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
 
 /**
  *
  * @author Konrad Renner
  */
-public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> {
+public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdapterBuilder.Properties<VersandkostenDTO> {
 
     private Land land;
     private Money betrag;
     private Money freibetrag;
 
-    @Override
-    public Land getLand() {
-        return land;
+    public VersandkostenDTO(Land land, Money betrag) {
+        this.land = land;
+        this.betrag = betrag;
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> land(Land land) {
-        this.land = land;
-        return this;
+    public Land getLand() {
+        return land;
     }
 
     @Override
@@ -50,18 +49,12 @@ public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdap
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> betrag(Money betrag) {
-        this.betrag = betrag;
-        return this;
-    }
-
-    @Override
     public Money getFreibetrag() {
         return freibetrag;
     }
 
     @Override
-    public VersandkostenAdapterFactory.AdapterBuilder<VersandkostenDTO> freibetrag(Money freibetrag) {
+    public VersandkostenAdapterBuilder.Properties<VersandkostenDTO> freibetrag(Money freibetrag) {
         this.freibetrag = freibetrag;
         return this;
     }

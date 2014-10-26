@@ -27,7 +27,7 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapterFactory;
+import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
 import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
@@ -53,15 +53,13 @@ public class VersandkostenBean {
     @AggregateVersandkosten
     VersandkostenService service;
 
-    public <T extends VersandkostenAdapter> Collection<T> getAll(VersandkostenAdapterFactory<T> factory) {
+    public <T extends VersandkostenAdapter> Collection<T> getAll(VersandkostenAdapterBuilder<T> factory) {
         List<Versandkosten> vkosten = repository.find();
 
         Collection<T> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
-            T dto = factory.createBuilder()
-                    .land(kost.getLand())
+            T dto = factory.newInstance(kost.getLand(), kost.getBetrag())
                     .freibetrag(kost.getFreibetrag())
-                    .betrag(kost.getBetrag())
                     .build();
 
             response.add(dto);
@@ -69,13 +67,11 @@ public class VersandkostenBean {
         return response;
     }
 
-    public <T extends VersandkostenAdapter> T getDetail(VersandkostenAdapterFactory<T> factory, Land land) {
+    public <T extends VersandkostenAdapter> T getDetail(VersandkostenAdapterBuilder<T> factory, Land land) {
         Versandkosten kost = repository.find(land);
 
-        return factory.createBuilder()
-                .land(kost.getLand())
+        return factory.newInstance(kost.getLand(), kost.getBetrag())
                 .freibetrag(kost.getFreibetrag())
-                .betrag(kost.getBetrag())
                 .build();
     }
 
