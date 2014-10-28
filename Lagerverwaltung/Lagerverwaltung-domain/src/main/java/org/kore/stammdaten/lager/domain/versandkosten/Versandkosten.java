@@ -26,6 +26,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
@@ -51,10 +52,16 @@ public class Versandkosten implements Serializable {
     //Eclipselink kann insertable vom orm.xml mit der AttributeOverride nicht uebersteuern, deshalb nur der Betrag hier
     private BigDecimal freibetrag;
 
+    @Version
+    private int version;
+
     protected Versandkosten() {
         //JPA
     }
 
+    int getVersion() {
+        return version;
+    }
 
     public Versandkosten(Land land, Money betrag) {
         this.land = land;
