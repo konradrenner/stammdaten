@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -51,7 +52,8 @@ import javax.validation.constraints.Size;
 public class Lager implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LAGER_ID")
+    @SequenceGenerator(name = "LAGER_ID", sequenceName = "LAGER_LAGER_ID", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "lager_id")
     private Short lagerId;

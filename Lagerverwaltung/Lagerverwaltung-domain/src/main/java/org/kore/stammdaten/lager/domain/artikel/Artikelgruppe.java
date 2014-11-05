@@ -21,12 +21,11 @@ package org.kore.stammdaten.lager.domain.artikel;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -57,8 +56,8 @@ public class Artikelgruppe implements Serializable {
     @Basic(optional = false)
     @NotNull
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikelgruppe")
-    private Collection<ArtikelArtikelgruppe> artikelArtikelgruppeCollection;
+    @ManyToMany(mappedBy = "artikelGruppen")
+    private Collection<Artikel> artikel;
 
     public Artikelgruppe() {
     }
@@ -105,12 +104,12 @@ public class Artikelgruppe implements Serializable {
         this.version = version;
     }
 
-    public Collection<ArtikelArtikelgruppe> getArtikelArtikelgruppeCollection() {
-        return artikelArtikelgruppeCollection;
+    public Collection<Artikel> getArtikel() {
+        return artikel;
     }
 
-    public void setArtikelArtikelgruppeCollection(Collection<ArtikelArtikelgruppe> artikelArtikelgruppeCollection) {
-        this.artikelArtikelgruppeCollection = artikelArtikelgruppeCollection;
+    public void setArtikel(Collection<Artikel> artikel) {
+        this.artikel = artikel;
     }
 
     @Override

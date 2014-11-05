@@ -28,10 +28,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum;
@@ -52,7 +55,8 @@ import org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum;
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTIKEL_ID")
+    @SequenceGenerator(name = "ARTIKEL_ID", sequenceName = "ARTIKEL_ARTIKEL_ID", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "artikel_id")
     private Integer artikelId;
@@ -77,8 +81,9 @@ public class Artikel implements Serializable {
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
     private Collection<ArtikelLagerraum> artikelLagerraumCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
-    private Collection<ArtikelArtikelgruppe> artikelArtikelgruppeCollection;
+    @ManyToMany()
+    @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
+    private Collection<Artikelgruppe> artikelGruppen;
 
     public Artikel() {
     }
@@ -159,12 +164,12 @@ public class Artikel implements Serializable {
         this.artikelLagerraumCollection = artikelLagerraumCollection;
     }
 
-    public Collection<ArtikelArtikelgruppe> getArtikelArtikelgruppeCollection() {
-        return artikelArtikelgruppeCollection;
+    public Collection<Artikelgruppe> getArtikelGruppen() {
+        return artikelGruppen;
     }
 
-    public void setArtikelArtikelgruppeCollection(Collection<ArtikelArtikelgruppe> artikelArtikelgruppeCollection) {
-        this.artikelArtikelgruppeCollection = artikelArtikelgruppeCollection;
+    public void setArtikelGruppen(Collection<Artikelgruppe> artikelGruppen) {
+        this.artikelGruppen = artikelGruppen;
     }
 
     @Override
