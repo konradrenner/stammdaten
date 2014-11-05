@@ -14,5 +14,6 @@
     <class>org.kore.stammdaten.lager.domain.artikel.ArtikelArtikelgruppe</class>
     <class>org.kore.stammdaten.lager.domain.artikel.Artikel</class>
     <class>org.kore.stammdaten.lager.domain.artikel.Artikelgruppe</class>
+    <class>org.kore.stammdaten.lager.domain.versandkosten.Versandkosten</class>
   </persistence-unit>
 </persistence>
