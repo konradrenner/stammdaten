@@ -79,7 +79,7 @@ public class Artikel implements Serializable {
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
     private Collection<Vorrat> artikelLagerraumCollection;
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
     private Collection<Artikelgruppe> artikelGruppen;
 
