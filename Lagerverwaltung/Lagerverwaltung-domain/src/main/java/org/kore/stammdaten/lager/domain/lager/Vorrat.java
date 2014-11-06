@@ -27,8 +27,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,15 +38,6 @@ import org.kore.stammdaten.lager.domain.artikel.Artikel;
  */
 @Entity
 @Table(name = "artikel_lagerraum")
-@NamedQueries({
-    @NamedQuery(name = "ArtikelLagerraum.findAll", query = "SELECT a FROM ArtikelLagerraum a"),
-    @NamedQuery(name = "ArtikelLagerraum.findByArtikelId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.artikelId = :artikelId"),
-    @NamedQuery(name = "ArtikelLagerraum.findByRaumId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.raumId = :raumId"),
-    @NamedQuery(name = "ArtikelLagerraum.findByLagerId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.lagerId = :lagerId"),
-    @NamedQuery(name = "ArtikelLagerraum.findByVolumenVerbrauch", query = "SELECT a FROM ArtikelLagerraum a WHERE a.volumenVerbrauch = :volumenVerbrauch"),
-    @NamedQuery(name = "ArtikelLagerraum.findByVersion", query = "SELECT a FROM ArtikelLagerraum a WHERE a.version = :version"),
-    @NamedQuery(name = "ArtikelLagerraum.findByMasseinheit", query = "SELECT a FROM ArtikelLagerraum a WHERE a.masseinheit = :masseinheit"),
-    @NamedQuery(name = "ArtikelLagerraum.findByEinheiten", query = "SELECT a FROM ArtikelLagerraum a WHERE a.einheiten = :einheiten")})
 public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
