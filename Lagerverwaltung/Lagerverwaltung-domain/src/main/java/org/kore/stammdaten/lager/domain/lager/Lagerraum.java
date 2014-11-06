@@ -24,8 +24,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,18 +41,17 @@ import javax.validation.constraints.Size;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Lagerraum.findAll", query = "SELECT l FROM Lagerraum l"),
-    @NamedQuery(name = "Lagerraum.findByRaumId", query = "SELECT l FROM Lagerraum l WHERE l.raumId = :raumId"),
+    @NamedQuery(name = "Lagerraum.findByRaumId", query = "SELECT l FROM Lagerraum l WHERE l.lagerraumPK.raumId = :raumId"),
     @NamedQuery(name = "Lagerraum.findByTyp", query = "SELECT l FROM Lagerraum l WHERE l.typ = :typ"),
     @NamedQuery(name = "Lagerraum.findByBezeichnung", query = "SELECT l FROM Lagerraum l WHERE l.bezeichnung = :bezeichnung"),
     @NamedQuery(name = "Lagerraum.findByVolumen", query = "SELECT l FROM Lagerraum l WHERE l.volumen = :volumen"),
-    @NamedQuery(name = "Lagerraum.findByVersion", query = "SELECT l FROM Lagerraum l WHERE l.version = :version")})
+    @NamedQuery(name = "Lagerraum.findByLagerId", query = "SELECT l FROM Lagerraum l WHERE l.lagerraumPK.lagerId = :lagerId"),
+    @NamedQuery(name = "Lagerraum.findByVersion", query = "SELECT l FROM Lagerraum l WHERE l.version = :version"),
+    @NamedQuery(name = "Lagerraum.findByVolumenEinheit", query = "SELECT l FROM Lagerraum l WHERE l.volumenEinheit = :volumenEinheit")})
 public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "raum_id")
-    private Short raumId;
+    @EmbeddedId
+    protected LagerraumPK lagerraumPK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -68,33 +67,43 @@ public class Lagerraum implements Serializable {
     @Basic(optional = false)
     @NotNull
     private int version;
-    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "volumen_einheit")
+    private String volumenEinheit;
+    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Lager lagerId;
+    private Lager lager;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
-    private Collection<ArtikelLagerraum> artikelLagerraumCollection;
+    private Collection<Vorrat> artikelLagerraumCollection;
 
     public Lagerraum() {
     }
 
-    public Lagerraum(Short raumId) {
-        this.raumId = raumId;
+    public Lagerraum(LagerraumPK lagerraumPK) {
+        this.lagerraumPK = lagerraumPK;
     }
 
-    public Lagerraum(Short raumId, String typ, String bezeichnung, BigDecimal volumen, int version) {
-        this.raumId = raumId;
+    public Lagerraum(LagerraumPK lagerraumPK, String typ, String bezeichnung, BigDecimal volumen, int version, String volumenEinheit) {
+        this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
         this.version = version;
+        this.volumenEinheit = volumenEinheit;
     }
 
-    public Short getRaumId() {
-        return raumId;
+    public Lagerraum(short raumId, short lagerId) {
+        this.lagerraumPK = new LagerraumPK(raumId, lagerId);
     }
 
-    public void setRaumId(Short raumId) {
-        this.raumId = raumId;
+    public LagerraumPK getLagerraumPK() {
+        return lagerraumPK;
+    }
+
+    public void setLagerraumPK(LagerraumPK lagerraumPK) {
+        this.lagerraumPK = lagerraumPK;
     }
 
     public String getTyp() {
@@ -129,26 +138,34 @@ public class Lagerraum implements Serializable {
         this.version = version;
     }
 
-    public Lager getLagerId() {
-        return lagerId;
+    public String getVolumenEinheit() {
+        return volumenEinheit;
     }
 
-    public void setLagerId(Lager lagerId) {
-        this.lagerId = lagerId;
+    public void setVolumenEinheit(String volumenEinheit) {
+        this.volumenEinheit = volumenEinheit;
     }
 
-    public Collection<ArtikelLagerraum> getArtikelLagerraumCollection() {
+    public Lager getLager() {
+        return lager;
+    }
+
+    public void setLager(Lager lager) {
+        this.lager = lager;
+    }
+
+    public Collection<Vorrat> getArtikelLagerraumCollection() {
         return artikelLagerraumCollection;
     }
 
-    public void setArtikelLagerraumCollection(Collection<ArtikelLagerraum> artikelLagerraumCollection) {
+    public void setArtikelLagerraumCollection(Collection<Vorrat> artikelLagerraumCollection) {
         this.artikelLagerraumCollection = artikelLagerraumCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (raumId != null ? raumId.hashCode() : 0);
+        hash += (lagerraumPK != null ? lagerraumPK.hashCode() : 0);
         return hash;
     }
 
@@ -159,7 +176,7 @@ public class Lagerraum implements Serializable {
             return false;
         }
         Lagerraum other = (Lagerraum) object;
-        if ((this.raumId == null && other.raumId != null) || (this.raumId != null && !this.raumId.equals(other.raumId))) {
+        if ((this.lagerraumPK == null && other.lagerraumPK != null) || (this.lagerraumPK != null && !this.lagerraumPK.equals(other.lagerraumPK))) {
             return false;
         }
         return true;
@@ -167,7 +184,7 @@ public class Lagerraum implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.Lagerraum[ raumId=" + raumId + " ]";
+        return "org.kore.stammdaten.lager.domain.lager.Lagerraum[ lagerraumPK=" + lagerraumPK + " ]";
     }
 
 }

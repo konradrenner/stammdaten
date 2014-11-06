@@ -29,30 +29,22 @@ import javax.validation.constraints.NotNull;
  * @author Konrad Renner
  */
 @Embeddable
-public class ArtikelLagerraumPK implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "artikel_id")
-    private int artikelId;
+public class LagerraumPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "raum_id")
     private short raumId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "lager_id")
+    private short lagerId;
 
-    public ArtikelLagerraumPK() {
+    public LagerraumPK() {
     }
 
-    public ArtikelLagerraumPK(int artikelId, short raumId) {
-        this.artikelId = artikelId;
+    public LagerraumPK(short raumId, short lagerId) {
         this.raumId = raumId;
-    }
-
-    public int getArtikelId() {
-        return artikelId;
-    }
-
-    public void setArtikelId(int artikelId) {
-        this.artikelId = artikelId;
+        this.lagerId = lagerId;
     }
 
     public short getRaumId() {
@@ -63,25 +55,33 @@ public class ArtikelLagerraumPK implements Serializable {
         this.raumId = raumId;
     }
 
+    public short getLagerId() {
+        return lagerId;
+    }
+
+    public void setLagerId(short lagerId) {
+        this.lagerId = lagerId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) artikelId;
         hash += (int) raumId;
+        hash += (int) lagerId;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ArtikelLagerraumPK)) {
+        if (!(object instanceof LagerraumPK)) {
             return false;
         }
-        ArtikelLagerraumPK other = (ArtikelLagerraumPK) object;
-        if (this.artikelId != other.artikelId) {
-            return false;
-        }
+        LagerraumPK other = (LagerraumPK) object;
         if (this.raumId != other.raumId) {
+            return false;
+        }
+        if (this.lagerId != other.lagerId) {
             return false;
         }
         return true;
@@ -89,7 +89,7 @@ public class ArtikelLagerraumPK implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.ArtikelLagerraumPK[ artikelId=" + artikelId + ", raumId=" + raumId + " ]";
+        return "org.kore.stammdaten.lager.domain.lager.LagerraumPK[ raumId=" + raumId + ", lagerId=" + lagerId + " ]";
     }
 
 }

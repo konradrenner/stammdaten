@@ -34,10 +34,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum;
+import org.kore.stammdaten.lager.domain.lager.Vorrat;
 
 /**
  *
@@ -55,8 +54,7 @@ import org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum;
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTIKEL_ID")
-    @SequenceGenerator(name = "ARTIKEL_ID", sequenceName = "ARTIKEL_ARTIKEL_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "artikel_id")
     private Integer artikelId;
@@ -80,7 +78,7 @@ public class Artikel implements Serializable {
     @NotNull
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
-    private Collection<ArtikelLagerraum> artikelLagerraumCollection;
+    private Collection<Vorrat> artikelLagerraumCollection;
     @ManyToMany()
     @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
     private Collection<Artikelgruppe> artikelGruppen;
@@ -156,11 +154,11 @@ public class Artikel implements Serializable {
         this.version = version;
     }
 
-    public Collection<ArtikelLagerraum> getArtikelLagerraumCollection() {
+    public Collection<Vorrat> getArtikelLagerraumCollection() {
         return artikelLagerraumCollection;
     }
 
-    public void setArtikelLagerraumCollection(Collection<ArtikelLagerraum> artikelLagerraumCollection) {
+    public void setArtikelLagerraumCollection(Collection<Vorrat> artikelLagerraumCollection) {
         this.artikelLagerraumCollection = artikelLagerraumCollection;
     }
 

@@ -1,0 +1,201 @@
++----------------------------+
+|ISO|                        |
+|---+------------------------|
+|23 |Gramm/Kubikzentimeter   |
+|28 |Kilogramm/Quadratmeter  |
+|2J |Kubikzentimeter/Sekunde |
+|2M |Zentimeter/Sekunde      |
+|2X |Meter/Minute            |
+|2Z |Millivolt               |
+|3B |Megajoule               |
+|3H |Kilogramm/Kilogramm     |
+|4G |Mikroliter              |
+|4H |Mikrometer              |
+|4K |Milliampere             |
+|4O |Mikrofarad              |
+|4P |Newton/Meter            |
+|4T |Pikofarad               |
+|59 |Parts per million       |
+|61 |Parts per billion (US)  |
+|A18|Becquerel/Kilogramm     |
+|A87|Gigaohm                 |
+|A93|Gramm/Kubikmeter        |
+|A97|Hektopascal             |
+|ACR|Acre                    |
+|AMP|Ampere                  |
+|ANN|Jahr                    |
+|B15|Joule/Mol               |
+|B22|Kiloampere              |
+|B25|Kilobecquerel/Kilogramm |
+|B34|Kilogramm/Kubikdezimeter|
+|B42|Kilojoule/Kilogramm     |
+|B44|Kilojoule/Mol           |
+|B45|Kilomol                 |
+|B47|Kilonewton              |
+|B49|Kiloohm                 |
+|B73|Meganewton              |
+|B75|Megaohm                 |
+|B78|Megavolt                |
+|B84|Mikroampere             |
+|B98|Mikrosekunde            |
+|BAR|Bar                     |
+|BG |Tüte                    |
+|BLL|                        |
+|BND|                        |
+|BO |Flasche                 |
+|C10|Millifarad              |
+|C15|Millijoule              |
+|C16|Millimeter/Sekunde      |
+|C18|Millimol                |
+|C19|Mol/Kilogramm           |
+|C22|Millinewton/Meter       |
+|C24|Millipascalsekunde      |
+|C26|Millisekunde            |
+|C29|Millitesla              |
+|C31|Milliwatt               |
+|C34|Mol                     |
+|C36|Mol pro Kubrikmeter     |
+|C38|Mol pro Liter           |
+|C39|Nanoampere              |
+|C41|Nanofarad               |
+|C45|Nanometer               |
+|C47|Nanosekunde             |
+|C55|Newton/Quadratmeter     |
+|C56|Newton/Quadratmillimeter|
+|C62|Eins                    |
+|C65|Pascalsekunde           |
+|CA |Kanister                |
+|CDL|Candela                 |
+|CEL|Celsius                 |
+|CEN|                        |
+|CLT|Centiliter              |
+|CMK|Quadratzentimeter       |
+|CMQ|Kubikcentimeter         |
+|CMT|Zentimeter              |
+|CN |                        |
+|CR |Kiste                   |
+|CS |Kasten                  |
+|CT |Karton                  |
+|D10|Siemens pro Meter       |
+|D33|Tesla                   |
+|D41|Tonne/Kubikmeter        |
+|D46|Voltampere              |
+|D87|Millimol/Kilogramm      |
+|DAY|Tag                     |
+|DD |Grad                    |
+|DEC|                        |
+|DLT|                        |
+|DMK|                        |
+|DMQ|Kubikdezimeter          |
+|DMT|Dezimeter               |
+|DR |Trommel                 |
+|DZN|Dutzend                 |
+|EA |Each                    |
+|FAH|Fahrenheit              |
+|FAR|Farad                   |
+|FLE|                        |
+|FOT|Fuß                     |
+|FTK|Quadratfuß              |
+|FTQ|Kubikfuß                |
+|GJ |Gramm/Milliliter        |
+|GK |Gramm/Kilogramm         |
+|GL |Gramm/Liter             |
+|GLL|US-Gallone              |
+|GM |Gramm/Quadratmeter      |
+|GP |Milligramm/Kubikmeter   |
+|GQ |Mikrogramm/Kubikmeter   |
+|GRM|Gramm                   |
+|GRO|Gross                   |
+|GV |Gigajoule               |
+|GWH|                        |
+|HAR|Hektar                  |
+|HLT|Hektoliter              |
+|HTZ|Hertz                   |
+|HUR|Stunde                  |
+|IKI|                        |
+|INH|Zoll                    |
+|INK|Quadratzoll             |
+|INQ|Kubikzoll               |
+|J2 |Joule/Kilogramm         |
+|JOU|Joule                   |
+|KBA|                        |
+|KEL|Kelvin                  |
+|KGM|Kilogramm               |
+|KGS|Kilogramm pro Sekunde   |
+|KHZ|Kilohertz               |
+|KJO|Kilojoule               |
+|KMH|Kilometer/Stunde        |
+|KMK|Quadrat Kilometer       |
+|KMQ|Kilogramm pro Kubikmeter|
+|KMT|Kilometer               |
+|KNT|                        |
+|KPA|Kilopascal              |
+|KVA|Kilovoltampere          |
+|KVT|Kilovolt                |
+|KWH|Kilowattstunde          |
+|KWT|Kilowatt                |
+|L2 |Liter/Minute            |
+|LBR|US-Pfund                |
+|LTR|Liter                   |
+|LUX|                        |
+|M1 |Milligramms/Liter       |
+|MAW|Megawatt                |
+|MBR|Millibar                |
+|MGM|Milligramm              |
+|MHZ|Megahertz               |
+|MIK|Quadratmeile            |
+|MIL|Tausend                 |
+|MIN|Minute                  |
+|MIO|                        |
+|MLD|                        |
+|MLT|Millilitre              |
+|MM |                        |
+|MMK|Quadratmillimeter       |
+|MMQ|Kubikmillimeter         |
+|MMT|Millimeter              |
+|MOH|                        |
+|MON|Monat                   |
+|MPA|Megapascal              |
+|MQH|Kubikmeter/Stunde       |
+|MQS|Kubikmeter pro Sekunde  |
+|MSK|Meter pro Quadratsekunde|
+|MTK|Quadratmeter            |
+|MTQ|Kubikmeter              |
+|MTR|Meter                   |
+|MTS|Meter pro Sekunde       |
+|MVA|Megavoltampere          |
+|MWH|Megawattstunde          |
+|NA |Milligramm/Kilogramm    |
+|NEW|Newton                  |
+|NMB|                        |
+|NMI|                        |
+|OHM|Ohm                     |
+|ONZ|Unze                    |
+|OZA|Fluid Ounce US          |
+|P1 |Prozent                 |
+|PA |Paket                   |
+|PAL|Pascal                  |
+|PCE|Stück                   |
+|PER|                        |
+|PF |Palette                 |
+|PK |Packen                  |
+|PR |Paar                    |
+|PT |Pint, U.S. liquid       |
+|QAN|                        |
+|QT |Quart, U.S. liquid      |
+|RO |Rolle                   |
+|RPM|                        |
+|RPS|                        |
+|S4 |Quadratmeter/Sekunde    |
+|SAN|                        |
+|SEC|Sekunde                 |
+|SMI|Meile                   |
+|STN|US-Tonne                |
+|TNE|Tonne (1000 KG)         |
+|VLT|Volt                    |
+|WEE|Woche                   |
+|WTT|Watt                    |
+|YDK|Quadrat Yard            |
+|YDQ|Kubik Yard              |
+|YRD|Yard                    |
++---+------------------------+

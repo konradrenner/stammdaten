@@ -9,11 +9,10 @@
     <jar-file>KoreRuntime-jpa-1.0-SNAPSHOT.jar</jar-file>
     <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->
     <class>org.kore.stammdaten.lager.domain.lager.Lagerraum</class>
-    <class>org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum</class>
     <class>org.kore.stammdaten.lager.domain.lager.Lager</class>
-    <class>org.kore.stammdaten.lager.domain.artikel.ArtikelArtikelgruppe</class>
     <class>org.kore.stammdaten.lager.domain.artikel.Artikel</class>
     <class>org.kore.stammdaten.lager.domain.artikel.Artikelgruppe</class>
     <class>org.kore.stammdaten.lager.domain.versandkosten.Versandkosten</class>
+    <class>org.kore.stammdaten.lager.domain.lager.Vorrat</class>
   </persistence-unit>
 </persistence>

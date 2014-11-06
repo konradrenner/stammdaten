@@ -18,7 +18,6 @@
  */
 package org.kore.stammdaten.lager.domain.lager;
 
-import org.kore.stammdaten.lager.domain.artikel.Artikel;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -26,11 +25,14 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.kore.stammdaten.lager.domain.artikel.Artikel;
 
 /**
  *
@@ -42,49 +44,64 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "ArtikelLagerraum.findAll", query = "SELECT a FROM ArtikelLagerraum a"),
     @NamedQuery(name = "ArtikelLagerraum.findByArtikelId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.artikelId = :artikelId"),
     @NamedQuery(name = "ArtikelLagerraum.findByRaumId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.raumId = :raumId"),
+    @NamedQuery(name = "ArtikelLagerraum.findByLagerId", query = "SELECT a FROM ArtikelLagerraum a WHERE a.artikelLagerraumPK.lagerId = :lagerId"),
     @NamedQuery(name = "ArtikelLagerraum.findByVolumenVerbrauch", query = "SELECT a FROM ArtikelLagerraum a WHERE a.volumenVerbrauch = :volumenVerbrauch"),
-    @NamedQuery(name = "ArtikelLagerraum.findByVersion", query = "SELECT a FROM ArtikelLagerraum a WHERE a.version = :version")})
-public class ArtikelLagerraum implements Serializable {
+    @NamedQuery(name = "ArtikelLagerraum.findByVersion", query = "SELECT a FROM ArtikelLagerraum a WHERE a.version = :version"),
+    @NamedQuery(name = "ArtikelLagerraum.findByMasseinheit", query = "SELECT a FROM ArtikelLagerraum a WHERE a.masseinheit = :masseinheit"),
+    @NamedQuery(name = "ArtikelLagerraum.findByEinheiten", query = "SELECT a FROM ArtikelLagerraum a WHERE a.einheiten = :einheiten")})
+public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ArtikelLagerraumPK artikelLagerraumPK;
+    protected VorratPK artikelLagerraumPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "volumen_verbrauch")
+    //Verbrauchtes volumen im Lagerraum, pro Einheit
     private BigDecimal volumenVerbrauch;
     @Basic(optional = false)
     @NotNull
     private int version;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    private String masseinheit;
+    @Basic(optional = false)
+    @NotNull
+    private BigDecimal einheiten;
     @JoinColumn(name = "artikel_id", referencedColumnName = "artikel_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Artikel artikel;
-    @JoinColumn(name = "raum_id", referencedColumnName = "raum_id", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id", insertable = false, updatable = false),
+        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Lagerraum lagerraum;
 
-    public ArtikelLagerraum() {
+    public Vorrat() {
     }
 
-    public ArtikelLagerraum(ArtikelLagerraumPK artikelLagerraumPK) {
+    public Vorrat(VorratPK artikelLagerraumPK) {
         this.artikelLagerraumPK = artikelLagerraumPK;
     }
 
-    public ArtikelLagerraum(ArtikelLagerraumPK artikelLagerraumPK, BigDecimal volumenVerbrauch, int version) {
+    public Vorrat(VorratPK artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
         this.artikelLagerraumPK = artikelLagerraumPK;
         this.volumenVerbrauch = volumenVerbrauch;
         this.version = version;
+        this.masseinheit = masseinheit;
+        this.einheiten = einheiten;
     }
 
-    public ArtikelLagerraum(int artikelId, short raumId) {
-        this.artikelLagerraumPK = new ArtikelLagerraumPK(artikelId, raumId);
+    public Vorrat(int artikelId, short raumId, short lagerId) {
+        this.artikelLagerraumPK = new VorratPK(artikelId, raumId, lagerId);
     }
 
-    public ArtikelLagerraumPK getArtikelLagerraumPK() {
+    public VorratPK getArtikelLagerraumPK() {
         return artikelLagerraumPK;
     }
 
-    public void setArtikelLagerraumPK(ArtikelLagerraumPK artikelLagerraumPK) {
+    public void setArtikelLagerraumPK(VorratPK artikelLagerraumPK) {
         this.artikelLagerraumPK = artikelLagerraumPK;
     }
 
@@ -102,6 +119,22 @@ public class ArtikelLagerraum implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public String getMasseinheit() {
+        return masseinheit;
+    }
+
+    public void setMasseinheit(String masseinheit) {
+        this.masseinheit = masseinheit;
+    }
+
+    public BigDecimal getEinheiten() {
+        return einheiten;
+    }
+
+    public void setEinheiten(BigDecimal einheiten) {
+        this.einheiten = einheiten;
     }
 
     public Artikel getArtikel() {
@@ -130,10 +163,10 @@ public class ArtikelLagerraum implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ArtikelLagerraum)) {
+        if (!(object instanceof Vorrat)) {
             return false;
         }
-        ArtikelLagerraum other = (ArtikelLagerraum) object;
+        Vorrat other = (Vorrat) object;
         if ((this.artikelLagerraumPK == null && other.artikelLagerraumPK != null) || (this.artikelLagerraumPK != null && !this.artikelLagerraumPK.equals(other.artikelLagerraumPK))) {
             return false;
         }
