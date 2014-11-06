@@ -24,6 +24,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -33,6 +34,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -40,14 +42,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Lagerraum.findAll", query = "SELECT l FROM Lagerraum l"),
-    @NamedQuery(name = "Lagerraum.findByRaumId", query = "SELECT l FROM Lagerraum l WHERE l.lagerraumPK.raumId = :raumId"),
-    @NamedQuery(name = "Lagerraum.findByTyp", query = "SELECT l FROM Lagerraum l WHERE l.typ = :typ"),
-    @NamedQuery(name = "Lagerraum.findByBezeichnung", query = "SELECT l FROM Lagerraum l WHERE l.bezeichnung = :bezeichnung"),
-    @NamedQuery(name = "Lagerraum.findByVolumen", query = "SELECT l FROM Lagerraum l WHERE l.volumen = :volumen"),
-    @NamedQuery(name = "Lagerraum.findByLagerId", query = "SELECT l FROM Lagerraum l WHERE l.lagerraumPK.lagerId = :lagerId"),
-    @NamedQuery(name = "Lagerraum.findByVersion", query = "SELECT l FROM Lagerraum l WHERE l.version = :version"),
-    @NamedQuery(name = "Lagerraum.findByVolumenEinheit", query = "SELECT l FROM Lagerraum l WHERE l.volumenEinheit = :volumenEinheit")})
+    @NamedQuery(name = "Lagerraum.findAll", query = "SELECT l FROM Lagerraum l")
+})
 public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -56,10 +52,9 @@ public class Lagerraum implements Serializable {
     @NotNull
     @Size(min = 1, max = 8)
     private String typ;
-    @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    private String bezeichnung;
+    @Embedded
+    private Identifier bezeichnung;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -78,19 +73,14 @@ public class Lagerraum implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
     private Collection<Vorrat> artikelLagerraumCollection;
 
-    public Lagerraum() {
+    protected Lagerraum() {
     }
 
-    public Lagerraum(LagerraumPK lagerraumPK) {
-        this.lagerraumPK = lagerraumPK;
-    }
-
-    public Lagerraum(LagerraumPK lagerraumPK, String typ, String bezeichnung, BigDecimal volumen, int version, String volumenEinheit) {
+    protected Lagerraum(LagerraumPK lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
-        this.version = version;
         this.volumenEinheit = volumenEinheit;
     }
 
@@ -102,64 +92,32 @@ public class Lagerraum implements Serializable {
         return lagerraumPK;
     }
 
-    public void setLagerraumPK(LagerraumPK lagerraumPK) {
-        this.lagerraumPK = lagerraumPK;
-    }
-
     public String getTyp() {
         return typ;
     }
 
-    public void setTyp(String typ) {
-        this.typ = typ;
-    }
-
-    public String getBezeichnung() {
+    public Identifier getBezeichnung() {
         return bezeichnung;
-    }
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
     }
 
     public BigDecimal getVolumen() {
         return volumen;
     }
 
-    public void setVolumen(BigDecimal volumen) {
-        this.volumen = volumen;
-    }
-
     public int getVersion() {
         return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
     }
 
     public String getVolumenEinheit() {
         return volumenEinheit;
     }
 
-    public void setVolumenEinheit(String volumenEinheit) {
-        this.volumenEinheit = volumenEinheit;
-    }
-
     public Lager getLager() {
         return lager;
     }
 
-    public void setLager(Lager lager) {
-        this.lager = lager;
-    }
-
     public Collection<Vorrat> getArtikelLagerraumCollection() {
         return artikelLagerraumCollection;
-    }
-
-    public void setArtikelLagerraumCollection(Collection<Vorrat> artikelLagerraumCollection) {
-        this.artikelLagerraumCollection = artikelLagerraumCollection;
     }
 
     @Override

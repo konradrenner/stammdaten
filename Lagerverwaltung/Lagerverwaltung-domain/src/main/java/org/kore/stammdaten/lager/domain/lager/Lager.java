@@ -19,10 +19,12 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +34,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.kore.runtime.specifications.Description;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -52,7 +56,7 @@ public class Lager implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @NotNull
     @Column(name = "lager_id")
     private Short lagerId;
     @Basic(optional = false)
@@ -61,10 +65,10 @@ public class Lager implements Serializable {
     private String adressid;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    private String bezeichnung;
-    @Size(max = 50)
-    private String beschreibung;
+    @Embedded
+    private Identifier bezeichnung;
+    @Embedded
+    private Description beschreibung;
     @Size(max = 35)
     @Column(name = "adressid_telefon")
     private String adressidTelefon;
@@ -83,87 +87,50 @@ public class Lager implements Serializable {
     public Lager() {
     }
 
-    public Lager(Short lagerId) {
-        this.lagerId = lagerId;
-    }
-
-    public Lager(Short lagerId, String adressid, String bezeichnung, int version) {
-        this.lagerId = lagerId;
+    public Lager(String adressid, Identifier bezeichnung, Description beschreibung, String adressidTelefon, String adressidFax, String email) {
         this.adressid = adressid;
         this.bezeichnung = bezeichnung;
-        this.version = version;
+        this.beschreibung = beschreibung;
+        this.adressidTelefon = adressidTelefon;
+        this.adressidFax = adressidFax;
+        this.email = email;
+        this.lagerraumCollection = new ArrayList<>();
     }
 
     public Short getLagerId() {
         return lagerId;
     }
 
-    public void setLagerId(Short lagerId) {
-        this.lagerId = lagerId;
-    }
-
     public String getAdressid() {
         return adressid;
-    }
-
-    public void setAdressid(String adressid) {
-        this.adressid = adressid;
-    }
-
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
-
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
     }
 
     public String getAdressidTelefon() {
         return adressidTelefon;
     }
 
-    public void setAdressidTelefon(String adressidTelefon) {
-        this.adressidTelefon = adressidTelefon;
-    }
-
     public String getAdressidFax() {
         return adressidFax;
-    }
-
-    public void setAdressidFax(String adressidFax) {
-        this.adressidFax = adressidFax;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public int getVersion() {
         return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
     }
 
     public Collection<Lagerraum> getLagerraumCollection() {
         return lagerraumCollection;
     }
 
-    public void setLagerraumCollection(Collection<Lagerraum> lagerraumCollection) {
-        this.lagerraumCollection = lagerraumCollection;
+    public Identifier getBezeichnung() {
+        return bezeichnung;
+    }
+
+    public Description getBeschreibung() {
+        return beschreibung;
     }
 
     @Override

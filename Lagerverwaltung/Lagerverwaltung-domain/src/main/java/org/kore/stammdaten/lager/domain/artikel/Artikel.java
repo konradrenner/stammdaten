@@ -19,11 +19,12 @@
 package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Basic;
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.kore.runtime.currency.Money;
+import org.kore.runtime.specifications.Description;
+import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.lager.Vorrat;
 
 /**
@@ -44,98 +47,48 @@ import org.kore.stammdaten.lager.domain.lager.Vorrat;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a"),
-    @NamedQuery(name = "Artikel.findByArtikelId", query = "SELECT a FROM Artikel a WHERE a.artikelId = :artikelId"),
-    @NamedQuery(name = "Artikel.findByBezeichnung", query = "SELECT a FROM Artikel a WHERE a.bezeichnung = :bezeichnung"),
-    @NamedQuery(name = "Artikel.findByBeschreibung", query = "SELECT a FROM Artikel a WHERE a.beschreibung = :beschreibung"),
-    @NamedQuery(name = "Artikel.findByPreis", query = "SELECT a FROM Artikel a WHERE a.preis = :preis"),
-    @NamedQuery(name = "Artikel.findByWaehrung", query = "SELECT a FROM Artikel a WHERE a.waehrung = :waehrung"),
-    @NamedQuery(name = "Artikel.findByVersion", query = "SELECT a FROM Artikel a WHERE a.version = :version")})
+    @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a")
+})
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @NotNull
     @Column(name = "artikel_id")
     private Integer artikelId;
-    @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    private String bezeichnung;
-    @Size(max = 300)
-    private String beschreibung;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
+    @Embedded
+    private Identifier bezeichnung;
+    @Embedded
+    private Description beschreibung;
+    @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "PREIS"))
     @NotNull
-    private BigDecimal preis;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 4)
-    private String waehrung;
+    private Money preis;
     @Lob
     private byte[] bild;
-    @Basic(optional = false)
-    @NotNull
+    @Column
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
-    private Collection<Vorrat> artikelLagerraumCollection;
+    private Collection<Vorrat> vorraete;
     @ManyToMany
     @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
     private Collection<Artikelgruppe> artikelGruppen;
 
-    public Artikel() {
+    protected Artikel() {
     }
 
-    public Artikel(Integer artikelId) {
-        this.artikelId = artikelId;
-    }
-
-    public Artikel(Integer artikelId, String bezeichnung, BigDecimal preis, String waehrung, int version) {
-        this.artikelId = artikelId;
+    protected Artikel(Identifier bezeichnung, Description beschreibung, Money preis) {
         this.bezeichnung = bezeichnung;
-        this.preis = preis;
-        this.waehrung = waehrung;
-        this.version = version;
-    }
-
-    public Integer getArtikelId() {
-        return artikelId;
-    }
-
-    public void setArtikelId(Integer artikelId) {
-        this.artikelId = artikelId;
-    }
-
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
-
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
-    }
-
-    public BigDecimal getPreis() {
-        return preis;
-    }
-
-    public void setPreis(BigDecimal preis) {
         this.preis = preis;
+        this.vorraete = new ArrayList<>();
+        this.artikelGruppen = new ArrayList<>();
     }
 
-    public String getWaehrung() {
-        return waehrung;
-    }
 
-    public void setWaehrung(String waehrung) {
-        this.waehrung = waehrung;
+    public int getArtikelId() {
+        return artikelId;
     }
 
     public byte[] getBild() {
@@ -150,24 +103,24 @@ public class Artikel implements Serializable {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
+    public Description getBeschreibung() {
+        return beschreibung;
+    }
+
+    public Identifier getBezeichnung() {
+        return bezeichnung;
+    }
+
+    public Money getPreis() {
+        return preis;
     }
 
     public Collection<Vorrat> getArtikelLagerraumCollection() {
-        return artikelLagerraumCollection;
-    }
-
-    public void setArtikelLagerraumCollection(Collection<Vorrat> artikelLagerraumCollection) {
-        this.artikelLagerraumCollection = artikelLagerraumCollection;
+        return vorraete;
     }
 
     public Collection<Artikelgruppe> getArtikelGruppen() {
         return artikelGruppen;
-    }
-
-    public void setArtikelGruppen(Collection<Artikelgruppe> artikelGruppen) {
-        this.artikelGruppen = artikelGruppen;
     }
 
     @Override
@@ -192,7 +145,7 @@ public class Artikel implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.Artikel[ artikelId=" + artikelId + " ]";
+        return "Artikel{" + "artikelId=" + artikelId + ", bezeichnung=" + bezeichnung + ", beschreibung=" + beschreibung + ", preis=" + preis + ", bild=" + bild + ", version=" + version + ", vorraete=" + vorraete + ", artikelGruppen=" + artikelGruppen + '}';
     }
 
 }

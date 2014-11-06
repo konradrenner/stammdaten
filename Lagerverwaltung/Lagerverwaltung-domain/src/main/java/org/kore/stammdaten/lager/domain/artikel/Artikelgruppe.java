@@ -19,15 +19,19 @@
 package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.kore.runtime.specifications.Description;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -35,20 +39,15 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Artikelgruppe.findAll", query = "SELECT a FROM Artikelgruppe a"),
-    @NamedQuery(name = "Artikelgruppe.findByBezeichnung", query = "SELECT a FROM Artikelgruppe a WHERE a.bezeichnung = :bezeichnung"),
-    @NamedQuery(name = "Artikelgruppe.findByBeschreibung", query = "SELECT a FROM Artikelgruppe a WHERE a.beschreibung = :beschreibung"),
-    @NamedQuery(name = "Artikelgruppe.findByTyp", query = "SELECT a FROM Artikelgruppe a WHERE a.typ = :typ"),
-    @NamedQuery(name = "Artikelgruppe.findByVersion", query = "SELECT a FROM Artikelgruppe a WHERE a.version = :version")})
+    @NamedQuery(name = "Artikelgruppe.findAll", query = "SELECT a FROM Artikelgruppe a")
+})
 public class Artikelgruppe implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
+    @EmbeddedId
     @NotNull
-    @Size(min = 1, max = 50)
-    private String bezeichnung;
-    @Size(max = 300)
-    private String beschreibung;
+    private Identifier bezeichnung;
+    @Embedded
+    private Description beschreibung;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -59,57 +58,34 @@ public class Artikelgruppe implements Serializable {
     @ManyToMany(mappedBy = "artikelGruppen")
     private Collection<Artikel> artikel;
 
-    public Artikelgruppe() {
+    protected Artikelgruppe() {
     }
 
-    public Artikelgruppe(String bezeichnung) {
+    protected Artikelgruppe(Identifier bezeichnung, Description beschreibung, String typ) {
         this.bezeichnung = bezeichnung;
-    }
-
-    public Artikelgruppe(String bezeichnung, String typ, int version) {
-        this.bezeichnung = bezeichnung;
+        this.beschreibung = beschreibung;
         this.typ = typ;
-        this.version = version;
+        this.artikel = new ArrayList<>();
     }
 
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
-
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
-
-    public String getBeschreibung() {
+    public Description getBeschreibung() {
         return beschreibung;
     }
 
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
+    public Identifier getBezeichnung() {
+        return bezeichnung;
     }
 
     public String getTyp() {
         return typ;
     }
 
-    public void setTyp(String typ) {
-        this.typ = typ;
-    }
-
     public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
     public Collection<Artikel> getArtikel() {
         return artikel;
-    }
-
-    public void setArtikel(Collection<Artikel> artikel) {
-        this.artikel = artikel;
     }
 
     @Override

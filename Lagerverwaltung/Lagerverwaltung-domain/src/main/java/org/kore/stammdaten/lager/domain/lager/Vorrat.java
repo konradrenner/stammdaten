@@ -67,79 +67,43 @@ public class Vorrat implements Serializable {
     @ManyToOne(optional = false)
     private Lagerraum lagerraum;
 
-    public Vorrat() {
+    protected Vorrat() {
     }
 
-    public Vorrat(VorratPK artikelLagerraumPK) {
-        this.artikelLagerraumPK = artikelLagerraumPK;
-    }
-
-    public Vorrat(VorratPK artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
+    protected Vorrat(VorratPK artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
         this.artikelLagerraumPK = artikelLagerraumPK;
         this.volumenVerbrauch = volumenVerbrauch;
         this.version = version;
         this.masseinheit = masseinheit;
         this.einheiten = einheiten;
-    }
-
-    public Vorrat(int artikelId, short raumId, short lagerId) {
-        this.artikelLagerraumPK = new VorratPK(artikelId, raumId, lagerId);
     }
 
     public VorratPK getArtikelLagerraumPK() {
         return artikelLagerraumPK;
     }
 
-    public void setArtikelLagerraumPK(VorratPK artikelLagerraumPK) {
-        this.artikelLagerraumPK = artikelLagerraumPK;
-    }
-
     public BigDecimal getVolumenVerbrauch() {
         return volumenVerbrauch;
-    }
-
-    public void setVolumenVerbrauch(BigDecimal volumenVerbrauch) {
-        this.volumenVerbrauch = volumenVerbrauch;
     }
 
     public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
     public String getMasseinheit() {
         return masseinheit;
-    }
-
-    public void setMasseinheit(String masseinheit) {
-        this.masseinheit = masseinheit;
     }
 
     public BigDecimal getEinheiten() {
         return einheiten;
     }
 
-    public void setEinheiten(BigDecimal einheiten) {
-        this.einheiten = einheiten;
-    }
-
     public Artikel getArtikel() {
         return artikel;
     }
 
-    public void setArtikel(Artikel artikel) {
-        this.artikel = artikel;
-    }
-
     public Lagerraum getLagerraum() {
         return lagerraum;
-    }
-
-    public void setLagerraum(Lagerraum lagerraum) {
-        this.lagerraum = lagerraum;
     }
 
     @Override

@@ -5,6 +5,20 @@
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
     
     <!-- <converter class="org.kore.runtime.jpa.converter.CurrencyConverter" auto-apply="true"></converter> -->
+    <embeddable class="org.kore.runtime.specifications.Identifier">
+        <attributes>
+            <basic name="value">
+                <column name="BEZEICHNUNG" nullable="false" length="50"></column>
+            </basic>
+        </attributes>
+    </embeddable>
+    <embeddable class="org.kore.runtime.specifications.Description">
+        <attributes>
+            <basic name="value">
+                <column name="BESCHREIBUNG" nullable="true" length="300"></column>
+            </basic>
+        </attributes>
+    </embeddable>
     <embeddable class="org.kore.stammdaten.core.adresse.Land">
         <attributes>
             <basic name="iso3166Code">
