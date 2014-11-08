@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -42,4 +43,9 @@ public class LagerRepository {
     public Lager find(@NotNull Short lagerid) {
         return em.find(Lager.class, lagerid);
     }
+
+    public Lager findByBezeichnung(@NotNull Identifier bezeichnung) {
+        return em.createNamedQuery("Lager.findByBezeichnung", Lager.class).setParameter("bezeichnung", bezeichnung).getSingleResult();
+    }
+
 }

@@ -48,7 +48,10 @@ import org.kore.stammdaten.lager.domain.lager.Vorrat;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a")
+    @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a"),
+    @NamedQuery(name = "Artikel.findByBezeichnung", query = "SELECT a FROM Artikel a WHERE a.bezeichnung = :bezeichnung"),
+    @NamedQuery(name = "Artikel.findByArtikelgruppeTyp", query = "SELECT a FROM Artikel a, Artikelgruppe g WHERE a = g.artikel AND g.typ = :typ"),
+    @NamedQuery(name = "Artikel.findByArtikelgruppe", query = "SELECT a FROM Artikel a, Artikelgruppe g WHERE a = g.artikel AND g.bezeichnung = :bezeichnung")
 })
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -19,8 +19,9 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +30,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -82,7 +84,8 @@ public class Lager implements Serializable {
     @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
-    private Collection<Lagerraum> lagerraumCollection;
+    @MapKey
+    private Map<LagerraumKey, Lagerraum> lagerraumCollection;
 
     public Lager() {
     }
@@ -94,7 +97,7 @@ public class Lager implements Serializable {
         this.adressidTelefon = adressidTelefon;
         this.adressidFax = adressidFax;
         this.email = email;
-        this.lagerraumCollection = new ArrayList<>();
+        this.lagerraumCollection = new TreeMap<>();
     }
 
     public Short getLagerId() {
@@ -122,7 +125,7 @@ public class Lager implements Serializable {
     }
 
     public Collection<Lagerraum> getLagerraumCollection() {
-        return lagerraumCollection;
+        return lagerraumCollection.values();
     }
 
     public Identifier getBezeichnung() {

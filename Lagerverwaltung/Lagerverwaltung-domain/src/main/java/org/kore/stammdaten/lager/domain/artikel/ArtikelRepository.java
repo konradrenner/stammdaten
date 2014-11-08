@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -41,5 +42,19 @@ public class ArtikelRepository {
 
     public Artikel find(@NotNull Integer artikelId) {
         return em.find(Artikel.class, artikelId);
+    }
+
+    public Artikel findByBezeichnung(@NotNull Identifier bezeichnung) {
+        return em.createNamedQuery("Artikel.findByBezeichnung", Artikel.class).setParameter("bezeichnung", bezeichnung).getSingleResult();
+    }
+
+    public List<Artikel> findByTyp(@NotNull Artikelgruppe.Typ typ) {
+        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppeTyp", Artikel.class).setParameter("typ", typ).getResultList();
+        return Collections.unmodifiableList(resultList);
+    }
+
+    public List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung) {
+        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppe", Artikel.class).setParameter("bezeichnung", bezeichnung).getResultList();
+        return Collections.unmodifiableList(resultList);
     }
 }

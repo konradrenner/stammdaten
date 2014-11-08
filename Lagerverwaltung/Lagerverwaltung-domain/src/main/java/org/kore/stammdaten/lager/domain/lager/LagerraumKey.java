@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author Konrad Renner
  */
 @Embeddable
-public class LagerraumKey implements Serializable {
+public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
     @Basic(optional = false)
     @NotNull
     @Column(name = "raum_id")
@@ -62,6 +62,16 @@ public class LagerraumKey implements Serializable {
         hash += (int) lagerId;
         return hash;
     }
+
+    @Override
+    public int compareTo(LagerraumKey o) {
+        int erg = lagerId - o.lagerId;
+        if (erg == 0) {
+            erg = raumId - o.raumId;
+        }
+        return erg;
+    }
+
 
     @Override
     public boolean equals(Object object) {
