@@ -35,6 +35,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.specifications.Description;
@@ -67,7 +68,7 @@ public class Artikel implements Serializable {
     private Money preis;
     @Lob
     private byte[] bild;
-    @Column
+    @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
     private Collection<Vorrat> vorraete;

@@ -28,6 +28,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.stammdaten.lager.domain.artikel.Artikel;
@@ -41,15 +42,14 @@ import org.kore.stammdaten.lager.domain.artikel.Artikel;
 public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected VorratPK artikelLagerraumPK;
+    protected VorratKey artikelLagerraumPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "volumen_verbrauch")
     //Verbrauchtes volumen im Lagerraum, pro Einheit
     private BigDecimal volumenVerbrauch;
-    @Basic(optional = false)
-    @NotNull
+    @Version
     private int version;
     @Basic(optional = false)
     @NotNull
@@ -70,7 +70,7 @@ public class Vorrat implements Serializable {
     protected Vorrat() {
     }
 
-    protected Vorrat(VorratPK artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
+    protected Vorrat(VorratKey artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
         this.artikelLagerraumPK = artikelLagerraumPK;
         this.volumenVerbrauch = volumenVerbrauch;
         this.version = version;
@@ -78,7 +78,7 @@ public class Vorrat implements Serializable {
         this.einheiten = einheiten;
     }
 
-    public VorratPK getArtikelLagerraumPK() {
+    public VorratKey getArtikelLagerraumPK() {
         return artikelLagerraumPK;
     }
 

@@ -32,6 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.runtime.specifications.Description;
@@ -78,8 +79,7 @@ public class Lager implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 35)
     private String email;
-    @Basic(optional = false)
-    @NotNull
+    @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
     private Collection<Lagerraum> lagerraumCollection;

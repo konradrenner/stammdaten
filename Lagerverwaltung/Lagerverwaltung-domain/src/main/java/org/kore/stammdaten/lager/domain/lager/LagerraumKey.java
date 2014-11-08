@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author Konrad Renner
  */
 @Embeddable
-public class LagerraumPK implements Serializable {
+public class LagerraumKey implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "raum_id")
@@ -39,10 +39,10 @@ public class LagerraumPK implements Serializable {
     @Column(name = "lager_id")
     private short lagerId;
 
-    public LagerraumPK() {
+    protected LagerraumKey() {
     }
 
-    public LagerraumPK(short raumId, short lagerId) {
+    protected LagerraumKey(short raumId, short lagerId) {
         this.raumId = raumId;
         this.lagerId = lagerId;
     }
@@ -51,16 +51,8 @@ public class LagerraumPK implements Serializable {
         return raumId;
     }
 
-    public void setRaumId(short raumId) {
-        this.raumId = raumId;
-    }
-
     public short getLagerId() {
         return lagerId;
-    }
-
-    public void setLagerId(short lagerId) {
-        this.lagerId = lagerId;
     }
 
     @Override
@@ -74,10 +66,10 @@ public class LagerraumPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LagerraumPK)) {
+        if (!(object instanceof LagerraumKey)) {
             return false;
         }
-        LagerraumPK other = (LagerraumPK) object;
+        LagerraumKey other = (LagerraumKey) object;
         if (this.raumId != other.raumId) {
             return false;
         }

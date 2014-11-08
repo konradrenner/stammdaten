@@ -21,15 +21,16 @@ package org.kore.stammdaten.lager.domain.artikel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
 
@@ -43,17 +44,20 @@ import org.kore.runtime.specifications.Identifier;
 })
 public class Artikelgruppe implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public enum Typ {
+        DROGERIE, BUCH, ZEITUNG, FREIZEIT, NAHRUNG, HAUSHALT, MEDIZIN, ELEKTRO, SPIEL, KLEIDUNG, SCHMUCK, FILM, MUSIK, MOBIL, WERKZEUG, BAUSTOFF, KFZ;
+    }
+
     @EmbeddedId
     @NotNull
     private Identifier bezeichnung;
     @Embedded
     private Description beschreibung;
-    @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 8)
-    private String typ;
-    @Basic(optional = false)
-    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Typ typ;
+    @Version
     private int version;
     @ManyToMany(mappedBy = "artikelGruppen")
     private Collection<Artikel> artikel;
@@ -61,7 +65,7 @@ public class Artikelgruppe implements Serializable {
     protected Artikelgruppe() {
     }
 
-    protected Artikelgruppe(Identifier bezeichnung, Description beschreibung, String typ) {
+    protected Artikelgruppe(Identifier bezeichnung, Description beschreibung, Typ typ) {
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.typ = typ;
@@ -76,7 +80,7 @@ public class Artikelgruppe implements Serializable {
         return bezeichnung;
     }
 
-    public String getTyp() {
+    public Typ getTyp() {
         return typ;
     }
 

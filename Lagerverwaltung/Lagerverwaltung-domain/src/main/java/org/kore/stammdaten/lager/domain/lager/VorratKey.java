@@ -19,7 +19,6 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
@@ -29,24 +28,21 @@ import javax.validation.constraints.NotNull;
  * @author Konrad Renner
  */
 @Embeddable
-public class VorratPK implements Serializable {
-    @Basic(optional = false)
+public class VorratKey implements Serializable {
     @NotNull
     @Column(name = "artikel_id")
     private int artikelId;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "raum_id")
     private short raumId;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "lager_id")
     private short lagerId;
 
-    public VorratPK() {
+    protected VorratKey() {
     }
 
-    public VorratPK(int artikelId, short raumId, short lagerId) {
+    protected VorratKey(int artikelId, short raumId, short lagerId) {
         this.artikelId = artikelId;
         this.raumId = raumId;
         this.lagerId = lagerId;
@@ -56,24 +52,12 @@ public class VorratPK implements Serializable {
         return artikelId;
     }
 
-    public void setArtikelId(int artikelId) {
-        this.artikelId = artikelId;
-    }
-
     public short getRaumId() {
         return raumId;
     }
 
-    public void setRaumId(short raumId) {
-        this.raumId = raumId;
-    }
-
     public short getLagerId() {
         return lagerId;
-    }
-
-    public void setLagerId(short lagerId) {
-        this.lagerId = lagerId;
     }
 
     @Override
@@ -88,10 +72,10 @@ public class VorratPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof VorratPK)) {
+        if (!(object instanceof VorratKey)) {
             return false;
         }
-        VorratPK other = (VorratPK) object;
+        VorratKey other = (VorratKey) object;
         if (this.artikelId != other.artikelId) {
             return false;
         }

@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.runtime.specifications.Identifier;
@@ -47,7 +48,7 @@ import org.kore.runtime.specifications.Identifier;
 public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected LagerraumPK lagerraumPK;
+    protected LagerraumKey lagerraumPK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -59,8 +60,7 @@ public class Lagerraum implements Serializable {
     @Basic(optional = false)
     @NotNull
     private BigDecimal volumen;
-    @Basic(optional = false)
-    @NotNull
+    @Version
     private int version;
     @Basic(optional = false)
     @NotNull
@@ -76,7 +76,7 @@ public class Lagerraum implements Serializable {
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumPK lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit) {
+    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
@@ -85,10 +85,10 @@ public class Lagerraum implements Serializable {
     }
 
     public Lagerraum(short raumId, short lagerId) {
-        this.lagerraumPK = new LagerraumPK(raumId, lagerId);
+        this.lagerraumPK = new LagerraumKey(raumId, lagerId);
     }
 
-    public LagerraumPK getLagerraumPK() {
+    public LagerraumKey getLagerraumPK() {
         return lagerraumPK;
     }
 
