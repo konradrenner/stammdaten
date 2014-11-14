@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -34,13 +33,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
-import org.kore.stammdaten.lager.domain.lager.Vorrat;
 
 /**
  *
@@ -73,8 +70,6 @@ public class Artikel implements Serializable {
     private byte[] bild;
     @Version
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artikel")
-    private Collection<Vorrat> vorraete;
     @ManyToMany
     @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
     private Collection<Artikelgruppe> artikelGruppen;
@@ -86,7 +81,6 @@ public class Artikel implements Serializable {
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.preis = preis;
-        this.vorraete = new ArrayList<>();
         this.artikelGruppen = new ArrayList<>();
     }
 
@@ -95,16 +89,12 @@ public class Artikel implements Serializable {
         return artikelId;
     }
 
-    public byte[] getBild() {
-        return bild;
-    }
-
-    public void setBild(byte[] bild) {
-        this.bild = bild;
-    }
-
     public int getVersion() {
         return version;
+    }
+
+    public byte[] getBild() {
+        return bild;
     }
 
     public Description getBeschreibung() {
@@ -117,10 +107,6 @@ public class Artikel implements Serializable {
 
     public Money getPreis() {
         return preis;
-    }
-
-    public Collection<Vorrat> getArtikelLagerraumCollection() {
-        return vorraete;
     }
 
     public Collection<Artikelgruppe> getArtikelGruppen() {
@@ -149,7 +135,7 @@ public class Artikel implements Serializable {
 
     @Override
     public String toString() {
-        return "Artikel{" + "artikelId=" + artikelId + ", bezeichnung=" + bezeichnung + ", beschreibung=" + beschreibung + ", preis=" + preis + ", bild=" + bild + ", version=" + version + ", vorraete=" + vorraete + ", artikelGruppen=" + artikelGruppen + '}';
+        return "Artikel{" + "artikelId=" + artikelId + ", bezeichnung=" + bezeichnung + ", beschreibung=" + beschreibung + ", preis=" + preis + ", bild=" + bild + ", version=" + version + ", artikelGruppen=" + artikelGruppen + '}';
     }
 
 }

@@ -16,23 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.lager;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
+package org.kore.stammdaten.lager.adapter;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface LagerRepository extends Serializable {
-
-    Lager find(@NotNull Short lagerid);
-
-    List<Lager> findAll();
-
-    Lager findByBezeichnung(@NotNull Identifier bezeichnung);
+public interface ArtikelAdapterBuilder {
 
 }

@@ -18,53 +18,51 @@
  */
 package org.kore.stammdaten.lager.application.versandkosten;
 
-import java.io.Serializable;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
+import java.util.Collections;
+import java.util.List;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.kore.runtime.currency.MoneyTranslator;
+import javax.persistence.TypedQuery;
+import javax.validation.constraints.NotNull;
+import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.domain.versandkosten.AggregateVersandkosten;
-import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenFactory;
+import org.kore.stammdaten.lager.domain.versandkosten.Versandkosten;
 import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenRepository;
-import org.kore.stammdaten.lager.domain.versandkosten.VersandkostenService;
 
 /**
  *
  * @author Konrad Renner
  */
-@Stateful
-@LocalBean
-@ConversationScoped
-public class VersandkostenProducer implements Serializable {
+@Stateless
+@Local(VersandkostenRepository.class)
+@Dependent
+@AggregateVersandkosten
+public class DefaultVersandkostenRepository implements VersandkostenRepository {
 
     @PersistenceContext(name = "lager")
     EntityManager em;
-    @Inject
-    MoneyTranslator translator;
 
-    @Produces
-    @AggregateVersandkosten
-    @RequestScoped
-    public VersandkostenRepository getVersandkostenRepository() {
-        return new VersandkostenRepository(em);
+    @Override
+    public Versandkosten find(@NotNull Land land) {
+        return em.find(Versandkosten.class, land);
+    }
+    
+    @Override
+    public List<Versandkosten> find() {
+        TypedQuery<Versandkosten> query = em.createNamedQuery("Versandkosten.findAll", Versandkosten.class);
+        return Collections.unmodifiableList(query.getResultList());
     }
 
-    @Produces
-    @AggregateVersandkosten
-    @RequestScoped
-    public VersandkostenService getVersandkostenService() {
-        return new VersandkostenService(translator);
+    @Override
+    public void save(Versandkosten kosten) {
+        em.merge(kosten);
     }
 
-    @Produces
-    @AggregateVersandkosten
-    @RequestScoped
-    public VersandkostenFactory getVersandkostenFactory() {
-        return new VersandkostenFactory();
+    @Override
+    public void delete(Versandkosten kosten) {
+        em.remove(kosten);
     }
 }

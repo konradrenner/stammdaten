@@ -25,6 +25,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import org.kore.runtime.currency.MoneyTranslator;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
@@ -52,6 +53,8 @@ public class VersandkostenBean {
     @Inject
     @AggregateVersandkosten
     VersandkostenService service;
+    @Inject
+    MoneyTranslator translator;
 
     public <T extends VersandkostenAdapter> Collection<T> getAll(VersandkostenAdapterBuilder<T> factory) {
         List<Versandkosten> vkosten = repository.find();
@@ -80,11 +83,11 @@ public class VersandkostenBean {
 
         if (kto == null) {
             kto = factory.create(currentDTO.getLand(), currentDTO.getBetrag());
-            service.changeFreibetrag(kto, currentDTO.getFreibetrag());
+            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag());
         } else {
         
-            service.changeBetrag(kto, currentDTO.getBetrag());
-            service.changeFreibetrag(kto, currentDTO.getFreibetrag());
+            service.changeBetrag(translator, kto, currentDTO.getBetrag());
+            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag());
         }
         
         repository.save(kto);

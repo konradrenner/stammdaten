@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
 import java.util.Currency;
+import javax.enterprise.context.Dependent;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.currency.MoneyTranslator;
@@ -28,28 +29,25 @@ import org.kore.runtime.currency.MoneyTranslator;
  *
  * @author Konrad Renner
  */
+@AggregateVersandkosten
+@Dependent
 public class VersandkostenService implements Serializable {
-
-    private MoneyTranslator umrechner;
 
     VersandkostenService() {
         //CDI
     }
 
 
-    public VersandkostenService(MoneyTranslator translator) {
-        umrechner = translator;
-    }
-
     /**
      * Setzt den Versandkostenbetrag, falls der neue Betrag in einer anderen
      * Waehrung ist, wird der Betrag in die Waehrung der Versandkosten
      * umgerechnet
      *
+     * @param umrechner
      * @param object
      * @param newBetrag
      */
-    public void changeBetrag(@NotNull Versandkosten object, @NotNull Money newBetrag) {
+    public void changeBetrag(@NotNull MoneyTranslator umrechner, @NotNull Versandkosten object, @NotNull Money newBetrag) {
         Money correctBetrag = newBetrag;
         Currency actualCurrency = object.getBetrag().getCurrency();
 
@@ -74,10 +72,11 @@ public class VersandkostenService implements Serializable {
      * Waehrung ist, wird der Betrag in die Waehrung der Versandkosten
      * umgerechnet
      *
+     * @param umrechner
      * @param object
      * @param newBetrag
      */
-    public void changeFreibetrag(@NotNull Versandkosten object, Money newBetrag) {
+    public void changeFreibetrag(@NotNull MoneyTranslator umrechner, @NotNull Versandkosten object, Money newBetrag) {
         if (newBetrag == null) {
             object.setFreibetrag(null);
             return;
@@ -104,10 +103,11 @@ public class VersandkostenService implements Serializable {
      * Aendert die Waehrung von Versandkosten. Zusaetzlich zur Waehrung werden
      * auch die Betraege in die neue Waehrung umgerechnet
      *
+     * @param umrechner
      * @param object
      * @param newCurrency
      */
-    public void changeCurrency(@NotNull Versandkosten object, @NotNull Currency newCurrency) {
+    public void changeCurrency(@NotNull MoneyTranslator umrechner, @NotNull Versandkosten object, @NotNull Currency newCurrency) {
         Money newBetrag = umrechner.translate(object.getBetrag(), newCurrency);
 
         Money newFreibetrag = object.getFreibetrag();

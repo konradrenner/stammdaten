@@ -19,10 +19,7 @@
 package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import org.kore.stammdaten.core.adresse.Land;
 
@@ -30,33 +27,14 @@ import org.kore.stammdaten.core.adresse.Land;
  *
  * @author Konrad Renner
  */
-public class VersandkostenRepository implements Serializable {
+public interface VersandkostenRepository extends Serializable {
 
-    private EntityManager em;
+    void delete(Versandkosten kosten);
 
-    VersandkostenRepository() {
-        //CDI
-    }
+    Versandkosten find(@NotNull Land land);
 
-    public VersandkostenRepository(final EntityManager manager) {
-        em = manager;
-    }
+    List<Versandkosten> find();
 
+    void save(Versandkosten kosten);
 
-    public Versandkosten find(@NotNull Land land) {
-        return em.find(Versandkosten.class, land);
-    }
-    
-    public List<Versandkosten> find() {
-        TypedQuery<Versandkosten> query = em.createNamedQuery("Versandkosten.findAll", Versandkosten.class);
-        return Collections.unmodifiableList(query.getResultList());
-    }
-
-    public void save(Versandkosten kosten) {
-        em.merge(kosten);
-    }
-
-    public void delete(Versandkosten kosten) {
-        em.remove(kosten);
-    }
 }

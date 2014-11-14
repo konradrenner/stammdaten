@@ -18,9 +18,8 @@
  */
 package org.kore.stammdaten.lager.domain.artikel;
 
-import java.util.Collections;
+import java.io.Serializable;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 
@@ -28,33 +27,16 @@ import org.kore.runtime.specifications.Identifier;
  *
  * @author Konrad Renner
  */
-public class ArtikelRepository {
-    private EntityManager em;
+public interface ArtikelRepository extends Serializable {
 
-    public ArtikelRepository(EntityManager em) {
-        this.em = em;
-    }
+    Artikel find(@NotNull Integer artikelId);
 
-    public List<Artikel> findAll() {
-        List<Artikel> resultList = em.createNamedQuery("Artikel.findAll", Artikel.class).getResultList();
-        return Collections.unmodifiableList(resultList);
-    }
+    List<Artikel> findAll();
 
-    public Artikel find(@NotNull Integer artikelId) {
-        return em.find(Artikel.class, artikelId);
-    }
+    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
 
-    public Artikel findByBezeichnung(@NotNull Identifier bezeichnung) {
-        return em.createNamedQuery("Artikel.findByBezeichnung", Artikel.class).setParameter("bezeichnung", bezeichnung).getSingleResult();
-    }
+    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
 
-    public List<Artikel> findByTyp(@NotNull Artikelgruppe.Typ typ) {
-        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppeTyp", Artikel.class).setParameter("typ", typ).getResultList();
-        return Collections.unmodifiableList(resultList);
-    }
+    List<Artikel> findByTyp(@NotNull Artikelgruppe.Typ typ);
 
-    public List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung) {
-        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppe", Artikel.class).setParameter("bezeichnung", bezeichnung).getResultList();
-        return Collections.unmodifiableList(resultList);
-    }
 }
