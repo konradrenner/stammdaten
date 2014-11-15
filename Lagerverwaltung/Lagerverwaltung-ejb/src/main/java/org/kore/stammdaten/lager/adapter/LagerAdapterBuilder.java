@@ -29,7 +29,7 @@ import org.kore.stammdaten.core.adresse.EMail;
  */
 public interface LagerAdapterBuilder<T extends LagerAdapter> {
 
-    Properties<T> createInstance(Short lagerid, Identifier bezeichnung);
+    Properties<T> newInstance(Short lagerid, Identifier bezeichnung);
 
     interface Properties<T extends LagerAdapter> {
         Properties<T> beschreibung(Description beschreibung);

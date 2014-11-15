@@ -37,7 +37,7 @@ public interface ArtikelAdapterBuilder<T extends ArtikelAdapter> {
 
         Properties<T> bild(byte[] bild);
 
-        Properties<T> artikelGruppen(ArtikelAdapter.Artikelgruppe... gruppe);
+        Properties<T> addArtikelGruppe(Identifier bezeichnung);
 
         T build();
     }

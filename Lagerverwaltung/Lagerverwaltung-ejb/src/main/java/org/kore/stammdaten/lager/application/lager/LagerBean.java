@@ -18,9 +18,18 @@
  */
 package org.kore.stammdaten.lager.application.lager;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import org.kore.stammdaten.lager.adapter.LagerAdapter;
+import org.kore.stammdaten.lager.adapter.LagerAdapterBuilder;
+import org.kore.stammdaten.lager.domain.lager.AggregateLager;
+import org.kore.stammdaten.lager.domain.lager.Lager;
+import org.kore.stammdaten.lager.domain.lager.LagerRepository;
 
 /**
  *
@@ -31,4 +40,20 @@ import javax.enterprise.context.ConversationScoped;
 @LocalBean
 public class LagerBean {
 
+    @AggregateLager
+    @Inject
+    LagerRepository repository;
+
+    public <T extends LagerAdapter> Collection<T> getAll(LagerAdapterBuilder<T> builder) {
+        List<Lager> findAll = repository.findAll();
+
+        ArrayList<T> ret = new ArrayList<>(findAll.size());
+
+        for (Lager lager : findAll) {
+            T adapter = builder.newInstance(lager.getLagerId(), lager.getBezeichnung()).beschreibung(lager.getBeschreibung()).email(lager.getEmail()).build();
+            ret.add(adapter);
+        }
+
+        return ret;
+    }
 }

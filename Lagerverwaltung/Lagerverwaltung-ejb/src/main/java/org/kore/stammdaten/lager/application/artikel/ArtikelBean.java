@@ -18,11 +18,18 @@
  */
 package org.kore.stammdaten.lager.application.artikel;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
+import org.kore.stammdaten.lager.adapter.ArtikelAdapter;
+import org.kore.stammdaten.lager.adapter.ArtikelAdapterBuilder;
 import org.kore.stammdaten.lager.domain.artikel.AggregateArtikel;
+import org.kore.stammdaten.lager.domain.artikel.Artikel;
+import org.kore.stammdaten.lager.domain.artikel.Artikelgruppe;
 
 /**
  *
@@ -37,4 +44,21 @@ public class ArtikelBean {
     @AggregateArtikel
     DefaultArtikelRepository repository;
 
+    public <T extends ArtikelAdapter> Collection<T> getAll(ArtikelAdapterBuilder<T> builder) {
+        List<Artikel> findAll = repository.findAll();
+
+        ArrayList<T> ret = new ArrayList<>(findAll.size());
+
+        for (Artikel artikel : findAll) {
+            ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(artikel.getBezeichnung(), artikel.getPreis()).beschreibung(artikel.getBeschreibung()).bild(artikel.getBild());
+
+            for (Artikelgruppe gruppe : artikel.getArtikelGruppen()) {
+                properties.addArtikelGruppe(gruppe.getBezeichnung());
+            }
+
+            ret.add(properties.build());
+        }
+
+        return ret;
+    }
 }
