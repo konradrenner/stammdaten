@@ -20,6 +20,8 @@
 package org.kore.stammdaten.core.adresse;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.kore.runtime.base.Scalar;
 
 /**
@@ -28,6 +30,9 @@ import org.kore.runtime.base.Scalar;
  */
 @Embeddable
 public class EMail extends Scalar<String> {
+
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 35)
     private String value;
 
     protected EMail() {

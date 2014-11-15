@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.artikel.AggregateArtikel;
@@ -36,14 +37,12 @@ import org.kore.stammdaten.lager.domain.artikel.Artikelgruppe;
 @Dependent
 @AggregateArtikel
 public class DefaultArtikelRepository implements ArtikelRepository {
-    private EntityManager em;
+
+    @PersistenceContext(name = "lager")
+    EntityManager em;
 
     DefaultArtikelRepository() {
         //CDI
-    }
-
-    public DefaultArtikelRepository(EntityManager em) {
-        this.em = em;
     }
 
     @Override

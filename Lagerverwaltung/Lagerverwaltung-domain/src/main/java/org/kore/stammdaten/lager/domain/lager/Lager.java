@@ -39,6 +39,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
+import org.kore.stammdaten.core.adresse.EMail;
 
 /**
  *
@@ -78,9 +79,8 @@ public class Lager implements Serializable {
     @Size(max = 35)
     @Column(name = "adressid_fax")
     private String adressidFax;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 35)
-    private String email;
+    @Embedded
+    private EMail email;
     @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
@@ -90,7 +90,7 @@ public class Lager implements Serializable {
     public Lager() {
     }
 
-    public Lager(String adressid, Identifier bezeichnung, Description beschreibung, String adressidTelefon, String adressidFax, String email) {
+    public Lager(String adressid, Identifier bezeichnung, Description beschreibung, String adressidTelefon, String adressidFax, EMail email) {
         this.adressid = adressid;
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
@@ -116,7 +116,7 @@ public class Lager implements Serializable {
         return adressidFax;
     }
 
-    public String getEmail() {
+    public EMail getEmail() {
         return email;
     }
 
@@ -124,7 +124,7 @@ public class Lager implements Serializable {
         return version;
     }
 
-    public Collection<Lagerraum> getLagerraumCollection() {
+    public Collection<Lagerraum> getLagerraeume() {
         return lagerraumCollection.values();
     }
 

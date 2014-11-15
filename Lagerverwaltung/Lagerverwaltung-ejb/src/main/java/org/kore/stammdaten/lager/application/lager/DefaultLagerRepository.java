@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.lager.AggregateLager;
@@ -35,16 +36,14 @@ import org.kore.stammdaten.lager.domain.lager.LagerRepository;
 @Dependent
 @AggregateLager
 public class DefaultLagerRepository implements LagerRepository {
-    private EntityManager em;
+
+    @PersistenceContext(name = "lager")
+    EntityManager em;
 
     DefaultLagerRepository() {
         //CDI
     }
 
-    public DefaultLagerRepository(EntityManager em) {
-        this.em = em;
-    }
-    
     @Override
     public List<Lager> findAll() {
         List resultList = em.createNamedQuery("Lager.findAll").getResultList();

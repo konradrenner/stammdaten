@@ -18,26 +18,23 @@
  */
 package org.kore.stammdaten.lager.adapter;
 
-import org.kore.runtime.currency.Money;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
+import org.kore.stammdaten.core.adresse.EMail;
 
 /**
  *
  * @author Konrad Renner
  * @param <T>
  */
-public interface ArtikelAdapterBuilder<T extends ArtikelAdapter> {
+public interface LagerAdapterBuilder<T extends LagerAdapter> {
 
-    Properties<T> newInstance(Identifier bezeichnung, Money preis);
+    Properties<T> createInstance(Short lagerid, Identifier bezeichnung);
 
-    interface Properties<T extends ArtikelAdapter> {
-
+    interface Properties<T extends LagerAdapter> {
         Properties<T> beschreibung(Description beschreibung);
 
-        Properties<T> bild(byte[] bild);
-
-        Properties<T> artikelGruppen(ArtikelAdapter.Artikelgruppe... gruppe);
+        Properties<T> email(EMail mail);
 
         T build();
     }
