@@ -59,8 +59,8 @@
                 </tr>
             </table>
             <br/>
-            <h:commandButton value="Zurueck" action="#{versandkosten.loadUebersicht()}" immediate="true" />
-            <h:commandButton value="Speichern" action="#{versandkosten.save()}" />
+            <h:commandButton value="#{lagerBundle.abbrechen}" action="#{versandkosten.loadUebersicht()}" immediate="true" />
+            <h:commandButton value="#{lagerBundle.speichern}" action="#{versandkosten.save()}" />
         </h:form>
     </ui:define>
 

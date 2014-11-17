@@ -16,27 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.model;
-
-import javax.enterprise.context.RequestScoped;
-import org.kore.runtime.currency.Money;
-import org.kore.stammdaten.core.adresse.Land;
-import org.kore.stammdaten.lager.adapter.VersandkostenAdapterBuilder;
+package org.kore.stammdaten.lager.model.artikel;
 
 /**
  *
  * @author Konrad Renner
  */
-@RequestScoped
-public class DefaultVersandkostenAdapterBuilder implements VersandkostenAdapterBuilder<VersandkostenModel> {
-
-    @Override
-    public Properties<VersandkostenModel> newInstance(Land value, Money betrag) {
-        VersandkostenModel model = new VersandkostenModel();
-        model.setLandforView(value.getValue());
-        model.setBetragForView(betrag.getAmount());
-        model.setWaehrungForView(betrag.getCurrency().getCurrencyCode());
-        return model;
-    }
+public class ArtikelController {
 
 }

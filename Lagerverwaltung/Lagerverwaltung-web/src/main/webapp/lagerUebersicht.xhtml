@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./mainLayout.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" >
+
+    <ui:define name="content">
+        <h:form>
+            <h:dataTable value="#{lager.all}" var="var" border="0">
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="lagerid" value="#{lagerBundle.lagerid}"></h:outputLabel></f:facet>
+                    <h:commandLink id="lagerid" value="#{var.lagerid}" action="#{lager.loadDetail(var.lagerid)}">
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="bezeichnung" value="#{lagerBundle.bezeichnung}"></h:outputLabel></f:facet>
+                    <h:outputText id="bezeichnung" value="#{var.bezeichnung}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="email" value="#{lagerBundle.email}"></h:outputLabel></f:facet>
+                    <h:outputText id="email" value="#{var.email}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <h:commandButton id="delete" value="#{lagerBundle.entfernen}" action="#{lager.delete(var.lagerid)}" >
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton id="create" value="#{lagerBundle.neu}" action="#{lager.create()}" >
+            </h:commandButton>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

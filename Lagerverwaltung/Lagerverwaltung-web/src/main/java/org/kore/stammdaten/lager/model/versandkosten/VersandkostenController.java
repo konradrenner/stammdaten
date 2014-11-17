@@ -17,7 +17,7 @@
  * MA 02110-1301  USA
  */
 
-package org.kore.stammdaten.lager.model;
+package org.kore.stammdaten.lager.model.versandkosten;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Set;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.stammdaten.core.adresse.Land;

@@ -31,11 +31,11 @@
                     </h:outputText>
                 </h:column>
                 <h:column>
-                    <h:commandButton id="delete" value="Entfernen" action="#{versandkosten.delete(vkosten.landforView)}" >
+                    <h:commandButton id="delete" value="#{lagerBundle.entfernen}" action="#{versandkosten.delete(vkosten.landforView)}" >
                     </h:commandButton>
                 </h:column>
             </h:dataTable>
-            <h:commandButton id="create" value="Neu" action="#{versandkosten.create()}" >
+            <h:commandButton id="create" value="#{lagerBundle.neu}" action="#{versandkosten.create()}" >
             </h:commandButton>
         </h:form>
     </ui:define>

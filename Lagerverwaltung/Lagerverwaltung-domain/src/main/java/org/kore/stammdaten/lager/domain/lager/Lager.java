@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -80,6 +81,7 @@ public class Lager implements Serializable {
     @Column(name = "adressid_fax")
     private String adressidFax;
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false))
     private EMail email;
     @Version
     private int version;
