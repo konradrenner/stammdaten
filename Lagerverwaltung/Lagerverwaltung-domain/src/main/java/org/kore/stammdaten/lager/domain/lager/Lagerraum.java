@@ -21,7 +21,6 @@ package org.kore.stammdaten.lager.domain.lager;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -49,7 +48,7 @@ public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected LagerraumKey lagerraumPK;
-    @Basic(optional = false)
+    @Column
     @NotNull
     @Size(min = 1, max = 8)
     private String typ;
@@ -57,12 +56,11 @@ public class Lagerraum implements Serializable {
     @Embedded
     private Identifier bezeichnung;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
+    @Column
     @NotNull
     private BigDecimal volumen;
     @Version
     private int version;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")

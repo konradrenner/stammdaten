@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.persistence.AttributeOverride;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -64,11 +63,10 @@ public class Lager implements Serializable {
     @NotNull
     @Column(name = "lager_id")
     private Short lagerId;
-    @Basic(optional = false)
+    @Column
     @NotNull
     @Size(min = 1, max = 35)
     private String adressid;
-    @Basic(optional = false)
     @NotNull
     @Embedded
     private Identifier bezeichnung;

@@ -20,7 +20,6 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -44,18 +43,17 @@ public class Vorrat implements Serializable {
     @EmbeddedId
     protected VorratKey artikelLagerraumPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
     @NotNull
     @Column(name = "volumen_verbrauch")
     //Verbrauchtes volumen im Lagerraum, pro Einheit
     private BigDecimal volumenVerbrauch;
     @Version
     private int version;
-    @Basic(optional = false)
+    @Column
     @NotNull
     @Size(min = 1, max = 3)
     private String masseinheit;
-    @Basic(optional = false)
+    @Column
     @NotNull
     private BigDecimal einheiten;
     @JoinColumn(name = "artikel_id", referencedColumnName = "artikel_id", insertable = false, updatable = false)
