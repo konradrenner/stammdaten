@@ -18,6 +18,7 @@
  */
 package org.kore.stammdaten.lager.model.lager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.faces.bean.SessionScoped;
@@ -29,9 +30,9 @@ import org.kore.stammdaten.lager.application.lager.LagerBean;
  *
  * @author Konrad Renner
  */
-@Named("lager")
+@Named
 @SessionScoped
-public class LagerController {
+public class LagerController implements Serializable {
 
     @Inject
     LagerBean bean;

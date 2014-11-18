@@ -36,7 +36,7 @@ import org.kore.stammdaten.lager.application.versandkosten.VersandkostenBean;
  *
  * @author Konrad Renner
  */
-@Named("versandkosten")
+@Named
 @SessionScoped
 public class VersandkostenController implements Serializable {
 

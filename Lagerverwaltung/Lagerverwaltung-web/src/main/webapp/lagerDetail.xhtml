@@ -14,7 +14,7 @@
                         <h:outputLabel for="lagerid" value="#{lagerBundle.lagerid}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:outputText id="lagerid" value="#{lager.detail.lagerid}">
+                        <h:outputText id="lagerid" value="#{lagerController.detail.lagerid}">
                         </h:outputText>
                     </td>
                 </tr>
@@ -23,7 +23,7 @@
                         <h:outputLabel for="bezeichnung" value="#{lagerBundle.bezeichnung}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:inputText id="bezeichnung" value="#{lager.detail.bezeichnung}" >
+                        <h:inputText id="bezeichnung" value="#{lagerController.detail.bezeichnung}" >
                         </h:inputText>
                     </td>
                     <td>
@@ -35,7 +35,7 @@
                         <h:outputLabel for="email" value="#{lagerBundle.email}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:inputText id="email" value="#{lager.detail.email}">
+                        <h:inputText id="email" value="#{lagerController.detail.email}">
                         </h:inputText>
                     </td>
                     <td>
@@ -47,7 +47,7 @@
                         <h:outputLabel for="beschreibung" value="#{lagerBundle.beschreibung}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:inputTextarea id="beschreibung" value="#{lager.detail.beschreibung}" rows="5">
+                        <h:inputTextarea id="beschreibung" value="#{lagerController.detail.beschreibung}" rows="5">
                         </h:inputTextarea>
                     </td>
                     <td>
@@ -56,8 +56,8 @@
                 </tr>
             </table>
             <br/>
-            <h:commandButton value="#{lagerBundle.abbrechen}" action="#{lager.loadUebersicht()}" immediate="true" />
-            <h:commandButton value="#{lagerBundle.speichern}" action="#{lager.save()}" />
+            <h:commandButton value="#{lagerBundle.abbrechen}" action="#{lagerController.loadUebersicht()}" immediate="true" />
+            <h:commandButton value="#{lagerBundle.speichern}" action="#{lagerController.save()}" />
         </h:form>
     </ui:define>
 

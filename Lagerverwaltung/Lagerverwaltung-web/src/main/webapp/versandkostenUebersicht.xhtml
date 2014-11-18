@@ -7,10 +7,10 @@
 
     <ui:define name="content">
         <h:form>
-            <h:dataTable value="#{versandkosten.all}" var="vkosten" border="0">
+            <h:dataTable value="#{versandkostenController.all}" var="vkosten" border="0">
                 <h:column>
                     <f:facet name="header"><h:outputLabel for="land" value="#{lagerBundle.land}"></h:outputLabel></f:facet>
-                    <h:commandLink id="land" value="#{vkosten.landforView}" action="#{versandkosten.loadLand(vkosten.landforView)}">
+                    <h:commandLink id="land" value="#{vkosten.landforView}" action="#{versandkostenController.loadLand(vkosten.landforView)}">
                     </h:commandLink>
                 </h:column>
                 <h:column>
@@ -31,11 +31,11 @@
                     </h:outputText>
                 </h:column>
                 <h:column>
-                    <h:commandButton id="delete" value="#{lagerBundle.entfernen}" action="#{versandkosten.delete(vkosten.landforView)}" >
+                    <h:commandButton id="delete" value="#{lagerBundle.entfernen}" action="#{versandkostenController.delete(vkosten.landforView)}" >
                     </h:commandButton>
                 </h:column>
             </h:dataTable>
-            <h:commandButton id="create" value="#{lagerBundle.neu}" action="#{versandkosten.create()}" >
+            <h:commandButton id="create" value="#{lagerBundle.neu}" action="#{versandkostenController.create()}" >
             </h:commandButton>
         </h:form>
     </ui:define>

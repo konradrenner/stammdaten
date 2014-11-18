@@ -14,8 +14,8 @@
                         <h:outputLabel for="land" value="#{lagerBundle.land}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:selectOneMenu id="land" value="#{versandkosten.detail.landforView}">
-                            <f:selectItems value="#{versandkosten.countries}">
+                        <h:selectOneMenu id="land" value="#{versandkostenController.detail.landforView}">
+                            <f:selectItems value="#{versandkostenController.countries}">
                             </f:selectItems>
                         </h:selectOneMenu>
                     </td>
@@ -25,7 +25,7 @@
                         <h:outputLabel for="betrag" value="#{lagerBundle.betrag}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:inputText id="betrag" value="#{versandkosten.detail.betragForView}" style="text-align: right; width: 80px">
+                        <h:inputText id="betrag" value="#{versandkostenController.detail.betragForView}" style="text-align: right; width: 80px">
                             <f:convertNumber></f:convertNumber>
                         </h:inputText>
                     </td>
@@ -38,7 +38,7 @@
                         <h:outputLabel for="freibetrag" value="#{lagerBundle.freibetrag}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:inputText id="freibetrag" value="#{versandkosten.detail.freibetragForView}" style="text-align: right; width: 80px">
+                        <h:inputText id="freibetrag" value="#{versandkostenController.detail.freibetragForView}" style="text-align: right; width: 80px">
                             <f:convertNumber></f:convertNumber>
                         </h:inputText>
                     </td>
@@ -51,16 +51,16 @@
                         <h:outputLabel for="waehrung" value="#{lagerBundle.waehrung}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:selectOneMenu id="waehrung" value="#{versandkosten.detail.waehrungForView}">
-                            <f:selectItems value="#{versandkosten.currencies}">
+                        <h:selectOneMenu id="waehrung" value="#{versandkostenController.detail.waehrungForView}">
+                            <f:selectItems value="#{versandkostenController.currencies}">
                             </f:selectItems>
                         </h:selectOneMenu>
                     </td>
                 </tr>
             </table>
             <br/>
-            <h:commandButton value="#{lagerBundle.abbrechen}" action="#{versandkosten.loadUebersicht()}" immediate="true" />
-            <h:commandButton value="#{lagerBundle.speichern}" action="#{versandkosten.save()}" />
+            <h:commandButton value="#{lagerBundle.abbrechen}" action="#{versandkostenController.loadUebersicht()}" immediate="true" />
+            <h:commandButton value="#{lagerBundle.speichern}" action="#{versandkostenController.save()}" />
         </h:form>
     </ui:define>
 
