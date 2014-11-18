@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./mainLayout.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" >
+
+    <ui:define name="content">
+        <h:form>
+            <h:dataTable value="#{artikelController.all}" var="var" border="0">
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="artikelid" value="#{lagerBundle.artikelid}"></h:outputLabel></f:facet>
+                    <h:commandLink id="artikelid" value="#{var.artikelid}" action="#{artikelController.loadDetail(var.artikelid)}">
+                    </h:commandLink>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="bezeichnung" value="#{lagerBundle.bezeichnung}"></h:outputLabel></f:facet>
+                    <h:outputText id="bezeichnung" value="#{var.bezeichnung}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="preis" value="#{lagerBundle.preis}"></h:outputLabel></f:facet>
+                    <h:outputText id="preis" value="#{var.preis}" style="float: right" >
+                        <f:convertNumber></f:convertNumber>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputLabel for="waehrung" value="#{lagerBundle.waehrung}"></h:outputLabel></f:facet>
+                    <h:outputText id="waehrung" value="#{var.waehrung}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <h:commandButton id="delete" value="#{lagerBundle.entfernen}" action="#{artikelController.delete(var.artikelid)}" >
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton id="create" value="#{lagerBundle.neu}" action="#{artikelController.create()}" >
+            </h:commandButton>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

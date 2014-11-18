@@ -28,6 +28,9 @@ import org.kore.runtime.specifications.Identifier;
  * @author Konrad Renner
  */
 public interface ArtikelAdapter {
+
+    public int getArtikelId();
+
     public byte[] getBild();
 
     public Description getBeschreibung();

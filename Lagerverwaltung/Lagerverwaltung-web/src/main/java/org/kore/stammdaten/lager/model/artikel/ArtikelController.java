@@ -18,10 +18,62 @@
  */
 package org.kore.stammdaten.lager.model.artikel;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.kore.stammdaten.lager.adapter.ArtikelAdapter;
+import org.kore.stammdaten.lager.application.artikel.ArtikelBean;
+
 /**
  *
  * @author Konrad Renner
  */
-public class ArtikelController {
+@SessionScoped
+@Named
+public class ArtikelController implements Serializable {
+    @Inject
+    ArtikelBean bean;
 
+    @Inject
+    DefaultArtikelAdapterBuilder builder;
+
+    private ArtikelModel aktuellesDetail;
+
+    public Collection<ArtikelModel> getAll() {
+        Collection<ArtikelAdapter> daten = bean.getAll(builder);
+
+        ArrayList<ArtikelModel> ret = new ArrayList<>(daten.size());
+        for (ArtikelAdapter dt : daten) {
+            ret.add(new ArtikelModel(dt));
+        }
+        return ret;
+    }
+
+    public String loadDetail(Short lagerid) {
+        aktuellesDetail = new ArtikelModel(bean.getDetail(builder, lagerid));
+        return "lagerDetail";
+    }
+
+    public String loadUebersicht() {
+        return "lagerUebersicht";
+    }
+
+    public ArtikelModel getDetail() {
+        return aktuellesDetail;
+    }
+
+    public String delete(Short lagerid) {
+        return "lagerUebersicht";
+    }
+
+    public String create() {
+        return "lagerDetail";
+    }
+
+    public String save() {
+        return "lagerUebersicht";
+    }
 }

@@ -30,6 +30,7 @@ import org.kore.stammdaten.lager.adapter.LagerAdapterBuilder;
 import org.kore.stammdaten.lager.domain.lager.AggregateLager;
 import org.kore.stammdaten.lager.domain.lager.Lager;
 import org.kore.stammdaten.lager.domain.lager.LagerRepository;
+import org.kore.stammdaten.lager.domain.lager.Lagerraum;
 
 /**
  *
@@ -66,7 +67,7 @@ public class LagerBean {
         return ret;
     }
 
-    public <T extends LagerAdapter> T getLager(LagerAdapterBuilder<T> builder, Short lagerid) {
+    public <T extends LagerAdapter> T getDetail(LagerAdapterBuilder<T> builder, short lagerid) {
         Lager lager = repository.find(lagerid);
 
         LagerAdapterBuilder.Properties<T> build = builder.newInstance(lager.getLagerId(), lager.getBezeichnung());
@@ -78,6 +79,10 @@ public class LagerBean {
         if (lager.getBeschreibung() != null) {
             build.beschreibung(lager.getBeschreibung());
         }
+
+        //Um zu testen ob der DB Zugriff passt
+        Collection<Lagerraum> lagerraeume = lager.getLagerraeume();
+        lagerraeume.iterator().next().getVorraete();
 
         return build.build();
     }

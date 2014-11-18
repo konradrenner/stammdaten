@@ -53,7 +53,7 @@ public class LagerController implements Serializable {
     }
     
     public String loadDetail(Short lagerid) {
-        aktuellesDetail = new LagerModel(bean.getLager(builder, lagerid));
+        aktuellesDetail = new LagerModel(bean.getDetail(builder, lagerid));
         return "lagerDetail";
     }
 

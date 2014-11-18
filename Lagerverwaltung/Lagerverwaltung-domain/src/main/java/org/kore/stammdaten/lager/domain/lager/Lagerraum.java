@@ -114,7 +114,7 @@ public class Lagerraum implements Serializable {
         return lager;
     }
 
-    public Collection<Vorrat> getArtikelLagerraumCollection() {
+    public Collection<Vorrat> getVorraete() {
         return artikelLagerraumCollection;
     }
 

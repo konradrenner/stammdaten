@@ -50,15 +50,35 @@ public class ArtikelBean {
         ArrayList<T> ret = new ArrayList<>(findAll.size());
 
         for (Artikel artikel : findAll) {
-            ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(artikel.getBezeichnung(), artikel.getPreis()).beschreibung(artikel.getBeschreibung()).bild(artikel.getBild());
+            ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(artikel.getArtikelId(), artikel.getBezeichnung(), artikel.getPreis()).beschreibung(artikel.getBeschreibung()).bild(artikel.getBild());
 
-            for (Artikelgruppe gruppe : artikel.getArtikelGruppen()) {
-                properties.addArtikelGruppe(gruppe.getBezeichnung());
-            }
+//            for (Artikelgruppe gruppe : artikel.getArtikelGruppen()) {
+//                properties.addArtikelGruppe(gruppe.getBezeichnung());
+//            }
 
             ret.add(properties.build());
         }
 
         return ret;
+    }
+
+    public <T extends ArtikelAdapter> T getDetail(ArtikelAdapterBuilder<T> builder, int artikelid) {
+        Artikel detail = repository.find(artikelid);
+
+        ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(detail.getArtikelId(), detail.getBezeichnung(), detail.getPreis());
+
+        if (detail.getBeschreibung() != null) {
+            properties.beschreibung(detail.getBeschreibung());
+        }
+
+        if (detail.getBild() != null) {
+            properties.bild(detail.getBild());
+        }
+
+        for (Artikelgruppe gruppe : detail.getArtikelGruppen()) {
+            properties.addArtikelGruppe(gruppe.getBezeichnung());
+        }
+
+        return properties.build();
     }
 }

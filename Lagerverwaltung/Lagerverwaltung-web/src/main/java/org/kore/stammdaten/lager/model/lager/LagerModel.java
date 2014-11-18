@@ -79,4 +79,9 @@ public class LagerModel {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "LagerModel{" + "lagerid=" + lagerid + ", bezeichnung=" + bezeichnung + ", beschreibung=" + beschreibung + ", email=" + email + '}';
+    }
+
 }

@@ -29,7 +29,7 @@ import org.kore.runtime.specifications.Identifier;
  */
 public interface ArtikelAdapterBuilder<T extends ArtikelAdapter> {
 
-    Properties<T> newInstance(Identifier bezeichnung, Money preis);
+    Properties<T> newInstance(int artikelid, Identifier bezeichnung, Money preis);
 
     interface Properties<T extends ArtikelAdapter> {
 
