@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Set;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.stammdaten.core.adresse.Land;

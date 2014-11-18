@@ -21,7 +21,7 @@ package org.kore.stammdaten.lager.model.lager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.kore.stammdaten.lager.application.lager.LagerBean;
