@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -56,12 +57,12 @@ public class Vorrat implements Serializable {
     @Column
     @NotNull
     private BigDecimal einheiten;
-    @JoinColumn(name = "artikel_id", referencedColumnName = "artikel_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "artikel_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Artikel artikel;
     @JoinColumns({
-        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id", insertable = false, updatable = false),
-        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)})
+        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id"),
+        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id")})
     @ManyToOne(optional = false)
     private Lagerraum lagerraum;
 

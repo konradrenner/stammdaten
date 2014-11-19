@@ -28,6 +28,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -71,7 +72,8 @@ public class Artikel implements Serializable {
     @Version
     private int version;
     @ManyToMany
-    @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE")
+    @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE", joinColumns = {
+        @JoinColumn(name = "artikel_id")})
     private Collection<Artikelgruppe> artikelGruppen;
 
     protected Artikel() {

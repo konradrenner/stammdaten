@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -65,7 +66,8 @@ public class Lagerraum implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")
     private String volumenEinheit;
-    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)
+    @Id
+    @JoinColumn(name = "lager_id")
     @ManyToOne(optional = false)
     private Lager lager;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")

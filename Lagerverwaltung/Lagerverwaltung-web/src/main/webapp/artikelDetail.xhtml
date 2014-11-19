@@ -73,9 +73,9 @@
                         <h:outputLabel for="artikelgruppen" value="#{lagerBundle.artikelgruppen}"></h:outputLabel>
                     </td>
                     <td>
-                        <h:selectOneListbox id="artikelgruppen" readonly="true">
+                        <h:selectManyMenu id="artikelgruppen" readonly="true">
                             <f:selectItems value="#{artikelController.detail.gruppen}" ></f:selectItems>
-                        </h:selectOneListbox>
+                        </h:selectManyMenu>
                     </td>
                 </tr>
             </table>

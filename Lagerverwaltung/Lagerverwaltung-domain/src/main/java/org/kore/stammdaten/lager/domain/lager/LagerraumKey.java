@@ -19,7 +19,6 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
@@ -30,11 +29,9 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
-    @Basic(optional = false)
     @NotNull
     @Column(name = "raum_id")
     private short raumId;
-    @Basic(optional = false)
     @NotNull
     @Column(name = "lager_id")
     private short lagerId;
@@ -42,7 +39,7 @@ public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
     protected LagerraumKey() {
     }
 
-    protected LagerraumKey(short raumId, short lagerId) {
+    protected LagerraumKey(short lagerId, short raumId) {
         this.raumId = raumId;
         this.lagerId = lagerId;
     }

@@ -30,7 +30,6 @@ import org.kore.stammdaten.lager.adapter.LagerAdapterBuilder;
 import org.kore.stammdaten.lager.domain.lager.AggregateLager;
 import org.kore.stammdaten.lager.domain.lager.Lager;
 import org.kore.stammdaten.lager.domain.lager.LagerRepository;
-import org.kore.stammdaten.lager.domain.lager.Lagerraum;
 
 /**
  *
@@ -81,8 +80,7 @@ public class LagerBean {
         }
 
         //Um zu testen ob der DB Zugriff passt
-        Collection<Lagerraum> lagerraeume = lager.getLagerraeume();
-        lagerraeume.iterator().next().getVorraete();
+        lager.getLagerraum((short) 1).getVorraete();
 
         return build.build();
     }

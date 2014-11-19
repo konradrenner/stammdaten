@@ -52,28 +52,28 @@ public class ArtikelController implements Serializable {
         return ret;
     }
 
-    public String loadDetail(Short lagerid) {
-        aktuellesDetail = new ArtikelModel(bean.getDetail(builder, lagerid));
-        return "lagerDetail";
+    public String loadDetail(int artikelid) {
+        aktuellesDetail = new ArtikelModel(bean.getDetail(builder, artikelid));
+        return "artikelDetail";
     }
 
     public String loadUebersicht() {
-        return "lagerUebersicht";
+        return "artikelUebersicht";
     }
 
     public ArtikelModel getDetail() {
         return aktuellesDetail;
     }
 
-    public String delete(Short lagerid) {
-        return "lagerUebersicht";
+    public String delete(Short artikelid) {
+        return "artikelUebersicht";
     }
 
     public String create() {
-        return "lagerDetail";
+        return "artikelDetail";
     }
 
     public String save() {
-        return "lagerUebersicht";
+        return "artikelUebersicht";
     }
 }

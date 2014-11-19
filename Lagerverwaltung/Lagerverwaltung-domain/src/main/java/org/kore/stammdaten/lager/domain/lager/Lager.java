@@ -30,7 +30,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapKey;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -84,8 +83,7 @@ public class Lager implements Serializable {
     @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
-    @MapKey
-    private Map<LagerraumKey, Lagerraum> lagerraumCollection;
+    private Map<LagerraumKey, Lagerraum> lagerraeume;
 
     public Lager() {
     }
@@ -97,7 +95,7 @@ public class Lager implements Serializable {
         this.adressidTelefon = adressidTelefon;
         this.adressidFax = adressidFax;
         this.email = email;
-        this.lagerraumCollection = new TreeMap<>();
+        this.lagerraeume = new TreeMap<>();
     }
 
     public Short getLagerId() {
@@ -125,7 +123,11 @@ public class Lager implements Serializable {
     }
 
     public Collection<Lagerraum> getLagerraeume() {
-        return lagerraumCollection.values();
+        return lagerraeume.values();
+    }
+
+    public Lagerraum getLagerraum(short raumid) {
+        return lagerraeume.get(new LagerraumKey(raumid, lagerId));
     }
 
     public Identifier getBezeichnung() {
