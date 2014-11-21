@@ -23,15 +23,10 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.kore.stammdaten.lager.domain.artikel.Artikel;
 
 /**
  *
@@ -42,7 +37,7 @@ import org.kore.stammdaten.lager.domain.artikel.Artikel;
 public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected VorratKey artikelLagerraumPK;
+    protected VorratKey vorratKey;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @NotNull
     @Column(name = "volumen_verbrauch")
@@ -57,28 +52,24 @@ public class Vorrat implements Serializable {
     @Column
     @NotNull
     private BigDecimal einheiten;
-    @JoinColumn(name = "artikel_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Artikel artikel;
-    @JoinColumns({
-        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id"),
-        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id")})
-    @ManyToOne(optional = false)
-    private Lagerraum lagerraum;
+//    @Id
+//    @JoinColumn(name = "artikel_id")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    private Artikel artikel;
 
     protected Vorrat() {
     }
 
-    protected Vorrat(VorratKey artikelLagerraumPK, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
-        this.artikelLagerraumPK = artikelLagerraumPK;
+    protected Vorrat(VorratKey vorratKey, BigDecimal volumenVerbrauch, int version, String masseinheit, BigDecimal einheiten) {
+        this.vorratKey = vorratKey;
         this.volumenVerbrauch = volumenVerbrauch;
         this.version = version;
         this.masseinheit = masseinheit;
         this.einheiten = einheiten;
     }
 
-    public VorratKey getArtikelLagerraumPK() {
-        return artikelLagerraumPK;
+    public VorratKey getVorratPK() {
+        return vorratKey;
     }
 
     public BigDecimal getVolumenVerbrauch() {
@@ -97,18 +88,14 @@ public class Vorrat implements Serializable {
         return einheiten;
     }
 
-    public Artikel getArtikel() {
-        return artikel;
-    }
-
-    public Lagerraum getLagerraum() {
-        return lagerraum;
-    }
+//    public Artikel getArtikel() {
+//        return artikel;
+//    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (artikelLagerraumPK != null ? artikelLagerraumPK.hashCode() : 0);
+        hash += (vorratKey != null ? vorratKey.hashCode() : 0);
         return hash;
     }
 
@@ -119,7 +106,7 @@ public class Vorrat implements Serializable {
             return false;
         }
         Vorrat other = (Vorrat) object;
-        if ((this.artikelLagerraumPK == null && other.artikelLagerraumPK != null) || (this.artikelLagerraumPK != null && !this.artikelLagerraumPK.equals(other.artikelLagerraumPK))) {
+        if ((this.vorratKey == null && other.vorratKey != null) || (this.vorratKey != null && !this.vorratKey.equals(other.vorratKey))) {
             return false;
         }
         return true;
@@ -127,7 +114,7 @@ public class Vorrat implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum[ artikelLagerraumPK=" + artikelLagerraumPK + " ]";
+        return "org.kore.stammdaten.lager.domain.lager.ArtikelLagerraum[ vorratKey=" + vorratKey + " ]";
     }
 
 }

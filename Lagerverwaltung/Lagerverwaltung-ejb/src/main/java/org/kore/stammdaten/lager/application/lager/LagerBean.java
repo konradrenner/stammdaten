@@ -79,9 +79,6 @@ public class LagerBean {
             build.beschreibung(lager.getBeschreibung());
         }
 
-        //Um zu testen ob der DB Zugriff passt
-        lager.getLagerraum((short) 1).getVorraete();
-
         return build.build();
     }
 }

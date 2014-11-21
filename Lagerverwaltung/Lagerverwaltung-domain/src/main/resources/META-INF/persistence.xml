@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="lager" transaction-type="JTA">
-    <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>
+      <!--  <jta-data-source>java:/stammdatenDS</jta-data-source>
         <properties>
             <property name="wildfly.jpa.twophasebootstrap" value="false"/>
-        </properties> -->
+      </properties> -->
     <jta-data-source>jdbc/stammdaten</jta-data-source>
     <jar-file>KoreRuntime-jpa-1.0-SNAPSHOT.jar</jar-file>
     <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->

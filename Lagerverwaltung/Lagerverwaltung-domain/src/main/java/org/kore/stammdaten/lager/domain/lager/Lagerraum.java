@@ -20,18 +20,12 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -66,12 +60,13 @@ public class Lagerraum implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")
     private String volumenEinheit;
-    @Id
-    @JoinColumn(name = "lager_id")
-    @ManyToOne(optional = false)
-    private Lager lager;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
-    private Collection<Vorrat> artikelLagerraumCollection;
+//    @Id
+//    @JoinColumn(name = "lager_id")
+//    @ManyToOne(optional = false)
+//    private Lager lager;
+    //Diese Verbindung bring ich aktuell irgendwie nicht zusammen, aktuell ist der Zugriff nur ueber Queries moeglich.
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
+//    private Map<VorratKey, Vorrat> vorraete;
 
     protected Lagerraum() {
     }
@@ -110,14 +105,6 @@ public class Lagerraum implements Serializable {
 
     public String getVolumenEinheit() {
         return volumenEinheit;
-    }
-
-    public Lager getLager() {
-        return lager;
-    }
-
-    public Collection<Vorrat> getVorraete() {
-        return artikelLagerraumCollection;
     }
 
     @Override
