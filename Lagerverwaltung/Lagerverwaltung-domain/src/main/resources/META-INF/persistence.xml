@@ -5,14 +5,15 @@
         <properties>
             <property name="wildfly.jpa.twophasebootstrap" value="false"/>
       </properties> -->
-    <jta-data-source>jdbc/stammdaten</jta-data-source>
-    <jar-file>KoreRuntime-jpa-1.0-SNAPSHOT.jar</jar-file>
-    <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->
-    <class>org.kore.stammdaten.lager.domain.lager.Lagerraum</class>
-    <class>org.kore.stammdaten.lager.domain.lager.Lager</class>
-    <class>org.kore.stammdaten.lager.domain.artikel.Artikel</class>
-    <class>org.kore.stammdaten.lager.domain.artikel.Artikelgruppe</class>
-    <class>org.kore.stammdaten.lager.domain.versandkosten.Versandkosten</class>
-    <class>org.kore.stammdaten.lager.domain.lager.Vorrat</class>
+      <jta-data-source>jdbc/stammdaten</jta-data-source>
+      <jar-file>KoreRuntime-jpa-1.0-SNAPSHOT.jar</jar-file>
+      <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->
+      <class>org.kore.stammdaten.lager.domain.lager.Lagerraum</class>
+      <class>org.kore.stammdaten.lager.domain.lager.Lager</class>
+      <class>org.kore.stammdaten.lager.domain.artikel.Artikel</class>
+      <class>org.kore.stammdaten.lager.domain.artikel.Artikelgruppe</class>
+      <class>org.kore.stammdaten.lager.domain.versandkosten.Versandkosten</class>
+      <class>org.kore.stammdaten.lager.domain.lager.Vorrat</class>
+      <properties/>
   </persistence-unit>
 </persistence>

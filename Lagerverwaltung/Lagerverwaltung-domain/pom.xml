@@ -46,37 +46,31 @@
           <groupId>org.eclipse.persistence</groupId>
           <artifactId>javax.persistence</artifactId>
           <version>2.1.0</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>org.eclipse.persistence</groupId>
           <artifactId>eclipselink</artifactId>
           <version>2.6.0-M3</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>org.eclipse.persistence</groupId>
           <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
           <version>2.6.0-M3</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>javax.validation</groupId>
           <artifactId>validation-api</artifactId>
           <version>1.1.0.Final</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>org.kore.stammdaten.core</groupId>
           <artifactId>Stammdaten-core</artifactId>
           <version>1.1-SNAPSHOT</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>javax.enterprise</groupId>
           <artifactId>cdi-api</artifactId>
           <version>1.1-20130403</version>
-          <scope>provided</scope>
       </dependency>
       <dependency>
           <groupId>junit</groupId>
@@ -93,13 +87,30 @@
       <dependency>
           <groupId>org.kore.runtime</groupId>
           <artifactId>KoreRuntime</artifactId>
-          <scope>provided</scope>
           <version>1.1.0</version>
       </dependency>
       <dependency>
           <groupId>org.kore.runtime</groupId>
           <artifactId>KoreRuntime-jpa</artifactId>
           <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derby</artifactId>
+          <version>10.11.1.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derbyclient</artifactId>
+          <version>10.11.1.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derbytools</artifactId>
+          <version>10.11.1.1</version>
+          <scope>test</scope>
       </dependency>
   </dependencies>
 </project>
