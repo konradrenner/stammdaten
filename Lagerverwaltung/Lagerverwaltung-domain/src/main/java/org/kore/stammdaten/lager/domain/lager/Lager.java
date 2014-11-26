@@ -29,6 +29,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -81,7 +82,8 @@ public class Lager implements Serializable {
     private EMail email;
     @Version
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
+    @JoinColumn(name = "lager_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private Map<LagerraumKey, Lagerraum> lagerraeume;
 
     public Lager() {

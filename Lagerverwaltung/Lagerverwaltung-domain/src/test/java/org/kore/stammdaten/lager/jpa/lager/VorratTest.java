@@ -20,40 +20,21 @@ package org.kore.stammdaten.lager.jpa.lager;
 
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
-import org.kore.runtime.specifications.Identifier;
-import org.kore.stammdaten.lager.domain.lager.Lager;
+import org.kore.stammdaten.lager.domain.lager.Vorrat;
 import org.kore.stammdaten.lager.jpa.EntityTest;
 
 /**
  *
  * @author Konrad Renner
  */
-public class LagerTest extends EntityTest {
+public class VorratTest extends EntityTest {
 
     @Test
     public void testFindAll() {
-        List<Lager> alleLager = getEntityManager().createNamedQuery("Lager.findAll", Lager.class).getResultList();
+        List<Vorrat> alleVorrat = getEntityManager().createNamedQuery("Vorrat.findAll", Vorrat.class).getResultList();
 
-        assertThat(alleLager.size(), is(2));
-    }
-
-    @Test
-    public void testFindNone() {
-        Lager lager = getEntityManager().find(Lager.class, (short) 10);
-
-        assertThat(lager, is(nullValue()));
-    }
-
-    @Test
-    public void testFindLager() {
-        Lager lager = getEntityManager().find(Lager.class, (short) 1);
-
-        assertThat(lager, is(notNullValue()));
-        assertThat(lager.getBezeichnung(), is(new Identifier("Zentrallager")));
-        assertThat(lager.getLagerraeume().size(), is(3));
+        assertThat(alleVorrat.size(), is(3));
     }
 }

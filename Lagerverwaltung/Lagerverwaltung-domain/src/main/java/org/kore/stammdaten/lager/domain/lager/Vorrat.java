@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -34,6 +36,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "artikel_lagerraum")
+@NamedQueries({
+    @NamedQuery(name = "Vorrat.findAll", query = "SELECT v FROM Vorrat v")
+})
 public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

@@ -24,8 +24,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
@@ -62,9 +60,10 @@ public class Lagerraum implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")
     private String volumenEinheit;
-    @JoinColumn(name = "lager_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Lager lager;
+//    @JoinColumn(name = "lager_id", insertable = false, updatable = false)
+//    @MapsId(value = "lagerId")
+//    @ManyToOne
+//    private Lager lager;
 
     protected Lagerraum() {
     }
@@ -81,9 +80,9 @@ public class Lagerraum implements Serializable {
         this.lagerraumPK = new LagerraumKey(raumId, lagerId);
     }
 
-    public Lager getLager() {
-        return lager;
-    }
+//    public Lager getLager() {
+//        return lager;
+//    }
 
     public LagerraumKey getLagerraumPK() {
         return lagerraumPK;
