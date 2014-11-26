@@ -24,6 +24,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
@@ -60,13 +62,9 @@ public class Lagerraum implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")
     private String volumenEinheit;
-//    @Id
-//    @JoinColumn(name = "lager_id")
-//    @ManyToOne(optional = false)
-//    private Lager lager;
-    //Diese Verbindung bring ich aktuell irgendwie nicht zusammen, aktuell ist der Zugriff nur ueber Queries moeglich.
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lagerraum")
-//    private Map<VorratKey, Vorrat> vorraete;
+    @JoinColumn(name = "lager_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Lager lager;
 
     protected Lagerraum() {
     }
@@ -81,6 +79,10 @@ public class Lagerraum implements Serializable {
 
     public Lagerraum(short raumId, short lagerId) {
         this.lagerraumPK = new LagerraumKey(raumId, lagerId);
+    }
+
+    public Lager getLager() {
+        return lager;
     }
 
     public LagerraumKey getLagerraumPK() {

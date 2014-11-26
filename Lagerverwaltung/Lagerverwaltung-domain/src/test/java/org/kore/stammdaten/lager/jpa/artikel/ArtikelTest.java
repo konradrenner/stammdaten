@@ -23,9 +23,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.artikel.Artikel;
+import org.kore.stammdaten.lager.domain.artikel.Artikelgruppe;
 import org.kore.stammdaten.lager.jpa.EntityTest;
 
 /**
@@ -55,5 +57,9 @@ public class ArtikelTest extends EntityTest {
         assertThat(artikel, is(notNullValue()));
         assertThat(artikel.getBezeichnung(), is(new Identifier("Elektroauto 5000")));
         assertThat(artikel.getArtikelGruppen().size(), is(2));
+
+        Artikelgruppe gruppe = artikel.getArtikelGruppen().iterator().next();
+        assertTrue(gruppe.getArtikel().size() >= 1);
+
     }
 }

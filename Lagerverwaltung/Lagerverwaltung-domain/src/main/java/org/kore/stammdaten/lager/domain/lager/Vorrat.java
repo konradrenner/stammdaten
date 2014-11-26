@@ -52,10 +52,6 @@ public class Vorrat implements Serializable {
     @Column
     @NotNull
     private BigDecimal einheiten;
-//    @Id
-//    @JoinColumn(name = "artikel_id")
-//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    private Artikel artikel;
 
     protected Vorrat() {
     }

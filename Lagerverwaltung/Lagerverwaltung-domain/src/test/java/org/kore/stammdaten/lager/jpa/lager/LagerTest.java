@@ -26,6 +26,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.lager.Lager;
+import org.kore.stammdaten.lager.domain.lager.Lagerraum;
 import org.kore.stammdaten.lager.jpa.EntityTest;
 
 /**
@@ -54,5 +55,9 @@ public class LagerTest extends EntityTest {
 
         assertThat(lager, is(notNullValue()));
         assertThat(lager.getBezeichnung(), is(new Identifier("Zentrallager")));
+        assertThat(lager.getLagerraeume().size(), is(3));
+
+        Lagerraum raum = lager.getLagerraeume().iterator().next();
+        assertThat(raum.getLager().getBezeichnung(), is(new Identifier("Zentrallager")));
     }
 }

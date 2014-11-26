@@ -19,7 +19,10 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -28,6 +31,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -77,8 +81,8 @@ public class Lager implements Serializable {
     private EMail email;
     @Version
     private int version;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
-//    private Map<LagerraumKey, Lagerraum> lagerraeume;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lager")
+    private Map<LagerraumKey, Lagerraum> lagerraeume;
 
     public Lager() {
     }
@@ -116,13 +120,13 @@ public class Lager implements Serializable {
         return version;
     }
 
-//    public Collection<Lagerraum> getLagerraeume() {
-//        return lagerraeume.values();
-//    }
-//
-//    public Lagerraum getLagerraum(short raumid) {
-//        return lagerraeume.get(new LagerraumKey(raumid, lagerId));
-//    }
+    public Collection<Lagerraum> getLagerraeume() {
+        return lagerraeume.values();
+    }
+
+    public Lagerraum getLagerraum(short raumid) {
+        return lagerraeume.get(new LagerraumKey(raumid, lagerId));
+    }
 
     public Identifier getBezeichnung() {
         return bezeichnung;
