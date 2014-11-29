@@ -47,14 +47,7 @@ import org.kore.stammdaten.core.adresse.EMail;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Lager.findAll", query = "SELECT l FROM Lager l"),
-    @NamedQuery(name = "Lager.findByLagerId", query = "SELECT l FROM Lager l WHERE l.lagerId = :lagerId"),
-    @NamedQuery(name = "Lager.findByAdressid", query = "SELECT l FROM Lager l WHERE l.adressid = :adressid"),
-    @NamedQuery(name = "Lager.findByBezeichnung", query = "SELECT l FROM Lager l WHERE l.bezeichnung = :bezeichnung"),
-    @NamedQuery(name = "Lager.findByBeschreibung", query = "SELECT l FROM Lager l WHERE l.beschreibung = :beschreibung"),
-    @NamedQuery(name = "Lager.findByAdressidTelefon", query = "SELECT l FROM Lager l WHERE l.adressidTelefon = :adressidTelefon"),
-    @NamedQuery(name = "Lager.findByAdressidFax", query = "SELECT l FROM Lager l WHERE l.adressidFax = :adressidFax"),
-    @NamedQuery(name = "Lager.findByEmail", query = "SELECT l FROM Lager l WHERE l.email = :email"),
-    @NamedQuery(name = "Lager.findByVersion", query = "SELECT l FROM Lager l WHERE l.version = :version")})
+    @NamedQuery(name = "Lager.findByArtikel", query = "SELECT l FROM Lager l, Vorrat v WHERE v.vorratKey.artikelId = :artikelId AND l.lagerId = v.vorratKey.lagerId ORDER BY l.lagerId")})
 public class Lager implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

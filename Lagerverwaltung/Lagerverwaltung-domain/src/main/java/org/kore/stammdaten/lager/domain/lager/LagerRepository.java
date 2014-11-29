@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 
@@ -35,4 +36,5 @@ public interface LagerRepository extends Serializable {
 
     Lager findByBezeichnung(@NotNull Identifier bezeichnung);
 
+    Set<Lager> findVorraeteVon(@NotNull int artikelId);
 }

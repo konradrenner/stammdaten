@@ -37,8 +37,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "artikel_lagerraum")
 @NamedQueries({
-    @NamedQuery(name = "Vorrat.findAll", query = "SELECT v FROM Vorrat v")
-})
+    @NamedQuery(name = "Vorrat.findAll", query = "SELECT v FROM Vorrat v")})
 public class Vorrat implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

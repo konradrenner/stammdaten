@@ -19,7 +19,9 @@
 package org.kore.stammdaten.lager.application.lager;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,6 +60,18 @@ public class DefaultLagerRepository implements LagerRepository {
     @Override
     public Lager findByBezeichnung(@NotNull Identifier bezeichnung) {
         return em.createNamedQuery("Lager.findByBezeichnung", Lager.class).setParameter("bezeichnung", bezeichnung).getSingleResult();
+    }
+
+    @Override
+    public Set<Lager> findVorraeteVon(@NotNull int artikel) {
+        List<Lager> resultList = em.createNamedQuery("Lager.findByArtikel", Lager.class).setParameter("artikelId", artikel).getResultList();
+
+        LinkedHashSet<Lager> lager = new LinkedHashSet<>(resultList.size());
+        for (Lager l : resultList) {
+            lager.add(l);
+        }
+
+        return lager;
     }
 
 }

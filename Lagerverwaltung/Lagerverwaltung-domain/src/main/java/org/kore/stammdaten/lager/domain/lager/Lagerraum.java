@@ -20,12 +20,19 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -64,25 +71,40 @@ public class Lagerraum implements Serializable {
 //    @MapsId(value = "lagerId")
 //    @ManyToOne
 //    private Lager lager;
+    @JoinColumns({
+        @JoinColumn(name = "lager_id"),
+        @JoinColumn(name = "raum_id")
+    })
+    @OneToMany(cascade = CascadeType.ALL)
+    private Map<VorratKey, Vorrat> vorraete;
 
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit) {
+    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit, Map<VorratKey, Vorrat> vorraete) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
         this.volumenEinheit = volumenEinheit;
+        this.vorraete = vorraete;
     }
 
     public Lagerraum(short raumId, short lagerId) {
         this.lagerraumPK = new LagerraumKey(raumId, lagerId);
     }
 
-//    public Lager getLager() {
-//        return lager;
-//    }
+    public Collection<Vorrat> getVorraete() {
+        return Collections.unmodifiableCollection(vorraete.values());
+    }
+
+    public BigDecimal getFreiesVolumen() {
+        BigDecimal verbrauchtesVolumen = BigDecimal.ZERO;
+        for (Vorrat vorrat : vorraete.values()) {
+            verbrauchtesVolumen = verbrauchtesVolumen.add(vorrat.getEinheiten().multiply(vorrat.getVolumenVerbrauch()));
+        }
+        return getVolumen().subtract(verbrauchtesVolumen);
+    }
 
     public LagerraumKey getLagerraumPK() {
         return lagerraumPK;

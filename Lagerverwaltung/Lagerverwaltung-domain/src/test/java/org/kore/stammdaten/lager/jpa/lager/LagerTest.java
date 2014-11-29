@@ -26,6 +26,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.lager.Lager;
+import org.kore.stammdaten.lager.domain.lager.Lagerraum;
 import org.kore.stammdaten.lager.jpa.EntityTest;
 
 /**
@@ -55,5 +56,16 @@ public class LagerTest extends EntityTest {
         assertThat(lager, is(notNullValue()));
         assertThat(lager.getBezeichnung(), is(new Identifier("Zentrallager")));
         assertThat(lager.getLagerraeume().size(), is(3));
+        
+        for (Lagerraum raum : lager.getLagerraeume()) {
+            assertThat(raum.getFreiesVolumen(), is(notNullValue()));
+        }
+    }
+    
+    @Test
+    public void testFindVorraeteVon() {
+        List<Lager> resultList = getEntityManager().createNamedQuery("Lager.findByArtikel", Lager.class).setParameter("artikelId", 1).getResultList();
+        
+        assertThat(resultList.size(), is(2));
     }
 }
