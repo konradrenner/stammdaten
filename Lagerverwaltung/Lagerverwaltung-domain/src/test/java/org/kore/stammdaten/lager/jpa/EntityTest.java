@@ -24,15 +24,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.spi.PersistenceUnitTransactionType;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_DRIVER;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_URL;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.LOGGING_LEVEL;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.LOGGING_SESSION;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.LOGGING_THREAD;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.LOGGING_TIMESTAMP;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.TARGET_SERVER;
-import static org.eclipse.persistence.config.PersistenceUnitProperties.TRANSACTION_TYPE;
-import org.eclipse.persistence.config.TargetServer;
 import org.junit.After;
 import org.junit.Before;
 
@@ -49,12 +40,12 @@ public abstract class EntityTest {
     public void createFactory() {
         Map<String, String> properties = new HashMap<>();
         // Ensure RESOURCE_LOCAL transactions is used.
-        properties.put(TRANSACTION_TYPE, PersistenceUnitTransactionType.RESOURCE_LOCAL.name());
+        properties.put("javax.persistence.transactionType", PersistenceUnitTransactionType.RESOURCE_LOCAL.name());
         properties.put("javax.persistence.jtaDataSource", null);
 
         // Configure the internal connection pool
-        properties.put(JDBC_DRIVER, "org.apache.derby.jdbc.EmbeddedDriver");
-        properties.put(JDBC_URL, "jdbc:derby:memory:STAMMDATEN;create=true");
+        properties.put("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.EmbeddedDriver");
+        properties.put("javax.persistence.jdbc.url", "jdbc:derby:memory:STAMMDATEN;create=true");
 
         properties.put("javax.persistence.schema-generation.database.action", "drop-and-create");
         properties.put("javax.persistence.sql-load-script-source", "testdaten.sql");
@@ -62,14 +53,6 @@ public abstract class EntityTest {
 //        properties.put(JDBC_USER, "stammdaten");
 //        properties.put(JDBC_PASSWORD, "stammdaten");
 
-        // Configure logging. FINE ensures all SQL is shown
-        properties.put(LOGGING_LEVEL, "FINE");
-        properties.put(LOGGING_TIMESTAMP, "false");
-        properties.put(LOGGING_THREAD, "false");
-        properties.put(LOGGING_SESSION, "false");
-
-        // Ensure that no server-platform is configured
-        properties.put(TARGET_SERVER, TargetServer.None);
 
         emf = Persistence.createEntityManagerFactory("lager", properties);
     }

@@ -57,6 +57,13 @@ public class Vorrat implements Serializable {
     @NotNull
     private BigDecimal einheiten;
 
+//    @JoinColumns({
+//        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false),
+//        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id", insertable = false, updatable = false)
+//    })
+//    @ManyToOne
+//    private Lagerraum raum;
+
     protected Vorrat() {
     }
 
