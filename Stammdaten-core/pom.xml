@@ -27,12 +27,11 @@
       </plugins>
   </build>
   <dependencies>
-      <dependency>
-          <groupId>javax.persistence</groupId>
-          <artifactId>persistence-api</artifactId>
-          <version>1.0-rev-1</version>
-          <scope>provided</scope>
-      </dependency>
+      <dependency>  
+          <groupId>org.eclipse.persistence</groupId>  
+          <artifactId>javax.persistence</artifactId>  
+          <version>2.1.0</version>
+      </dependency> 
       <dependency>
           <groupId>javax.validation</groupId>
           <artifactId>validation-api</artifactId>
@@ -53,7 +52,6 @@
           <groupId>javax.enterprise</groupId>
           <artifactId>cdi-api</artifactId>
           <version>1.1.EDR1.1</version>
-          <scope>provided</scope>
       </dependency>
   </dependencies>
   <name>Stammdaten-core</name>
