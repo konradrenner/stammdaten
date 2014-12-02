@@ -8,25 +8,26 @@
         <version>1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Stammdaten-pom-web</artifactId>
+    <artifactId>Stammdaten-pom-ejb</artifactId>
     <packaging>pom</packaging>
     
     <dependencies>
         <dependency>
-            <groupId>org.kore.stammdaten.core</groupId>
-            <artifactId>Stammdaten-core</artifactId>
-            <version>${stammdatencore.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kore.runtime</groupId>
-            <artifactId>KoreRuntime-jsf</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
+            <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kore.stammdaten.core</groupId>
+            <artifactId>Stammdaten-core</artifactId>
+            <version>${stammdatencore.version}</version>
         </dependency>
     </dependencies>
 
@@ -34,10 +35,27 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <ejbVersion>3.2</ejbVersion>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>

@@ -2,47 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>Lagerverwaltung</artifactId>
-    <groupId>org.kore.stammdaten.lager</groupId>
-    <version>1.1-SNAPSHOT</version>
-  </parent>
+        <artifactId>Stammdaten-pom</artifactId>
+        <groupId>org.kore.stammdaten</groupId>
+        <version>1.1-SNAPSHOT</version>
+    </parent>
 
     <groupId>org.kore.stammdaten.lager</groupId>
     <artifactId>Lagerverwaltung-ear</artifactId>
-    <version>1.1-SNAPSHOT</version>
     <packaging>ear</packaging>
 
     <name>Lagerverwaltung-ear</name>
 
     <properties>
-        <netbeans.hint.license>lgpl21</netbeans.hint.license>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
-  
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <version>7</version>
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <skinnyWars>true</skinnyWars>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -56,32 +30,26 @@
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.kore.runtime</groupId>
-            <artifactId>KoreRuntime</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kore.stammdaten.core</groupId>
-            <artifactId>Stammdaten-core</artifactId>
-            <version>1.1-SNAPSHOT</version>
-        </dependency> -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Lagerverwaltung-domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Lagerverwaltung-rest</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Lagerverwaltung-rest-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
+  
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <version>7</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <skinnyWars>true</skinnyWars>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
