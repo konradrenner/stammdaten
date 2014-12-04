@@ -22,14 +22,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.MapKeyJoinColumns;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -71,17 +70,21 @@ public class Lagerraum implements Serializable {
 //    @MapsId(value = "lagerId")
 //    @ManyToOne
 //    private Lager lager;
-    @MapKeyJoinColumns({
-        @MapKeyJoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
-        @MapKeyJoinColumn(name = "raum_id", referencedColumnName = "raum_id")
+//    @MapKeyJoinColumns({
+//        @MapKeyJoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
+//        @MapKeyJoinColumn(name = "raum_id", referencedColumnName = "raum_id")
+//    })
+    @JoinColumns({
+        @JoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
+        @JoinColumn(name = "raum_id", referencedColumnName = "raum_id")
     })
     @OneToMany(cascade = CascadeType.ALL)
-    private Map<VorratKey, Vorrat> vorraete;
+    private Collection<Vorrat> vorraete;
 
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit, Map<VorratKey, Vorrat> vorraete) {
+    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit, Collection<Vorrat> vorraete) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
@@ -95,12 +98,12 @@ public class Lagerraum implements Serializable {
     }
 
     public Collection<Vorrat> getVorraete() {
-        return Collections.unmodifiableCollection(vorraete.values());
+        return Collections.unmodifiableCollection(vorraete);
     }
 
     public BigDecimal getFreiesVolumen() {
         BigDecimal verbrauchtesVolumen = BigDecimal.ZERO;
-        for (Vorrat vorrat : vorraete.values()) {
+        for (Vorrat vorrat : vorraete) {
             verbrauchtesVolumen = verbrauchtesVolumen.add(vorrat.getEinheiten().multiply(vorrat.getVolumenVerbrauch()));
         }
         return getVolumen().subtract(verbrauchtesVolumen);

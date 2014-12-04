@@ -35,6 +35,7 @@ public class VorratTest extends EntityTest {
     public void testFindAll() {
         List<Vorrat> alleVorrat = getEntityManager().createNamedQuery("Vorrat.findAll", Vorrat.class).getResultList();
 
-        assertThat(alleVorrat.size(), is(3));
+        System.out.println("vorraete:" + alleVorrat);
+        assertThat(alleVorrat.size(), is(2));
     }
 }

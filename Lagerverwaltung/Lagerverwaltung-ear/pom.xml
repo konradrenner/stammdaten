@@ -5,6 +5,7 @@
         <artifactId>Stammdaten-pom</artifactId>
         <groupId>org.kore.stammdaten</groupId>
         <version>1.1-SNAPSHOT</version>
+        <relativePath>org.kore.stammdaten:Stammdaten-pom</relativePath>
     </parent>
 
     <groupId>org.kore.stammdaten.lager</groupId>

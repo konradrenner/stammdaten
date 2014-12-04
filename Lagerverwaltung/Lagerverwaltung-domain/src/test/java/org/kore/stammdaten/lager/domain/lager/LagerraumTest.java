@@ -67,7 +67,7 @@ public class LagerraumTest {
         BigDecimal expected = BigDecimal.valueOf(5);
 
         LagerraumKey lagerraumKey = new LagerraumKey((short) 1, (short) 1);
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete);
+        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(expected));
     }
@@ -78,7 +78,7 @@ public class LagerraumTest {
         BigDecimal gesamtVolumen = BigDecimal.valueOf(20);
 
         LagerraumKey lagerraumKey = new LagerraumKey((short) 1, (short) 1);
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete);
+        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(gesamtVolumen));
     }

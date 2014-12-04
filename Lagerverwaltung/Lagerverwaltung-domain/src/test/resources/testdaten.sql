@@ -15,4 +15,3 @@ insert into LAGERRAUM (raum_id,typ,bezeichnung,volumen,lager_id,version,volumen_
 insert into LAGERRAUM (raum_id,typ,bezeichnung,volumen,lager_id,version,volumen_einheit) values (3,'RAUM','Hauptlagerraum',550,1,0,'STK')
 insert into ARTIKEL_LAGERRAUM (artikel_id,raum_id,lager_id,volumen_verbrauch,version,masseinheit,einheiten) values (1,1,2,1,0,'STK',1)
 insert into ARTIKEL_LAGERRAUM (artikel_id,raum_id,lager_id,volumen_verbrauch,version,masseinheit,einheiten) values (1,3,1,1,0,'STK',99)
-insert into ARTIKEL_LAGERRAUM (artikel_id,raum_id,lager_id,volumen_verbrauch,version,masseinheit,einheiten) values (2,3,2,100,0,'STK',2)
