@@ -59,6 +59,7 @@ public class LagerTest extends EntityTest {
         
         for (Lagerraum raum : lager.getLagerraeume()) {
             assertThat(raum.getFreiesVolumen(), is(notNullValue()));
+            System.out.println("freies  volumen:" + raum.getFreiesVolumen());
         }
     }
     
