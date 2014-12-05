@@ -13,6 +13,7 @@
     
     <properties>
         <KoreRuntime.jpa.version>1.0-SNAPSHOT</KoreRuntime.jpa.version>
+        <jta.datasource>jdbc/stammdaten</jta.datasource>
     </properties>
     
     <dependencies>
@@ -66,6 +67,21 @@
             <version>${KoreRuntime.jpa.version}</version>
         </dependency>
     </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>wildfly</id>
+            <properties>
+                <jta.datasource>java:/stammdatenDS</jta.datasource>
+            </properties>
+        </profile>
+        <profile>
+            <id>openshift</id>
+            <properties>
+                <jta.datasource>java:jboss/datasources/PostgreSQLDS</jta.datasource>
+            </properties>
+        </profile>
+    </profiles>
     
     <build>
         <resources>

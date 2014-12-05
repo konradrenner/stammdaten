@@ -5,7 +5,7 @@
         <properties>
             <property name="wildfly.jpa.twophasebootstrap" value="false"/>
       </properties> -->
-      <jta-data-source>jdbc/stammdaten</jta-data-source>
+      <jta-data-source>${jta.datasource}</jta-data-source>
       <jar-file>KoreRuntime-jpa-${KoreRuntime.jpa.version}.jar</jar-file>
       
       <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->
