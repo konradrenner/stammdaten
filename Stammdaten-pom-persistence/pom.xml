@@ -24,7 +24,6 @@
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency> 
-      
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
