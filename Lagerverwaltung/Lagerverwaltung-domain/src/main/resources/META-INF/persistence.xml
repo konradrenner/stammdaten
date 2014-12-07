@@ -5,10 +5,12 @@
         <properties>
             <property name="wildfly.jpa.twophasebootstrap" value="false"/>
       </properties> -->
+      <provider>${persistence.provider}</provider>
       <jta-data-source>${jta.datasource}</jta-data-source>
-      <jar-file>KoreRuntime-jpa-${KoreRuntime.jpa.version}.jar</jar-file>
-      
+      <!-- <jar-file>KoreRuntime-jpa-${KoreRuntime.jpa.version}.jar</jar-file> -->
       <!-- <jta-data-source>java:/stammdatenDS</jta-data-source>-->
+      <class>org.kore.runtime.jpa.converter.CurrencyConverter</class>
+      
       <class>org.kore.stammdaten.lager.domain.lager.Lagerraum</class>
       <class>org.kore.stammdaten.lager.domain.lager.Lager</class>
       <class>org.kore.stammdaten.lager.domain.artikel.Artikel</class>

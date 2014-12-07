@@ -14,6 +14,7 @@
     <properties>
         <KoreRuntime.jpa.version>1.0-SNAPSHOT</KoreRuntime.jpa.version>
         <jta.datasource>jdbc/stammdaten</jta.datasource>
+        <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>
     </properties>
     
     <dependencies>
@@ -21,17 +22,20 @@
             <groupId>org.eclipse.persistence</groupId>  
             <artifactId>javax.persistence</artifactId>  
             <version>2.1.0</version>
+            <scope>provided</scope>
         </dependency> 
       
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>1.1-20130403</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -52,16 +56,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>2.5.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.kore.runtime</groupId>
             <artifactId>KoreRuntime-jpa</artifactId>
             <version>${KoreRuntime.jpa.version}</version>
@@ -70,16 +64,54 @@
     
     <profiles>
         <profile>
+            <id>glassfish</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>eclipselink</artifactId>
+                    <version>2.5.2</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                    <version>2.5.2</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>wildfly</id>
             <properties>
                 <jta.datasource>java:/stammdatenDS</jta.datasource>
+                <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <version>4.3.7.Final</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>openshift</id>
             <properties>
                 <jta.datasource>java:jboss/datasources/PostgreSQLDS</jta.datasource>
+                <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <version>4.3.7.Final</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
     
@@ -93,32 +125,5 @@
                 </includes>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                
-                <executions>
-                    <execution>
-                        <!-- Das jar ist im persistence.xml eingetragen, ohne diese 'hinkopieren' wuerde das jar nicht gefunden werden-->
-                        <id>copy</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.kore.runtime</groupId>
-                                    <artifactId>KoreRuntime-jpa</artifactId>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

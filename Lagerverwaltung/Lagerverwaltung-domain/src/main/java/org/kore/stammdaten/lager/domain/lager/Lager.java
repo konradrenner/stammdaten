@@ -31,6 +31,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -54,7 +55,7 @@ public class Lager implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    @Column(name = "lager_id")
+    @Column(name = "id")
     private Short lagerId;
     @Column
     @NotNull
@@ -76,7 +77,7 @@ public class Lager implements Serializable {
     private EMail email;
     @Version
     private int version;
-    @JoinColumn(name = "lager_id")
+    @JoinTable(name = "LAGERRAUM", joinColumns = @JoinColumn(name = "lager_id", referencedColumnName = "id"))
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<LagerraumKey, Lagerraum> lagerraeume;
 

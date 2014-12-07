@@ -63,13 +63,11 @@ public class DefaultArtikelRepository implements ArtikelRepository {
 
     @Override
     public List<Artikel> findByTyp(@NotNull Artikelgruppe.Typ typ) {
-        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppeTyp", Artikel.class).setParameter("typ", typ).getResultList();
-        return Collections.unmodifiableList(resultList);
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung) {
-        List<Artikel> resultList = em.createNamedQuery("Artikel.findByArtikelgruppe", Artikel.class).setParameter("bezeichnung", bezeichnung).getResultList();
-        return Collections.unmodifiableList(resultList);
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

@@ -48,8 +48,6 @@ import org.kore.runtime.specifications.Identifier;
 @NamedQueries({
     @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a"),
     @NamedQuery(name = "Artikel.findByBezeichnung", query = "SELECT a FROM Artikel a WHERE a.bezeichnung = :bezeichnung"),
-    @NamedQuery(name = "Artikel.findByArtikelgruppeTyp", query = "SELECT a FROM Artikel a, Artikelgruppe g WHERE a = g.artikel AND g.typ = :typ"),
-    @NamedQuery(name = "Artikel.findByArtikelgruppe", query = "SELECT a FROM Artikel a, Artikelgruppe g WHERE a = g.artikel AND g.bezeichnung = :bezeichnung")
 })
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -72,8 +70,11 @@ public class Artikel implements Serializable {
     @Version
     private int version;
     @ManyToMany
-    @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE", joinColumns = {
-        @JoinColumn(name = "artikel_id")})
+    @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE",
+            joinColumns = {
+                @JoinColumn(name = "artikel_id", referencedColumnName = "artikel_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "bezeichnung", referencedColumnName = "bezeichnung")})
     private Collection<Artikelgruppe> artikelGruppen;
 
     protected Artikel() {
