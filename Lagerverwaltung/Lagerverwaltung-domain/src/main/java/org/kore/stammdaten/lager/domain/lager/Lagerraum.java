@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import javax.persistence.CascadeType;
@@ -57,17 +58,11 @@ public class Lagerraum implements Serializable {
     @NotNull
     @Embedded
     private Identifier bezeichnung;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column
     @NotNull
-    private BigDecimal volumen;
+    @Embedded
+    private Volumen volumen;
     @Version
     private int version;
-    @NotNull
-    @Size(min = 1, max = 3)
-    @Column(name = "volumen_einheit")
-    private String volumenEinheit;
-
     @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)
     @ManyToOne
     private Lager lager;
@@ -81,17 +76,12 @@ public class Lagerraum implements Serializable {
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, BigDecimal volumen, String volumenEinheit, Collection<Vorrat> vorraete) {
+    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, Volumen volumen) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
-        this.volumenEinheit = volumenEinheit;
-        this.vorraete = vorraete;
-    }
-
-    public Lagerraum(short raumId, short lagerId) {
-        this.lagerraumPK = new LagerraumKey(raumId, lagerId);
+        this.vorraete = new ArrayList<>();
     }
 
     public Collection<Vorrat> getVorraete() {
@@ -103,15 +93,19 @@ public class Lagerraum implements Serializable {
         for (Vorrat vorrat : vorraete) {
             verbrauchtesVolumen = verbrauchtesVolumen.add(vorrat.getEinheiten().multiply(vorrat.getVolumenVerbrauch()));
         }
-        return getVolumen().subtract(verbrauchtesVolumen);
+        return getVolumen().getGroesse().subtract(verbrauchtesVolumen);
     }
 
     Lager getLager() {
         return lager;
     }
 
-    public LagerraumKey getLagerraumPK() {
+    LagerraumKey getLagerraumPK() {
         return lagerraumPK;
+    }
+
+    public RaumId getRaumId() {
+        return lagerraumPK.getRaumId();
     }
 
     public String getTyp() {
@@ -122,16 +116,12 @@ public class Lagerraum implements Serializable {
         return bezeichnung;
     }
 
-    public BigDecimal getVolumen() {
+    public Volumen getVolumen() {
         return volumen;
     }
 
     public int getVersion() {
         return version;
-    }
-
-    public String getVolumenEinheit() {
-        return volumenEinheit;
     }
 
     @Override
@@ -156,7 +146,8 @@ public class Lagerraum implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.Lagerraum[ lagerraumPK=" + lagerraumPK + " ]";
+        return "Lagerraum{" + "lagerraumPK=" + lagerraumPK + ", typ=" + typ + ", bezeichnung=" + bezeichnung + ", volumen=" + volumen + ", version=" + version + ", lager=" + lager + ", vorraete=" + vorraete + '}';
     }
+
 
 }

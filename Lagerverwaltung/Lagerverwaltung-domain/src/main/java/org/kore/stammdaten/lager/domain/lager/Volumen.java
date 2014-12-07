@@ -16,27 +16,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.artikel;
+package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
+@Embeddable
+public class Volumen implements Serializable {
 
-    Artikel find(@NotNull Integer artikelId);
+    @Column
+    @NotNull
+    private BigDecimal groesse;
 
-    List<Artikel> findAll();
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Masseinheit einheit;
 
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
+    protected Volumen() {
+    }
 
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
+    public Volumen(BigDecimal groesse, Masseinheit einheit) {
+        this.groesse = groesse;
+        this.einheit = einheit;
+    }
 
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
+    public BigDecimal getGroesse() {
+        return groesse;
+    }
+
+    public Masseinheit getEinheit() {
+        return einheit;
+    }
 
 }

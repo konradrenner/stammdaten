@@ -19,24 +19,26 @@
 package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
+import org.kore.runtime.currency.Money;
 import org.kore.runtime.specifications.Identifier;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
+@AggregateArtikel
+@RequestScoped
+public class ArtikelFactory implements Serializable {
 
-    Artikel find(@NotNull Integer artikelId);
+    public Artikel createArtikel(@NotNull Identifier bezeichnung, @NotNull Money preis) {
+        //muss noch ueberprueft werden bei neuanlage, wegen sequence
+        ArtikelId id = new ArtikelId(0);
+        return new Artikel(id, bezeichnung, preis);
+    }
 
-    List<Artikel> findAll();
-
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
-
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
-
+    public Artikelgruppe createArtikelgruppe(@NotNull Identifier bezeichnung, @NotNull Artikelgruppe.Typ typ) {
+        return new Artikelgruppe(bezeichnung, typ);
+    }
 }

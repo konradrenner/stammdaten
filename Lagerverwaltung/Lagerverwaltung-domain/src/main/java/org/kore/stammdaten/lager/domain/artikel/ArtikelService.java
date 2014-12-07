@@ -19,24 +19,18 @@
 package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
+@AggregateArtikel
+@RequestScoped
+public class ArtikelService implements Serializable {
 
-    Artikel find(@NotNull Integer artikelId);
-
-    List<Artikel> findAll();
-
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
-
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
-
+    public void changeArtikelgruppeTyp(@NotNull Artikelgruppe gruppe, @NotNull Artikelgruppe.Typ typ) {
+        gruppe.setTyp(typ);
+    }
 }

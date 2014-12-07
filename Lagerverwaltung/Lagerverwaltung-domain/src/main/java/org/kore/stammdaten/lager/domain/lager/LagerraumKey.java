@@ -39,17 +39,17 @@ public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
     protected LagerraumKey() {
     }
 
-    protected LagerraumKey(short lagerId, short raumId) {
-        this.raumId = raumId;
-        this.lagerId = lagerId;
+    protected LagerraumKey(LagerId lagerId, RaumId raumId) {
+        this.raumId = raumId.getValue();
+        this.lagerId = lagerId.getValue();
     }
 
-    public short getRaumId() {
-        return raumId;
+    public RaumId getRaumId() {
+        return new RaumId(raumId);
     }
 
-    public short getLagerId() {
-        return lagerId;
+    public LagerId getLagerId() {
+        return new LagerId(lagerId);
     }
 
     @Override

@@ -16,27 +16,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.artikel;
+package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
-
-    Artikel find(@NotNull Integer artikelId);
-
-    List<Artikel> findAll();
-
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
-
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
-
+@AggregateLager
+@RequestScoped
+public class LagerService implements Serializable {
+    
+    public void changeAdressId(@NotNull Lager lager, @NotNull String adressId) {
+        lager.setAdressid(adressId);
+    }
 }

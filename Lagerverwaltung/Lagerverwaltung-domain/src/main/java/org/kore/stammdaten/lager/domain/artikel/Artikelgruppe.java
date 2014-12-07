@@ -21,6 +21,7 @@ package org.kore.stammdaten.lager.domain.artikel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -65,19 +66,26 @@ public class Artikelgruppe implements Serializable {
     protected Artikelgruppe() {
     }
 
-    protected Artikelgruppe(Identifier bezeichnung, Description beschreibung, Typ typ) {
+    protected Artikelgruppe(Identifier bezeichnung, Typ typ) {
         this.bezeichnung = bezeichnung;
-        this.beschreibung = beschreibung;
         this.typ = typ;
         this.artikel = new ArrayList<>();
     }
 
-    public Description getBeschreibung() {
-        return beschreibung;
+    public Optional<Description> getBeschreibung() {
+        return Optional.ofNullable(beschreibung);
     }
 
     public Identifier getBezeichnung() {
         return bezeichnung;
+    }
+
+    public void setBeschreibung(Description beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    void setTyp(Typ typ) {
+        this.typ = typ;
     }
 
     public Typ getTyp() {

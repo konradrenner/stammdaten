@@ -20,7 +20,10 @@ package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -34,6 +37,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
@@ -47,7 +52,7 @@ import org.kore.runtime.specifications.Identifier;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Artikel.findAll", query = "SELECT a FROM Artikel a"),
-    @NamedQuery(name = "Artikel.findByBezeichnung", query = "SELECT a FROM Artikel a WHERE a.bezeichnung = :bezeichnung"),
+    @NamedQuery(name = "Artikel.findByBezeichnung", query = "SELECT a FROM Artikel a WHERE a.bezeichnung = :bezeichnung")
 })
 public class Artikel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -77,19 +82,28 @@ public class Artikel implements Serializable {
                 @JoinColumn(name = "bezeichnung", referencedColumnName = "bezeichnung")})
     private Collection<Artikelgruppe> artikelGruppen;
 
+    @Transient
+    private ArtikelId id;
+
     protected Artikel() {
     }
 
-    protected Artikel(Identifier bezeichnung, Description beschreibung, Money preis) {
+    protected Artikel(ArtikelId id, Identifier bezeichnung, Money preis) {
+        //TODO bei einer neuen entity eventuell auch artikelId setzen
+        this.id = id;
         this.bezeichnung = bezeichnung;
-        this.beschreibung = beschreibung;
         this.preis = preis;
         this.artikelGruppen = new ArrayList<>();
     }
 
+    @PostLoad
+    protected void initId() {
+        this.id = new ArtikelId(artikelId);
+    }
 
-    public int getArtikelId() {
-        return artikelId;
+
+    public ArtikelId getArtikelId() {
+        return id;
     }
 
     public int getVersion() {
@@ -100,8 +114,16 @@ public class Artikel implements Serializable {
         return bild;
     }
 
-    public Description getBeschreibung() {
-        return beschreibung;
+    public void setBild(byte[] bild) {
+        this.bild = bild;
+    }
+
+    public Optional<Description> getBeschreibung() {
+        return Optional.ofNullable(beschreibung);
+    }
+
+    public void setBeschreibung(Description beschreibung) {
+        this.beschreibung = beschreibung;
     }
 
     public Identifier getBezeichnung() {
@@ -113,7 +135,33 @@ public class Artikel implements Serializable {
     }
 
     public Collection<Artikelgruppe> getArtikelGruppen() {
-        return artikelGruppen;
+        return Collections.unmodifiableCollection(artikelGruppen);
+    }
+
+    public void addArtikelGruppen(Artikelgruppe... gruppen) {
+        this.artikelGruppen.addAll(Arrays.asList(gruppen));
+    }
+
+    public void removeArtikelGruppen(Identifier... gruppenBezeichnung) {
+        //TODO Java 8 Streams benutzen
+        for (Artikelgruppe gruppe : this.artikelGruppen) {
+            for (Identifier bez : gruppenBezeichnung) {
+                if (gruppe.getBezeichnung().equals(bez)) {
+                    this.artikelGruppen.remove(gruppe);
+                }
+            }
+        }
+    }
+
+    public void removeArtikelGruppen(Artikelgruppe.Typ... typen) {
+        //TODO Java 8 Streams benutzen
+        for (Artikelgruppe gruppe : this.artikelGruppen) {
+            for (Artikelgruppe.Typ typ : typen) {
+                if (gruppe.getTyp().equals(typ)) {
+                    this.artikelGruppen.remove(gruppe);
+                }
+            }
+        }
     }
 
     @Override

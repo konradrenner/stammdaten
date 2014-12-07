@@ -16,27 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.artikel;
-
-import java.io.Serializable;
-import java.util.List;
-import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
+package org.kore.stammdaten.lager.domain.lager;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
-
-    Artikel find(@NotNull Integer artikelId);
-
-    List<Artikel> findAll();
-
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
-
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
-
+public enum Masseinheit {
+    STK, CR, CT, LTR;
 }

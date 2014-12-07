@@ -19,7 +19,7 @@
 package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
@@ -30,7 +30,7 @@ import org.kore.stammdaten.lager.domain.versandkosten.validation.ConsistentMoney
  * @author Konrad Renner
  */
 @AggregateVersandkosten
-@Dependent
+@RequestScoped
 public class VersandkostenFactory implements Serializable {
 
     public Versandkosten create(@NotNull Land land, @NotNull Money betrag) {

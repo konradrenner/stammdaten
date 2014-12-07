@@ -16,10 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.artikel;
+package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 
@@ -27,16 +27,15 @@ import org.kore.runtime.specifications.Identifier;
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
+@AggregateLager
+@RequestScoped
+public class LagerFactory implements Serializable {
 
-    Artikel find(@NotNull Integer artikelId);
-
-    List<Artikel> findAll();
-
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
-
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
-
+    public Lager createLager(@NotNull String adressid, @NotNull Identifier bezeichnung, Lagerraum... lagerraeume) {
+        //muss noch ueberprueft werden bei neuanlage, wegen sequence
+        LagerId id = new LagerId(0);
+        Lager lager = new Lager(adressid, bezeichnung);
+        lager.addLagerraeume(lagerraeume);
+        return lager;
+    }
 }

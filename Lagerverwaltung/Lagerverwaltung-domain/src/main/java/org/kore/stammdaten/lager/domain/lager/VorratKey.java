@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelId;
 
 /**
  *
@@ -42,22 +43,18 @@ public class VorratKey implements Serializable {
     protected VorratKey() {
     }
 
-    protected VorratKey(int artikelId, short raumId, short lagerId) {
-        this.artikelId = artikelId;
-        this.raumId = raumId;
-        this.lagerId = lagerId;
+    protected VorratKey(ArtikelId artikelId, LagerraumKey lagerraum) {
+        this.artikelId = artikelId.getValue();
+        this.raumId = lagerraum.getRaumId().getValue();
+        this.lagerId = lagerraum.getLagerId().getValue();
     }
 
-    public int getArtikelId() {
-        return artikelId;
+    public ArtikelId getArtikelId() {
+        return new ArtikelId(artikelId);
     }
 
-    public short getRaumId() {
-        return raumId;
-    }
-
-    public short getLagerId() {
-        return lagerId;
+    public LagerraumKey getLagerraumKey() {
+        return new LagerraumKey(new LagerId(lagerId), new RaumId(raumId));
     }
 
     @Override

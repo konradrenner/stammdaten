@@ -16,27 +16,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package org.kore.stammdaten.lager.domain.artikel;
+package org.kore.stammdaten.lager.domain.lager;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.validation.constraints.NotNull;
-import org.kore.runtime.specifications.Identifier;
+import org.kore.runtime.base.Scalar;
 
 /**
  *
  * @author Konrad Renner
  */
-public interface ArtikelRepository extends Serializable {
+public class RaumId extends Scalar<Short> {
 
-    Artikel find(@NotNull Integer artikelId);
+    private final Short value;
 
-    List<Artikel> findAll();
+    public RaumId(short value) {
+        this.value = value;
+    }
 
-    List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
+    public RaumId(int value) {
+        this((short) value);
+    }
 
-    Artikel findByBezeichnung(@NotNull Identifier bezeichnung);
-
-    List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
+    @Override
+    public Short getValue() {
+        return value;
+    }
 
 }

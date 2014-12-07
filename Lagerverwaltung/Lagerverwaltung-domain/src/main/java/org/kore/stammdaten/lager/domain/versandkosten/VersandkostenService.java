@@ -20,7 +20,7 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
 import java.util.Currency;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.currency.MoneyTranslator;
@@ -30,7 +30,7 @@ import org.kore.runtime.currency.MoneyTranslator;
  * @author Konrad Renner
  */
 @AggregateVersandkosten
-@Dependent
+@RequestScoped
 public class VersandkostenService implements Serializable {
 
     VersandkostenService() {

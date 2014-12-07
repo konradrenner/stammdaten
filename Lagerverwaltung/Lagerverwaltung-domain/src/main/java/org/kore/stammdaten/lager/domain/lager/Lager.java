@@ -20,7 +20,10 @@ package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +37,8 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -80,36 +85,57 @@ public class Lager implements Serializable {
     @MapKeyColumn(name = "raum_id")
     private Map<Short, Lagerraum> lagerraeume;
 
+    @Transient
+    private LagerId id;
+
     public Lager() {
     }
 
-    public Lager(String adressid, Identifier bezeichnung, Description beschreibung, String adressidTelefon, String adressidFax, EMail email) {
+    public Lager(String adressid, Identifier bezeichnung) {
         this.adressid = adressid;
         this.bezeichnung = bezeichnung;
-        this.beschreibung = beschreibung;
-        this.adressidTelefon = adressidTelefon;
-        this.adressidFax = adressidFax;
-        this.email = email;
+        this.lagerraeume = new HashMap<>();
     }
 
-    public Short getLagerId() {
-        return lagerId;
+    @PostLoad
+    protected void initId() {
+        this.id = new LagerId(lagerId);
+    }
+
+    public LagerId getLagerId() {
+        return id;
     }
 
     public String getAdressid() {
         return adressid;
     }
 
-    public String getAdressidTelefon() {
-        return adressidTelefon;
+    void setAdressid(String adressid) {
+        this.adressid = adressid;
     }
 
-    public String getAdressidFax() {
-        return adressidFax;
+    public Optional<String> getAdressidTelefon() {
+        return Optional.ofNullable(adressidTelefon);
     }
 
-    public EMail getEmail() {
-        return email;
+    public void setAdressidTelefon(String adressidTelefon) {
+        this.adressidTelefon = adressidTelefon;
+    }
+
+    public Optional<String> getAdressidFax() {
+        return Optional.ofNullable(adressidFax);
+    }
+
+    public void setAdressidFax(String adressidFax) {
+        this.adressidFax = adressidFax;
+    }
+
+    public Optional<EMail> getEmail() {
+        return Optional.ofNullable(email);
+    }
+
+    public void setEmail(EMail email) {
+        this.email = email;
     }
 
     public int getVersion() {
@@ -117,20 +143,37 @@ public class Lager implements Serializable {
     }
 
     public Collection<Lagerraum> getLagerraeume() {
-        return lagerraeume.values();
+        return Collections.unmodifiableCollection(lagerraeume.values());
     }
 
-    public Lagerraum getLagerraum(short raumid) {
-        return lagerraeume.get(raumid);
+    public Lagerraum getLagerraum(RaumId raumid) {
+        return lagerraeume.get(raumid.getValue());
+    }
+
+    public void addLagerraeume(Lagerraum... raeume) {
+        for (Lagerraum raum : raeume) {
+            this.lagerraeume.put(raum.getLagerraumPK().getRaumId().getValue(), raum);
+        }
+    }
+
+    public void removeLagerraeume(RaumId... raeume) {
+        for (RaumId raum : raeume) {
+            this.lagerraeume.remove(raum.getValue());
+        }
     }
 
     public Identifier getBezeichnung() {
         return bezeichnung;
     }
 
-    public Description getBeschreibung() {
-        return beschreibung;
+    public Optional<Description> getBeschreibung() {
+        return Optional.ofNullable(beschreibung);
     }
+
+    public void setBeschreibung(Description beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
 
     @Override
     public int hashCode() {
@@ -154,7 +197,7 @@ public class Lager implements Serializable {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.Lager[ lagerId=" + lagerId + " ]";
+        return "Lager{" + "lagerId=" + lagerId + ", adressid=" + adressid + ", bezeichnung=" + bezeichnung + ", beschreibung=" + beschreibung + ", adressidTelefon=" + adressidTelefon + ", adressidFax=" + adressidFax + ", email=" + email + ", version=" + version + ", lagerraeume=" + lagerraeume + '}';
     }
 
 }
