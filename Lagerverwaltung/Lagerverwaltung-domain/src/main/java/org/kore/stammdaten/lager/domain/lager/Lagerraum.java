@@ -29,6 +29,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -66,14 +67,10 @@ public class Lagerraum implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "volumen_einheit")
     private String volumenEinheit;
-//    @JoinColumn(name = "lager_id", insertable = false, updatable = false)
-//    @MapsId(value = "lagerId")
-//    @ManyToOne
-//    private Lager lager;
-//    @MapKeyJoinColumns({
-//        @MapKeyJoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
-//        @MapKeyJoinColumn(name = "raum_id", referencedColumnName = "raum_id")
-//    })
+
+    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)
+    @ManyToOne
+    private Lager lager;
     @JoinColumns({
         @JoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
         @JoinColumn(name = "raum_id", referencedColumnName = "raum_id")
@@ -107,6 +104,10 @@ public class Lagerraum implements Serializable {
             verbrauchtesVolumen = verbrauchtesVolumen.add(vorrat.getEinheiten().multiply(vorrat.getVolumenVerbrauch()));
         }
         return getVolumen().subtract(verbrauchtesVolumen);
+    }
+
+    Lager getLager() {
+        return lager;
     }
 
     public LagerraumKey getLagerraumPK() {

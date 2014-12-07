@@ -30,8 +30,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,7 +54,7 @@ public class Lager implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    @Column(name = "id")
+    @Column(name = "lager_id")
     private Short lagerId;
     @Column
     @NotNull
@@ -77,9 +76,9 @@ public class Lager implements Serializable {
     private EMail email;
     @Version
     private int version;
-    @JoinTable(name = "LAGERRAUM", joinColumns = @JoinColumn(name = "lager_id", referencedColumnName = "id"))
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Map<LagerraumKey, Lagerraum> lagerraeume;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "lager")
+    @MapKeyColumn(name = "raum_id")
+    private Map<Short, Lagerraum> lagerraeume;
 
     public Lager() {
     }
@@ -122,7 +121,7 @@ public class Lager implements Serializable {
     }
 
     public Lagerraum getLagerraum(short raumid) {
-        return lagerraeume.get(new LagerraumKey(raumid, lagerId));
+        return lagerraeume.get(raumid);
     }
 
     public Identifier getBezeichnung() {
