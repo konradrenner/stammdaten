@@ -75,7 +75,7 @@ public class Vorrat implements Serializable {
         return volumenVerbrauch;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 

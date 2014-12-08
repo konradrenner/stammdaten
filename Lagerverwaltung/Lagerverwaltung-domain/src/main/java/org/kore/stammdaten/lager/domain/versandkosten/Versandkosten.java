@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
@@ -76,11 +77,11 @@ public class Versandkosten implements Serializable {
         return this.betrag;
     }
 
-    public Money getFreibetrag() {
+    public Optional<Money> getFreibetrag() {
         if (this.freibetrag == null) {
-            return null;
+            return Optional.empty();
         }
-        return new Money(this.freibetrag, this.betrag.getCurrency());
+        return Optional.of(new Money(this.freibetrag, this.betrag.getCurrency()));
     }
 
     void setFreibetrag(BigDecimal freibetrag) {

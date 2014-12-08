@@ -138,7 +138,7 @@ public class Lager implements Serializable {
         this.email = email;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 

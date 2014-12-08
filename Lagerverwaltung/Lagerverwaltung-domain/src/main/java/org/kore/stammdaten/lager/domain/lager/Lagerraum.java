@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -36,7 +37,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.kore.runtime.specifications.Identifier;
 
 /**
@@ -49,12 +49,17 @@ import org.kore.runtime.specifications.Identifier;
 })
 public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public enum Typ {
+
+        KUEHL, LAGER, BUERO, KONTROLL;
+    }
+
     @EmbeddedId
     protected LagerraumKey lagerraumPK;
-    @Column
     @NotNull
-    @Size(min = 1, max = 8)
-    private String typ;
+    @Enumerated(EnumType.STRING)
+    private Typ typ;
     @NotNull
     @Embedded
     private Identifier bezeichnung;
@@ -76,12 +81,16 @@ public class Lagerraum implements Serializable {
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumKey lagerraumPK, String typ, Identifier bezeichnung, Volumen volumen) {
+    protected Lagerraum(LagerraumKey lagerraumPK, Typ typ, Identifier bezeichnung, Volumen volumen) {
+        this(lagerraumPK, typ, bezeichnung, volumen, new ArrayList<>());
+    }
+
+    Lagerraum(LagerraumKey lagerraumPK, Typ typ, Identifier bezeichnung, Volumen volumen, Collection<Vorrat> vorraete) {
         this.lagerraumPK = lagerraumPK;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
-        this.vorraete = new ArrayList<>();
+        this.vorraete = vorraete;
     }
 
     public Collection<Vorrat> getVorraete() {
@@ -108,7 +117,7 @@ public class Lagerraum implements Serializable {
         return lagerraumPK.getRaumId();
     }
 
-    public String getTyp() {
+    public Typ getTyp() {
         return typ;
     }
 
@@ -120,7 +129,7 @@ public class Lagerraum implements Serializable {
         return volumen;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 

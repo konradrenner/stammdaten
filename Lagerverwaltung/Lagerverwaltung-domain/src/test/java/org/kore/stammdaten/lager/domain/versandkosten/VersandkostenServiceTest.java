@@ -6,8 +6,8 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.NoSuchElementException;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.kore.runtime.currency.Money;
@@ -55,14 +55,14 @@ public class VersandkostenServiceTest {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("EUR"));
         service.changeFreibetrag(translator, testObject, newmoney);
 
-        assertEquals(newmoney, testObject.getFreibetrag());
+        assertEquals(newmoney, testObject.getFreibetrag().get());
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testChangeFreibetragNull() {
         service.changeFreibetrag(translator, testObject, null);
 
-        assertNull(testObject.getFreibetrag());
+        testObject.getFreibetrag().get();
     }
 
     @Test
@@ -70,15 +70,15 @@ public class VersandkostenServiceTest {
         Money newmoney = new Money(BigDecimal.TEN, Currency.getInstance("USD"));
         service.changeFreibetrag(translator, testObject, newmoney);
 
-        assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("EUR")), testObject.getFreibetrag());
+        assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("EUR")), testObject.getFreibetrag().get());
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testChangeCurrencyFreibetragNull() {
         service.changeCurrency(translator, testObject, Currency.getInstance("USD"));
 
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());
-        assertNull(testObject.getFreibetrag());
+        testObject.getFreibetrag().get();
     }
     
     @Test
@@ -87,7 +87,7 @@ public class VersandkostenServiceTest {
         service.changeCurrency(translator, testObject, Currency.getInstance("USD"));
         
         assertEquals(new Money(BigDecimal.ONE, Currency.getInstance("USD")), testObject.getBetrag());
-        assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("USD")), testObject.getFreibetrag());
+        assertEquals(new Money(BigDecimal.valueOf(11), Currency.getInstance("USD")), testObject.getFreibetrag().get());
     }
 
     @Test

@@ -106,7 +106,7 @@ public class Artikel implements Serializable {
         return id;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 

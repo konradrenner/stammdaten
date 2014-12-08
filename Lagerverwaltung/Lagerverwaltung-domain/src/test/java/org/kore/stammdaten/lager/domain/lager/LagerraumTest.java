@@ -26,6 +26,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelId;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -46,12 +47,13 @@ public class LagerraumTest {
 
     @Before
     public void setUp() {
-        VorratKey key1 = new VorratKey(1, (short) 1, (short) 1);
+
+        VorratKey key1 = new VorratKey(new ArtikelId(1), new LagerraumKey(new LagerId(1), new RaumId(1)));
         when(vorratArtikel1.getVorratPK()).thenReturn(key1);
         when(vorratArtikel1.getEinheiten()).thenReturn(BigDecimal.valueOf(2));
         when(vorratArtikel1.getVolumenVerbrauch()).thenReturn(BigDecimal.valueOf(5));
 
-        VorratKey key2 = new VorratKey(2, (short) 1, (short) 1);
+        VorratKey key2 = new VorratKey(new ArtikelId(2), new LagerraumKey(new LagerId(1), new RaumId(1)));
         when(vorratArtikel2.getVorratPK()).thenReturn(key2);
         when(vorratArtikel2.getEinheiten()).thenReturn(BigDecimal.valueOf(5));
         when(vorratArtikel2.getVolumenVerbrauch()).thenReturn(BigDecimal.valueOf(1));
@@ -66,8 +68,8 @@ public class LagerraumTest {
         BigDecimal gesamtVolumen = BigDecimal.valueOf(20);
         BigDecimal expected = BigDecimal.valueOf(5);
 
-        LagerraumKey lagerraumKey = new LagerraumKey((short) 1, (short) 1);
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete.values());
+        LagerraumKey lagerraumKey = new LagerraumKey(new LagerId(1), new RaumId(1));
+        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(expected));
     }
@@ -77,8 +79,8 @@ public class LagerraumTest {
         vorraete = new HashMap<>();
         BigDecimal gesamtVolumen = BigDecimal.valueOf(20);
 
-        LagerraumKey lagerraumKey = new LagerraumKey((short) 1, (short) 1);
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, gesamtVolumen, null, vorraete.values());
+        LagerraumKey lagerraumKey = new LagerraumKey(new LagerId(1), new RaumId(1));
+        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(gesamtVolumen));
     }

@@ -92,7 +92,7 @@ public class Artikelgruppe implements Serializable {
         return typ;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 

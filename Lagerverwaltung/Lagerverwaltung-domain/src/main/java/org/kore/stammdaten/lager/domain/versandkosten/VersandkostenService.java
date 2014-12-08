@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.domain.versandkosten;
 
 import java.io.Serializable;
 import java.util.Currency;
+import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.currency.Money;
@@ -60,9 +61,9 @@ public class VersandkostenService implements Serializable {
 
         object.setBetrag(correctBetrag);
         
-        Money freibetrag = object.getFreibetrag();
-        if (freibetrag != null) {
-            correctBetrag = umrechner.translate(freibetrag, actualCurrency);
+        Optional<Money> freibetrag = object.getFreibetrag();
+        if (freibetrag.isPresent()) {
+            correctBetrag = umrechner.translate(freibetrag.get(), actualCurrency);
             object.setFreibetrag(correctBetrag.getAmount());
         }
     }
@@ -110,10 +111,10 @@ public class VersandkostenService implements Serializable {
     public void changeCurrency(@NotNull MoneyTranslator umrechner, @NotNull Versandkosten object, @NotNull Currency newCurrency) {
         Money newBetrag = umrechner.translate(object.getBetrag(), newCurrency);
 
-        Money newFreibetrag = object.getFreibetrag();
-        if (newFreibetrag != null) {
-            newFreibetrag = umrechner.translate(object.getFreibetrag(), newCurrency);
-            object.setFreibetrag(newFreibetrag.getAmount());
+        Optional<Money> newFreibetrag = object.getFreibetrag();
+        if (newFreibetrag.isPresent()) {
+            Money umgerechnet = umrechner.translate(object.getFreibetrag().get(), newCurrency);
+            object.setFreibetrag(umgerechnet.getAmount());
         }
         
         object.setBetrag(newBetrag);

@@ -33,20 +33,20 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Volumen implements Serializable {
 
-    @Column
+    @Column(name = "volumen")
     @NotNull
     private BigDecimal groesse;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Masseinheit einheit;
+    private Masseinheit volumen_einheit;
 
     protected Volumen() {
     }
 
     public Volumen(BigDecimal groesse, Masseinheit einheit) {
         this.groesse = groesse;
-        this.einheit = einheit;
+        this.volumen_einheit = einheit;
     }
 
     public BigDecimal getGroesse() {
@@ -54,7 +54,7 @@ public class Volumen implements Serializable {
     }
 
     public Masseinheit getEinheit() {
-        return einheit;
+        return volumen_einheit;
     }
 
 }
