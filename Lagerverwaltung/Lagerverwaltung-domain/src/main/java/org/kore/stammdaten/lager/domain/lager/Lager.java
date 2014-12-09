@@ -82,16 +82,16 @@ public class Lager implements Serializable {
     @Version
     private int version;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "lager")
-    @MapKeyColumn(name = "raum_id")
+    @MapKeyColumn(name = "raum_id", insertable = false, updatable = false)
     private Map<Short, Lagerraum> lagerraeume;
 
     @Transient
     private LagerId id;
 
-    public Lager() {
+    protected Lager() {
     }
 
-    public Lager(String adressid, Identifier bezeichnung) {
+    protected Lager(String adressid, Identifier bezeichnung) {
         this.adressid = adressid;
         this.bezeichnung = bezeichnung;
         this.lagerraeume = new HashMap<>();
@@ -152,7 +152,7 @@ public class Lager implements Serializable {
 
     public void addLagerraeume(Lagerraum... raeume) {
         for (Lagerraum raum : raeume) {
-            this.lagerraeume.put(raum.getLagerraumPK().getRaumId().getValue(), raum);
+            this.lagerraeume.put(raum.getRaumId().getValue(), raum);
         }
     }
 

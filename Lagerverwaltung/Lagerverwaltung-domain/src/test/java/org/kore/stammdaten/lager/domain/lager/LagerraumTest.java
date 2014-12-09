@@ -42,6 +42,8 @@ public class LagerraumTest {
     private Vorrat vorratArtikel1;
     @Mock
     private Vorrat vorratArtikel2;
+    @Mock
+    private Lager lager;
 
     private Map<VorratKey, Vorrat> vorraete;
 
@@ -68,8 +70,7 @@ public class LagerraumTest {
         BigDecimal gesamtVolumen = BigDecimal.valueOf(20);
         BigDecimal expected = BigDecimal.valueOf(5);
 
-        LagerraumKey lagerraumKey = new LagerraumKey(new LagerId(1), new RaumId(1));
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
+        Lagerraum raum = new Lagerraum(lager, new RaumId(1), null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(expected));
     }
@@ -80,7 +81,7 @@ public class LagerraumTest {
         BigDecimal gesamtVolumen = BigDecimal.valueOf(20);
 
         LagerraumKey lagerraumKey = new LagerraumKey(new LagerId(1), new RaumId(1));
-        Lagerraum raum = new Lagerraum(lagerraumKey, null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
+        Lagerraum raum = new Lagerraum(lager, new RaumId(1), null, null, new Volumen(gesamtVolumen, Masseinheit.STK), vorraete.values());
 
         assertThat(raum.getFreiesVolumen(), is(gesamtVolumen));
     }

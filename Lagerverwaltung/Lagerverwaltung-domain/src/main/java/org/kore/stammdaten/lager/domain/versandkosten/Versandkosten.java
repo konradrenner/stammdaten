@@ -64,7 +64,7 @@ public class Versandkosten implements Serializable {
         return version;
     }
 
-    public Versandkosten(Land land, Money betrag) {
+    Versandkosten(Land land, Money betrag) {
         this.land = land;
         this.betrag = betrag;
     }

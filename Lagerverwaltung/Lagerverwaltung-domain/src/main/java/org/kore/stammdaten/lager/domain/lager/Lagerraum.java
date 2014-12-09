@@ -24,17 +24,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
@@ -47,6 +51,7 @@ import org.kore.runtime.specifications.Identifier;
 @NamedQueries({
     @NamedQuery(name = "Lagerraum.findAll", query = "SELECT l FROM Lagerraum l")
 })
+@IdClass(LagerraumKey.class)
 public class Lagerraum implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -55,8 +60,14 @@ public class Lagerraum implements Serializable {
         KUEHL, LAGER, BUERO, KONTROLL;
     }
 
-    @EmbeddedId
-    protected LagerraumKey lagerraumPK;
+    @Id
+    @Column(name = "raum_id")
+    private short raumId;
+    @Id
+    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id")
+    @ManyToOne
+    private Lager lager;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Typ typ;
@@ -68,9 +79,9 @@ public class Lagerraum implements Serializable {
     private Volumen volumen;
     @Version
     private int version;
-    @JoinColumn(name = "lager_id", referencedColumnName = "lager_id", insertable = false, updatable = false)
-    @ManyToOne
-    private Lager lager;
+    @Transient
+    private RaumId id;
+    
     @JoinColumns({
         @JoinColumn(name = "lager_id", referencedColumnName = "lager_id"),
         @JoinColumn(name = "raum_id", referencedColumnName = "raum_id")
@@ -81,16 +92,23 @@ public class Lagerraum implements Serializable {
     protected Lagerraum() {
     }
 
-    protected Lagerraum(LagerraumKey lagerraumPK, Typ typ, Identifier bezeichnung, Volumen volumen) {
-        this(lagerraumPK, typ, bezeichnung, volumen, new ArrayList<>());
+    protected Lagerraum(Lager lager, RaumId raumId, Typ typ, Identifier bezeichnung, Volumen volumen) {
+        this(lager, raumId, typ, bezeichnung, volumen, new ArrayList<>());
     }
 
-    Lagerraum(LagerraumKey lagerraumPK, Typ typ, Identifier bezeichnung, Volumen volumen, Collection<Vorrat> vorraete) {
-        this.lagerraumPK = lagerraumPK;
+    protected Lagerraum(Lager lager, RaumId raumId, Typ typ, Identifier bezeichnung, Volumen volumen, Collection<Vorrat> vorraete) {
+        this.lager = lager;
+        this.raumId = raumId.getValue();
+        this.id = raumId;
         this.typ = typ;
         this.bezeichnung = bezeichnung;
         this.volumen = volumen;
         this.vorraete = vorraete;
+    }
+
+    @PostLoad
+    protected void initId() {
+        this.id = new RaumId(raumId);
     }
 
     public Collection<Vorrat> getVorraete() {
@@ -109,12 +127,8 @@ public class Lagerraum implements Serializable {
         return lager;
     }
 
-    LagerraumKey getLagerraumPK() {
-        return lagerraumPK;
-    }
-
     public RaumId getRaumId() {
-        return lagerraumPK.getRaumId();
+        return this.id;
     }
 
     public Typ getTyp() {
@@ -136,7 +150,8 @@ public class Lagerraum implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (lagerraumPK != null ? lagerraumPK.hashCode() : 0);
+        hash += (lager != null ? lager.hashCode() : 0);
+        hash += this.raumId * 31;
         return hash;
     }
 
@@ -147,15 +162,15 @@ public class Lagerraum implements Serializable {
             return false;
         }
         Lagerraum other = (Lagerraum) object;
-        if ((this.lagerraumPK == null && other.lagerraumPK != null) || (this.lagerraumPK != null && !this.lagerraumPK.equals(other.lagerraumPK))) {
+        if ((this.lager == null && other.lager != null) || (this.lager != null && !this.lager.equals(other.lager))) {
             return false;
         }
-        return true;
+        return this.raumId == other.raumId;
     }
 
     @Override
     public String toString() {
-        return "Lagerraum{" + "lagerraumPK=" + lagerraumPK + ", typ=" + typ + ", bezeichnung=" + bezeichnung + ", volumen=" + volumen + ", version=" + version + ", lager=" + lager + ", vorraete=" + vorraete + '}';
+        return "Lagerraum{" + "raumId=" + raumId + ", lager=" + lager + ", typ=" + typ + ", bezeichnung=" + bezeichnung + ", volumen=" + volumen + ", version=" + version + ", lager=" + lager + ", vorraete=" + vorraete + '}';
     }
 
 

@@ -19,29 +19,21 @@
 package org.kore.stammdaten.lager.domain.lager;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Konrad Renner
  */
-@Embeddable
 public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
-    @NotNull
-    @Column(name = "raum_id")
     private short raumId;
-    @NotNull
-    @Column(name = "lager_id")
-    private short lagerId;
+    private short lager;
 
     protected LagerraumKey() {
     }
 
     protected LagerraumKey(LagerId lagerId, RaumId raumId) {
         this.raumId = raumId.getValue();
-        this.lagerId = lagerId.getValue();
+        this.lager = lagerId.getValue();
     }
 
     public RaumId getRaumId() {
@@ -49,20 +41,20 @@ public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
     }
 
     public LagerId getLagerId() {
-        return new LagerId(lagerId);
+        return new LagerId(lager);
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) raumId;
-        hash += (int) lagerId;
+        hash += (int) lager;
         return hash;
     }
 
     @Override
     public int compareTo(LagerraumKey o) {
-        int erg = lagerId - o.lagerId;
+        int erg = lager - o.lager;
         if (erg == 0) {
             erg = raumId - o.raumId;
         }
@@ -80,7 +72,7 @@ public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
         if (this.raumId != other.raumId) {
             return false;
         }
-        if (this.lagerId != other.lagerId) {
+        if (this.lager != other.lager) {
             return false;
         }
         return true;
@@ -88,7 +80,7 @@ public class LagerraumKey implements Serializable, Comparable<LagerraumKey> {
 
     @Override
     public String toString() {
-        return "org.kore.stammdaten.lager.domain.lager.LagerraumPK[ raumId=" + raumId + ", lagerId=" + lagerId + " ]";
+        return "org.kore.stammdaten.lager.domain.lager.LagerraumPK[ raumId=" + raumId + ", lagerId=" + lager + " ]";
     }
 
 }
