@@ -62,8 +62,8 @@ public class DefaultArtikelRepository implements ArtikelRepository {
     }
 
     @Override
-    public List<Artikel> findByTyp(@NotNull Artikelgruppe.Typ typ) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public List<Artikel> findByArtikelgruppenTyp(Artikelgruppe.Typ typ) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -50,14 +50,14 @@ public class LagerBean {
         ArrayList<T> ret = new ArrayList<>(findAll.size());
 
         for (Lager lager : findAll) {
-            LagerAdapterBuilder.Properties<T> build = builder.newInstance(lager.getLagerId(), lager.getBezeichnung());
+            LagerAdapterBuilder.Properties<T> build = builder.newInstance(lager.getLagerId().getValue(), lager.getBezeichnung());
 
             if (lager.getEmail() != null) {
-                build.email(lager.getEmail());
+                build.email(lager.getEmail().get());
             }
 
             if (lager.getBeschreibung() != null) {
-                build.beschreibung(lager.getBeschreibung());
+                build.beschreibung(lager.getBeschreibung().get());
             }
 
             ret.add(build.build());
@@ -69,14 +69,14 @@ public class LagerBean {
     public <T extends LagerAdapter> T getDetail(LagerAdapterBuilder<T> builder, short lagerid) {
         Lager lager = repository.find(lagerid);
 
-        LagerAdapterBuilder.Properties<T> build = builder.newInstance(lager.getLagerId(), lager.getBezeichnung());
+        LagerAdapterBuilder.Properties<T> build = builder.newInstance(lager.getLagerId().getValue(), lager.getBezeichnung());
 
         if (lager.getEmail() != null) {
-            build.email(lager.getEmail());
+            build.email(lager.getEmail().get());
         }
 
         if (lager.getBeschreibung() != null) {
-            build.beschreibung(lager.getBeschreibung());
+            build.beschreibung(lager.getBeschreibung().get());
         }
 
         return build.build();

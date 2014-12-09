@@ -62,7 +62,7 @@ public class VersandkostenBean {
         Collection<T> response = new ArrayList<>();
         for (Versandkosten kost : vkosten) {
             T dto = factory.newInstance(kost.getLand(), kost.getBetrag())
-                    .freibetrag(kost.getFreibetrag())
+                    .freibetrag(kost.getFreibetrag().orElse(null))
                     .build();
 
             response.add(dto);
@@ -74,7 +74,7 @@ public class VersandkostenBean {
         Versandkosten kost = repository.find(land);
 
         return factory.newInstance(kost.getLand(), kost.getBetrag())
-                .freibetrag(kost.getFreibetrag())
+                .freibetrag(kost.getFreibetrag().orElse(null))
                 .build();
     }
 
