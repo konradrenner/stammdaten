@@ -66,6 +66,10 @@
             <id>glassfish</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>build.glassfish</name>
+                    <value>true</value>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -84,6 +88,12 @@
         </profile>
         <profile>
             <id>wildfly</id>
+            <activation>
+                <property>
+                    <name>build.wildfly</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <properties>
                 <jta.datasource>java:/stammdatenDS</jta.datasource>
                 <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>
@@ -99,6 +109,12 @@
         </profile>
         <profile>
             <id>openshift</id>
+            <activation>
+                <property>
+                    <name>build.openshift</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <properties>
                 <jta.datasource>java:jboss/datasources/PostgreSQLDS</jta.datasource>
                 <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>

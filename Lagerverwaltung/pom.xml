@@ -15,4 +15,27 @@
     <module>Lagerverwaltung-rest</module>
     <module>Lagerverwaltung-rest-api</module>
   </modules>
+  <profiles>
+      <profile>
+          <id>glassfish</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+          <properties>
+              <build.glassfish>true</build.glassfish>
+          </properties>
+      </profile>
+      <profile>
+          <id>openshift</id>
+          <properties>
+              <build.openshift>true</build.openshift>
+          </properties>
+      </profile>
+      <profile>
+          <id>wildfly</id>
+          <properties>
+              <build.wildfly>true</build.wildfly>
+          </properties>
+      </profile>
+  </profiles>
 </project>
