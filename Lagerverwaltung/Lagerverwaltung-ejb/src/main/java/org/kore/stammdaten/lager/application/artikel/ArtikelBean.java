@@ -50,13 +50,9 @@ public class ArtikelBean {
         ArrayList<T> ret = new ArrayList<>(findAll.size());
 
         for (Artikel artikel : findAll) {
-            ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(artikel.getArtikelId().getValue(), artikel.getBezeichnung(), artikel.getPreis()).beschreibung(artikel.getBeschreibung().get()).bild(artikel.getBild());
-
-//            for (Artikelgruppe gruppe : artikel.getArtikelGruppen()) {
-//                properties.addArtikelGruppe(gruppe.getBezeichnung());
-//            }
-
-            ret.add(properties.build());
+            ret.add(builder.newInstance(artikel.getArtikelId().getValue(), artikel.getBezeichnung(), artikel.getPreis())
+                    .beschreibung(artikel.getBeschreibung().orElse(null))
+                    .bild(artikel.getBild()).build());
         }
 
         return ret;
@@ -65,15 +61,7 @@ public class ArtikelBean {
     public <T extends ArtikelAdapter> T getDetail(ArtikelAdapterBuilder<T> builder, int artikelid) {
         Artikel detail = repository.find(artikelid);
 
-        ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(detail.getArtikelId().getValue(), detail.getBezeichnung(), detail.getPreis());
-
-        if (detail.getBeschreibung() != null) {
-            properties.beschreibung(detail.getBeschreibung().get());
-        }
-
-        if (detail.getBild() != null) {
-            properties.bild(detail.getBild());
-        }
+        ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(detail.getArtikelId().getValue(), detail.getBezeichnung(), detail.getPreis()).beschreibung(detail.getBeschreibung().orElse(null)).bild(detail.getBild());
 
         for (Artikelgruppe gruppe : detail.getArtikelGruppen()) {
             properties.addArtikelGruppe(gruppe.getBezeichnung());
