@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateful;
-import javax.enterprise.context.ConversationScoped;
+import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.kore.stammdaten.lager.adapter.LagerAdapter;
 import org.kore.stammdaten.lager.adapter.LagerAdapterBuilder;
@@ -35,8 +35,8 @@ import org.kore.stammdaten.lager.domain.lager.LagerRepository;
  *
  * @author Konrad Renner
  */
-@Stateful
-@ConversationScoped
+@Stateless
+@Dependent
 @LocalBean
 public class LagerBean {
 
