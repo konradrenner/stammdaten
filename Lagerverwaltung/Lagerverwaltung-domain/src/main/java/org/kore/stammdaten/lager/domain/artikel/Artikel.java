@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -143,25 +144,21 @@ public class Artikel implements Serializable {
     }
 
     public void removeArtikelGruppen(Identifier... gruppenBezeichnung) {
-        //TODO Java 8 Streams benutzen
-        for (Artikelgruppe gruppe : this.artikelGruppen) {
-            for (Identifier bez : gruppenBezeichnung) {
-                if (gruppe.getBezeichnung().equals(bez)) {
-                    this.artikelGruppen.remove(gruppe);
-                }
-            }
-        }
+        List<Identifier> bezeichnungen = Arrays.asList(gruppenBezeichnung);
+        this.artikelGruppen.stream().forEach((gruppe) -> {
+            bezeichnungen.stream().filter((bez) -> (gruppe.getBezeichnung().equals(bez))).forEach((identifier) -> {
+                this.artikelGruppen.remove(gruppe);
+            });
+        });
     }
 
-    public void removeArtikelGruppen(Artikelgruppe.Typ... typen) {
-        //TODO Java 8 Streams benutzen
-        for (Artikelgruppe gruppe : this.artikelGruppen) {
-            for (Artikelgruppe.Typ typ : typen) {
-                if (gruppe.getTyp().equals(typ)) {
-                    this.artikelGruppen.remove(gruppe);
-                }
-            }
-        }
+    public void removeArtikelGruppen(Artikelgruppe.Typ... typens) {
+        List<Artikelgruppe.Typ> typen = Arrays.asList(typens);
+        this.artikelGruppen.stream().forEach((gruppe) -> {
+            typen.stream().filter((typ) -> (gruppe.getTyp().equals(typ))).forEach((identifier) -> {
+                this.artikelGruppen.remove(gruppe);
+            });
+        });
     }
 
     @Override
