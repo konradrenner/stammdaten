@@ -32,9 +32,13 @@ public interface LagerAdapterBuilder<T extends LagerAdapter> {
     Properties<T> newInstance(Short lagerid, Identifier bezeichnung);
 
     interface Properties<T extends LagerAdapter> {
-        Properties<T> beschreibung(Description beschreibung);
+        default Properties<T> beschreibung(Description beschreibung) {
+            return this;
+        }
 
-        Properties<T> email(EMail mail);
+        default Properties<T> email(EMail mail) {
+            return this;
+        }
 
         T build();
     }

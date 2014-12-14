@@ -29,6 +29,9 @@ import org.kore.stammdaten.lager.adapter.ArtikelAdapter;
 import org.kore.stammdaten.lager.adapter.ArtikelAdapterBuilder;
 import org.kore.stammdaten.lager.domain.artikel.AggregateArtikel;
 import org.kore.stammdaten.lager.domain.artikel.Artikel;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelFactory;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelRepository;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelService;
 import org.kore.stammdaten.lager.domain.artikel.Artikelgruppe;
 
 /**
@@ -42,18 +45,26 @@ public class ArtikelBean {
 
     @Inject
     @AggregateArtikel
-    DefaultArtikelRepository repository;
+    ArtikelRepository repository;
+
+    @Inject
+    @AggregateArtikel
+    ArtikelFactory factory;
+
+    @Inject
+    @AggregateArtikel
+    ArtikelService service;
 
     public <T extends ArtikelAdapter> Collection<T> getAll(ArtikelAdapterBuilder<T> builder) {
         List<Artikel> findAll = repository.findAll();
 
         ArrayList<T> ret = new ArrayList<>(findAll.size());
 
-        for (Artikel artikel : findAll) {
+        findAll.stream().forEach((artikel) -> {
             ret.add(builder.newInstance(artikel.getArtikelId().getValue(), artikel.getBezeichnung(), artikel.getPreis())
                     .beschreibung(artikel.getBeschreibung().orElse(null))
                     .bild(artikel.getBild()).build());
-        }
+        });
 
         return ret;
     }
@@ -63,10 +74,35 @@ public class ArtikelBean {
 
         ArtikelAdapterBuilder.Properties<T> properties = builder.newInstance(detail.getArtikelId().getValue(), detail.getBezeichnung(), detail.getPreis()).beschreibung(detail.getBeschreibung().orElse(null)).bild(detail.getBild());
 
-        for (Artikelgruppe gruppe : detail.getArtikelGruppen()) {
-            properties.addArtikelGruppe(gruppe.getBezeichnung());
-        }
+        detail.getArtikelGruppen().stream().forEach((gruppe) -> {
+            properties.addArtikelGruppe(gruppe.getBezeichnung(), gruppe.getBeschreibung().orElse(null), gruppe.getTyp().toString());
+        });
 
         return properties.build();
+    }
+
+    public void update(ArtikelAdapter artikeladapter) {
+        Artikel artikel = repository.find(artikeladapter.getArtikelId());
+
+        if (artikel == null) {
+            artikel = factory.createArtikel(artikeladapter.getBezeichnung(), artikeladapter.getPreis());
+        }
+        
+        artikel.setBeschreibung(artikeladapter.getBeschreibung().orElse(null));
+        artikel.setBild(artikeladapter.getBild());
+
+        for (ArtikelAdapter.Artikelgruppe gruppe : artikeladapter.getArtikelGruppen()) {
+            service.changeArtikelgruppe(artikel, gruppe.getBezeichnung(), gruppe.getBeschreibung(), Artikelgruppe.Typ.valueOf(gruppe.getTyp()));
+        }
+    }
+
+    public void delete(int artikelId) {
+        Artikel artikel = repository.find(artikelId);
+        
+        if (artikel == null) {
+            return;
+        }
+        
+        repository.delete(artikel);
     }
 }

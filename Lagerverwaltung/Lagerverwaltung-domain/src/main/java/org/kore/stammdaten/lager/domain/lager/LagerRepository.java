@@ -32,6 +32,8 @@ public interface LagerRepository extends Serializable {
 
     Lager find(@NotNull Short lagerid);
 
+    Lager find(@NotNull LagerId lagerid);
+
     List<Lager> findAll();
 
     Lager findByBezeichnung(@NotNull Identifier bezeichnung);

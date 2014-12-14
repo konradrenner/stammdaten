@@ -18,7 +18,8 @@
  */
 package org.kore.stammdaten.lager.adapter;
 
-import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 import org.kore.runtime.currency.Money;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
@@ -33,16 +34,20 @@ public interface ArtikelAdapter {
 
     public byte[] getBild();
 
-    public Description getBeschreibung();
+    public Optional<Description> getBeschreibung();
 
     public Identifier getBezeichnung();
 
     public Money getPreis();
 
-    public Collection<Artikelgruppe> getArtikelGruppen();
+    public Set<Artikelgruppe> getArtikelGruppen();
 
     interface Artikelgruppe extends Comparable<Artikelgruppe> {
 
         public Identifier getBezeichnung();
+
+        public Description getBeschreibung();
+
+        public String getTyp();
     }
 }

@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.lager.AggregateLager;
 import org.kore.stammdaten.lager.domain.lager.Lager;
+import org.kore.stammdaten.lager.domain.lager.LagerId;
 import org.kore.stammdaten.lager.domain.lager.LagerRepository;
 
 /**
@@ -55,6 +56,11 @@ public class DefaultLagerRepository implements LagerRepository {
     @Override
     public Lager find(@NotNull Short lagerid) {
         return em.find(Lager.class, lagerid);
+    }
+
+    @Override
+    public Lager find(@NotNull LagerId lagerid) {
+        return find(lagerid.getValue());
     }
 
     @Override

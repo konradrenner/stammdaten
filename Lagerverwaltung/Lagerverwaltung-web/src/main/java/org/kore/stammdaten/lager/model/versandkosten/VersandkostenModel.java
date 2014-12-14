@@ -20,6 +20,7 @@ package org.kore.stammdaten.lager.model.versandkosten;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Optional;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -90,11 +91,11 @@ public class VersandkostenModel implements VersandkostenAdapter, VersandkostenAd
     }
 
     @Override
-    public Money getFreibetrag() {
+    public Optional<Money> getFreibetrag() {
         if (this.freibetragForView == null) {
             return null;
         }
-        return new Money(freibetragForView, Currency.getInstance(this.waehrungForView));
+        return Optional.of(new Money(freibetragForView, Currency.getInstance(this.waehrungForView)));
     }
 
     @Override

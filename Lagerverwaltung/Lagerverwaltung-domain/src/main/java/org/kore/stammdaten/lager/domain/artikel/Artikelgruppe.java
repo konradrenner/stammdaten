@@ -43,7 +43,7 @@ import org.kore.runtime.specifications.Identifier;
 @NamedQueries({
     @NamedQuery(name = "Artikelgruppe.findAll", query = "SELECT a FROM Artikelgruppe a")
 })
-public class Artikelgruppe implements Serializable {
+public class Artikelgruppe implements Serializable, Comparable<Artikelgruppe> {
     private static final long serialVersionUID = 1L;
 
     public enum Typ {
@@ -123,6 +123,11 @@ public class Artikelgruppe implements Serializable {
     @Override
     public String toString() {
         return "org.kore.stammdaten.lager.domain.lager.Artikelgruppe[ bezeichnung=" + bezeichnung + " ]";
+    }
+
+    @Override
+    public int compareTo(Artikelgruppe o) {
+        return getBezeichnung().compareTo(o.getBezeichnung());
     }
 
 }

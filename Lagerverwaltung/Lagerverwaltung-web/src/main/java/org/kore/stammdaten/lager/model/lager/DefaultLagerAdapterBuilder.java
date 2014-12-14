@@ -18,6 +18,7 @@
  */
 package org.kore.stammdaten.lager.model.lager;
 
+import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
@@ -65,8 +66,8 @@ public class DefaultLagerAdapterBuilder implements LagerAdapterBuilder<DefaultLa
 
         
         @Override
-        public Description getBeschreibung() {
-            return beschreibung;
+        public Optional<Description> getBeschreibung() {
+            return Optional.ofNullable(beschreibung);
         }
         
         @Override
@@ -75,8 +76,8 @@ public class DefaultLagerAdapterBuilder implements LagerAdapterBuilder<DefaultLa
         }
         
         @Override
-        public EMail getEmail() {
-            return email;
+        public Optional<EMail> getEmail() {
+            return Optional.ofNullable(email);
         }
         
         @Override

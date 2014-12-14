@@ -32,7 +32,9 @@ public interface VersandkostenAdapterBuilder<T extends VersandkostenAdapter> {
 
     interface Properties<T extends VersandkostenAdapter> {
 
-        Properties<T> freibetrag(Money value);
+        default Properties<T> freibetrag(Money value) {
+            return this;
+        }
 
         T build();
     }

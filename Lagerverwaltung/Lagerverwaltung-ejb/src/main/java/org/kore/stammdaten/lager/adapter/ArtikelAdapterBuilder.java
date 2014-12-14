@@ -33,11 +33,25 @@ public interface ArtikelAdapterBuilder<T extends ArtikelAdapter> {
 
     interface Properties<T extends ArtikelAdapter> {
 
-        Properties<T> beschreibung(Description beschreibung);
+        default Properties<T> beschreibung(Description beschreibung) {
+            return this;
+        }
 
-        Properties<T> bild(byte[] bild);
+        default Properties<T> bild(byte[] bild) {
+            return this;
+        }
 
-        Properties<T> addArtikelGruppe(Identifier bezeichnung);
+        default Properties<T> addArtikelGruppe(ArtikelAdapter.Artikelgruppe gruppe) {
+            return this;
+        }
+
+        default Properties<T> addArtikelGruppe(Identifier bezeichnung, Description beschreibung, String typ) {
+            return this;
+        }
+
+        default Properties<T> addArtikelGruppe(Identifier bezeichnung, String typ) {
+            return addArtikelGruppe(bezeichnung, null, typ);
+        }
 
         T build();
     }

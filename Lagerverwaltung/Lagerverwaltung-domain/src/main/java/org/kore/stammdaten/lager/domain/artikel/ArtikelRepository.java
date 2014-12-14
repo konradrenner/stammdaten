@@ -31,6 +31,8 @@ public interface ArtikelRepository extends Serializable {
 
     Artikel find(@NotNull Integer artikelId);
 
+    Artikel find(@NotNull ArtikelId artikelId);
+
     List<Artikel> findAll();
 
     List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung);
@@ -39,4 +41,5 @@ public interface ArtikelRepository extends Serializable {
 
     List<Artikel> findByArtikelgruppenTyp(@NotNull Artikelgruppe.Typ typ);
 
+    void delete(@NotNull Artikel artikel);
 }

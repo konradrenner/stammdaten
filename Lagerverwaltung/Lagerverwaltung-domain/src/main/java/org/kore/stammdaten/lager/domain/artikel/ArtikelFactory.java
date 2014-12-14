@@ -37,8 +37,4 @@ public class ArtikelFactory implements Serializable {
         ArtikelId id = new ArtikelId(0);
         return new Artikel(id, bezeichnung, preis);
     }
-
-    public Artikelgruppe createArtikelgruppe(@NotNull Identifier bezeichnung, @NotNull Artikelgruppe.Typ typ) {
-        return new Artikelgruppe(bezeichnung, typ);
-    }
 }

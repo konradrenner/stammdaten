@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Dec 14 10:38:11 CET 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014a-4829-900f-000008468490 
+Sun Dec 14 16:17:15 CET 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014a-495f-feb3-0000084c2248 
 on database directory memory:/home/koni/Programmieren/Sources/Stammdaten/Lagerverwaltung/Lagerverwaltung-domain/STAMMDATEN with class loader sun.misc.Launcher$AppClassLoader@6bc7c054 
 Loaded from file:/home/koni/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation

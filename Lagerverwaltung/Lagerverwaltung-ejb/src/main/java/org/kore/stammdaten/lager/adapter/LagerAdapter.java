@@ -18,6 +18,7 @@
  */
 package org.kore.stammdaten.lager.adapter;
 
+import java.util.Optional;
 import org.kore.runtime.specifications.Description;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.core.adresse.EMail;
@@ -28,11 +29,11 @@ import org.kore.stammdaten.core.adresse.EMail;
  */
 public interface LagerAdapter {
 
-    Description getBeschreibung();
+    Optional<Description> getBeschreibung();
 
     Identifier getBezeichnung();
 
-    EMail getEmail();
+    Optional<EMail> getEmail();
 
     Short getLagerId();
 

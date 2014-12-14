@@ -47,8 +47,8 @@ public class VersandkostenResource{
 
         for (VersandkostenAdapter dto : all) {
             Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand().getValue(), dto.getBetrag());
-            if (dto.getFreibetrag() != null) {
-                builder.withFreibetrag(dto.getFreibetrag().getAmount());
+            if (dto.getFreibetrag().isPresent()) {
+                builder.withFreibetrag(dto.getFreibetrag().get().getAmount());
             }
 
             ret.add(builder.build());
@@ -63,8 +63,8 @@ public class VersandkostenResource{
         VersandkostenDTO dto = bean.getDetail(adapterFactory, new Land(land));
 
         Versandkosten.Builder builder = new Versandkosten.Builder(dto.getLand().getValue(), dto.getBetrag());
-        if (dto.getFreibetrag() != null) {
-            builder.withFreibetrag(dto.getFreibetrag().getAmount());
+        if (dto.getFreibetrag().isPresent()) {
+            builder.withFreibetrag(dto.getFreibetrag().get().getAmount());
         }
         return builder.build();
     }

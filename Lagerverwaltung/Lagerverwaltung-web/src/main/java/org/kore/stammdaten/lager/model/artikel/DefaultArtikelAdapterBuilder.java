@@ -18,7 +18,8 @@
  */
 package org.kore.stammdaten.lager.model.artikel;
 
-import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 import java.util.TreeSet;
 import javax.enterprise.context.RequestScoped;
 import org.kore.runtime.currency.Money;
@@ -42,7 +43,7 @@ public class DefaultArtikelAdapterBuilder implements ArtikelAdapterBuilder<Artik
     public class DefaultArtikelAdapter implements ArtikelAdapter, ArtikelAdapterBuilder.Properties {
 
         private final int artikelId;
-        private final Collection<ArtikelAdapter.Artikelgruppe> gruppen;
+        private final Set<ArtikelAdapter.Artikelgruppe> gruppen;
         private final Identifier bezeichnung;
         private final Money preis;
 
@@ -69,8 +70,8 @@ public class DefaultArtikelAdapterBuilder implements ArtikelAdapterBuilder<Artik
         }
 
         @Override
-        public Properties addArtikelGruppe(Identifier bezeichnung) {
-            gruppen.add(new DefaultArtikelgruppe(bezeichnung));
+        public Properties addArtikelGruppe(Identifier bezeichnung, Description beschreibung, String typ) {
+            gruppen.add(new DefaultArtikelgruppe(bezeichnung, beschreibung, typ));
             return this;
         }
 
@@ -90,8 +91,8 @@ public class DefaultArtikelAdapterBuilder implements ArtikelAdapterBuilder<Artik
         }
 
         @Override
-        public Description getBeschreibung() {
-            return beschreibung;
+        public Optional<Description> getBeschreibung() {
+            return Optional.ofNullable(beschreibung);
         }
 
         @Override
@@ -105,7 +106,7 @@ public class DefaultArtikelAdapterBuilder implements ArtikelAdapterBuilder<Artik
         }
 
         @Override
-        public Collection<Artikelgruppe> getArtikelGruppen() {
+        public Set<Artikelgruppe> getArtikelGruppen() {
             return gruppen;
         }
 
@@ -114,15 +115,29 @@ public class DefaultArtikelAdapterBuilder implements ArtikelAdapterBuilder<Artik
     public class DefaultArtikelgruppe implements ArtikelAdapter.Artikelgruppe {
 
         private final Identifier bezeichnung;
+        private final Description beschreibung;
+        private final String typ;
 
-        public DefaultArtikelgruppe(Identifier bezeichnung) {
+        public DefaultArtikelgruppe(Identifier bezeichnung, Description beschreibung, String typ) {
             this.bezeichnung = bezeichnung;
+            this.beschreibung = beschreibung;
+            this.typ = typ;
         }
 
 
         @Override
         public Identifier getBezeichnung() {
             return bezeichnung;
+        }
+
+        @Override
+        public Description getBeschreibung() {
+            return beschreibung;
+        }
+
+        @Override
+        public String getTyp() {
+            return typ;
         }
 
         @Override

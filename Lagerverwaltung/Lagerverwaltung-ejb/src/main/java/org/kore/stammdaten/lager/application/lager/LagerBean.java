@@ -49,12 +49,12 @@ public class LagerBean {
 
         ArrayList<T> ret = new ArrayList<>(findAll.size());
 
-        for (Lager lager : findAll) {
+        findAll.stream().forEach((lager) -> {
             ret.add(builder.newInstance(lager.getLagerId().getValue(), lager.getBezeichnung())
                     .email(lager.getEmail().orElse(null))
                     .beschreibung(lager.getBeschreibung().orElse(null))
                     .build());
-        }
+        });
 
         return ret;
     }

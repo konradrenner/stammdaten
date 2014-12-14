@@ -48,8 +48,8 @@ public class ArtikelModel {
         waehrung = adapter.getPreis().getCurrency().getCurrencyCode();
         bild = adapter.getBild();
 
-        if (adapter.getBeschreibung() != null) {
-            beschreibung = adapter.getBeschreibung().getValue();
+        if (adapter.getBeschreibung().isPresent()) {
+            beschreibung = adapter.getBeschreibung().get().getValue();
         }
 
         gruppen = new TreeSet<>();

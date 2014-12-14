@@ -39,11 +39,11 @@ public class LagerModel {
     public LagerModel(LagerAdapter adapter) {
         lagerid = adapter.getLagerId();
         bezeichnung = adapter.getBezeichnung().getValue();
-        if (adapter.getBeschreibung() != null) {
-            beschreibung = adapter.getBeschreibung().getValue();
+        if (adapter.getBeschreibung().isPresent()) {
+            beschreibung = adapter.getBeschreibung().get().getValue();
         }
-        if (adapter.getEmail() != null) {
-            email = adapter.getEmail().getValue();
+        if (adapter.getEmail().isPresent()) {
+            email = adapter.getEmail().get().getValue();
         }
     }
 

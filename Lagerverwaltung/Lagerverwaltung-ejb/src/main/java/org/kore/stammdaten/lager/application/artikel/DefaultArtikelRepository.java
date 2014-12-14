@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import org.kore.runtime.specifications.Identifier;
 import org.kore.stammdaten.lager.domain.artikel.AggregateArtikel;
 import org.kore.stammdaten.lager.domain.artikel.Artikel;
+import org.kore.stammdaten.lager.domain.artikel.ArtikelId;
 import org.kore.stammdaten.lager.domain.artikel.ArtikelRepository;
 import org.kore.stammdaten.lager.domain.artikel.Artikelgruppe;
 
@@ -55,6 +56,11 @@ public class DefaultArtikelRepository implements ArtikelRepository {
     public Artikel find(@NotNull Integer artikelId) {
         return em.find(Artikel.class, artikelId);
     }
+    
+    @Override
+    public Artikel find(@NotNull ArtikelId artikelId) {
+        return find(artikelId.getValue());
+    }
 
     @Override
     public Artikel findByBezeichnung(@NotNull Identifier bezeichnung) {
@@ -69,5 +75,10 @@ public class DefaultArtikelRepository implements ArtikelRepository {
     @Override
     public List<Artikel> findByArtikelgruppenBezeichnung(@NotNull Identifier bezeichnung) {
         throw new UnsupportedOperationException("not implemented yet");
+    }
+    
+    @Override
+    public void delete(Artikel artikel) {
+        em.remove(artikel);
     }
 }

@@ -21,6 +21,8 @@ package org.kore.stammdaten.lager.domain.artikel;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
+import org.kore.runtime.specifications.Description;
+import org.kore.runtime.specifications.Identifier;
 
 /**
  *
@@ -32,5 +34,22 @@ public class ArtikelService implements Serializable {
 
     public void changeArtikelgruppeTyp(@NotNull Artikelgruppe gruppe, @NotNull Artikelgruppe.Typ typ) {
         gruppe.setTyp(typ);
+    }
+
+    public void changeArtikelgruppe(@NotNull Artikel artikel, @NotNull Identifier bezeichnung, @NotNull Description beschreibung, @NotNull Artikelgruppe.Typ typ) {
+        Artikelgruppe artikelgruppe = new Artikelgruppe(bezeichnung, typ);
+        artikelgruppe.setBeschreibung(beschreibung);
+
+        artikel.addArtikelGruppen(artikelgruppe);
+    }
+
+    public void changeArtikelgruppe(@NotNull Artikel artikel, @NotNull Identifier bezeichnung, @NotNull Artikelgruppe.Typ typ) {
+        Artikelgruppe artikelgruppe = new Artikelgruppe(bezeichnung, typ);
+
+        artikel.addArtikelGruppen(artikelgruppe);
+    }
+
+    public void changeArtikelgruppe(@NotNull Artikel artikel, @NotNull Artikelgruppe... gruppe) {
+        artikel.addArtikelGruppen(gruppe);
     }
 }

@@ -60,13 +60,11 @@ public class VersandkostenBean {
         List<Versandkosten> vkosten = repository.find();
 
         Collection<T> response = new ArrayList<>();
-        for (Versandkosten kost : vkosten) {
-            T dto = factory.newInstance(kost.getLand(), kost.getBetrag())
-                    .freibetrag(kost.getFreibetrag().orElse(null))
-                    .build();
-
-            response.add(dto);
-        }
+        vkosten.stream().map((kost) -> factory.newInstance(kost.getLand(), kost.getBetrag())
+                .freibetrag(kost.getFreibetrag().orElse(null))
+                .build()).forEach((dto) -> {
+                    response.add(dto);
+                });
         return response;
     }
 
@@ -83,17 +81,21 @@ public class VersandkostenBean {
 
         if (kto == null) {
             kto = factory.create(currentDTO.getLand(), currentDTO.getBetrag());
-            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag());
+            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag().orElse(null));
         } else {
         
             service.changeBetrag(translator, kto, currentDTO.getBetrag());
-            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag());
+            service.changeFreibetrag(translator, kto, currentDTO.getFreibetrag().orElse(null));
         }
         
         repository.save(kto);
     }
     
     public void delete(Land land) {
-        repository.delete(repository.find(land));
+        Versandkosten vkosten = repository.find(land);
+        if (vkosten == null) {
+            return;
+        }
+        repository.delete(vkosten);
     }
 }

@@ -18,6 +18,7 @@
  */
 package org.kore.stammdaten.lager.rest;
 
+import java.util.Optional;
 import org.kore.runtime.currency.Money;
 import org.kore.stammdaten.core.adresse.Land;
 import org.kore.stammdaten.lager.adapter.VersandkostenAdapter;
@@ -49,8 +50,8 @@ public class VersandkostenDTO implements VersandkostenAdapter, VersandkostenAdap
     }
 
     @Override
-    public Money getFreibetrag() {
-        return freibetrag;
+    public Optional<Money> getFreibetrag() {
+        return Optional.ofNullable(freibetrag);
     }
 
     @Override
