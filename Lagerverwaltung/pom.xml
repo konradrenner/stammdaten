@@ -14,7 +14,6 @@
     <module>../Stammdaten-core</module>
     <module>Lagerverwaltung-rest</module>
     <module>Lagerverwaltung-rest-api</module>
-    <module>Lagerverwaltung-ejb-it</module>
   </modules>
   <profiles>
       <profile>
