@@ -1,31 +1,28 @@
 package org.kore.stammdaten.lager.application.lager;
 
-import org.kore.stammdaten.lager.application.lager.LagerBean;
+import java.io.File;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
-import static org.hamcrest.core.Is.*;
 
 @RunWith(Arquillian.class)
-public class LagerBeanTest
-{
+public class LagerBeanIT {
 
    @Inject
    private LagerBean lagerbean;
 
    @Deployment
-   public static JavaArchive createDeployment()
-   {
-      return ShrinkWrap.create(JavaArchive.class)
-            .addClass(LagerBean.class)
-            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    public static WebArchive createDeployment()   {
+       File[] mavenArtefakte = Maven.configureResolver().workOffline()
+               .loadPomFromFile("pom.xml").importCompileAndRuntimeDependencies().resolve().withTransitivity().asFile();
+
+       return ShrinkWrap.create(WebArchive.class).addAsLibraries(mavenArtefakte);
    }
 
    @Test
