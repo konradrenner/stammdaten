@@ -21,7 +21,10 @@ public class ArtikelBeanIT {
     public static WebArchive createDeployment() {
        File[] mavenArtefakte = Maven.configureResolver().workOffline()
                .loadPomFromFile("pom.xml").importCompileAndRuntimeDependencies().resolve().withTransitivity().asFile();
-       return ShrinkWrap.create(WebArchive.class).addAsLibraries(mavenArtefakte);
+       return ShrinkWrap.create(WebArchive.class)
+               .addAsLibraries(mavenArtefakte)
+               .addPackage("org/kore/stammdaten/lager/adapter")
+               .addPackage("org/kore/stammdaten/lager/application/artikel");
    }
 
    @Test

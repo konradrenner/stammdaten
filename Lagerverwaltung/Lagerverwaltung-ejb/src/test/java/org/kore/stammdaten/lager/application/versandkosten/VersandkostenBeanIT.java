@@ -23,7 +23,11 @@ public class VersandkostenBeanIT
         File[] mavenArtefakte = Maven.configureResolver().workOffline()
                .loadPomFromFile("pom.xml").importCompileAndRuntimeDependencies().resolve().withTransitivity().asFile();
 
-       return ShrinkWrap.create(WebArchive.class).addAsLibraries(mavenArtefakte);
+       return ShrinkWrap.create(WebArchive.class)
+               .addAsLibraries(mavenArtefakte)
+               .addPackage("org/kore/stammdaten/lager/adapter")
+               .addPackage("org/kore/stammdaten/lager/application/versandkosten")
+               .addClass(NoTranslationTranslator.class);
    }
 
    @Test
