@@ -1,6 +1,5 @@
 package org.kore.stammdaten.lager.application;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.Currency;
 import javax.inject.Inject;
@@ -10,25 +9,32 @@ import static org.hamcrest.core.IsNot.not;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kore.runtime.currency.Money;
+import org.kore.runtime.currency.MoneyTranslator;
 
 @RunWith(Arquillian.class)
 public class EZBMoneyTranslatorIT {
 
    @Inject
-    private EZBMoneyTranslator ezbmoneytranslator;
+    private MoneyTranslator ezbmoneytranslator;
 
    @Deployment
-    public static WebArchive createDeployment()   {
-       File[] mavenArtefakte = Maven.configureResolver().workOffline()
-               .loadPomFromFile("pom.xml").importCompileAndRuntimeDependencies().resolve().withTransitivity().asFile();
+    public static JavaArchive createDeployment() {
+       //Als WebArchive kanns ned deployed werden, da es den EJB TimerService benutzt und der folgende Ausdruck funktioniert auch nicht, weil aktuell kein ejb packaging unterstuetzt wird
+       //return ShrinkWrap.create(MavenImporter.class).offline().loadPomFromFile("pom.xml").importBuildOutput().as(JavaArchive.class);
+       //Aber in diesem Fall ist es eh gscheiter so, da ja nicht soviele Abhaengigkeiten in diesem Fall benoetigt werden
+       JavaArchive archive = ShrinkWrap.create(JavaArchive.class);
+       archive.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+       archive.addClass(EZBMoneyTranslator.class);
+       archive.addClass(MoneyTranslator.class);
+       archive.addClass(Money.class);
 
-       return ShrinkWrap.create(WebArchive.class).addAsLibraries(mavenArtefakte);
+       return archive;
    }
 
    @Test

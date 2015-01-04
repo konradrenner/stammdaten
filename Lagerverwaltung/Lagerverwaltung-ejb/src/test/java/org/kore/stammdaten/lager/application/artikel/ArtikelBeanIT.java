@@ -18,10 +18,9 @@ public class ArtikelBeanIT {
    private ArtikelBean artikelbean;
 
    @Deployment
-    public static WebArchive createDeployment()   {
+    public static WebArchive createDeployment() {
        File[] mavenArtefakte = Maven.configureResolver().workOffline()
                .loadPomFromFile("pom.xml").importCompileAndRuntimeDependencies().resolve().withTransitivity().asFile();
-
        return ShrinkWrap.create(WebArchive.class).addAsLibraries(mavenArtefakte);
    }
 
