@@ -13,6 +13,7 @@
     
     <properties>
         <version.junit>4.12</version.junit>
+        <version.surefire>2.18.1</version.surefire>
         <version.arquillian_core>1.1.5.Final</version.arquillian_core>
         <version.shrinkwrap.resolvers>2.1.1</version.shrinkwrap.resolvers>
     </properties>
@@ -120,12 +121,39 @@
     
     <profiles>
         <profile>
+            <id>arquillian-glassfish-local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire}</version>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <arquillian.launch>arquillian-glassfish-local</arquillian.launch>
+                            </systemPropertyVariables>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <version>1.0.0.CR4</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>arquillian-wildfly-local</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.18.1</version>
+                        <version>${version.surefire}</version>
                         <configuration>
                             <systemPropertyVariables>
                                 <arquillian.launch>arquillian-wildfly-local</arquillian.launch>
