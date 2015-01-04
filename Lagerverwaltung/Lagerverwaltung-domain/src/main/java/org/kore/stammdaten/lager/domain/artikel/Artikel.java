@@ -20,15 +20,18 @@ package org.kore.stammdaten.lager.domain.artikel;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
+import java.util.Set;
 import java.util.TreeSet;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +41,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -76,14 +78,13 @@ public class Artikel implements Serializable {
     private byte[] bild;
     @Version
     private int version;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ARTIKEL_ARTIKELGRUPPE",
             joinColumns = {
                 @JoinColumn(name = "artikel_id", referencedColumnName = "artikel_id")},
             inverseJoinColumns = {
                 @JoinColumn(name = "bezeichnung", referencedColumnName = "bezeichnung")})
-    @OrderBy("bezeichnung.value")
-    private SortedSet<Artikelgruppe> artikelGruppen;
+    private Set<Artikelgruppe> artikelGruppen;
 
     @Transient
     private ArtikelId id;
@@ -96,7 +97,7 @@ public class Artikel implements Serializable {
         this.id = id;
         this.bezeichnung = bezeichnung;
         this.preis = preis;
-        this.artikelGruppen = new TreeSet<>();
+        this.artikelGruppen = new LinkedHashSet<>();
     }
 
     @PostLoad
@@ -137,8 +138,8 @@ public class Artikel implements Serializable {
         return preis;
     }
 
-    public SortedSet<Artikelgruppe> getArtikelGruppen() {
-        return Collections.unmodifiableSortedSet(artikelGruppen);
+    public Collection<Artikelgruppe> getArtikelGruppen() {
+        return Collections.unmodifiableSortedSet(new TreeSet<>(artikelGruppen));
     }
 
     void addArtikelGruppen(Artikelgruppe... gruppen) {
