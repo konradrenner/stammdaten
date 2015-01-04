@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>Stammdaten-pom-ejb</artifactId>
-        <groupId>org.kore.stammdaten</groupId>
-        <version>1.1-SNAPSHOT</version>
-        <relativePath>org.kore.stammdaten:Stammdaten-pom-ejb</relativePath>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kore.stammdaten</groupId>
+    <artifactId>Stammdaten-pom-ejb</artifactId>
+    <version>1.1-SNAPSHOT</version>
+    <relativePath>org.kore.stammdaten:Stammdaten-pom-ejb</relativePath>
   </parent>
-
-    <groupId>org.kore.stammdaten.lager</groupId>
-    <artifactId>Lagerverwaltung-ejb</artifactId>
-    <packaging>ejb</packaging>
-
-    <name>Lagerverwaltung-ejb</name>
-    
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Lagerverwaltung-domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+  <groupId>org.kore.stammdaten.lager</groupId>
+  <artifactId>Lagerverwaltung-ejb</artifactId>
+  <packaging>ejb</packaging>
+  <name>Lagerverwaltung-ejb</name>
+  <properties>
+    <version.arquillian_core>1.1.5.Final</version.arquillian_core>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>Lagerverwaltung-domain</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>
