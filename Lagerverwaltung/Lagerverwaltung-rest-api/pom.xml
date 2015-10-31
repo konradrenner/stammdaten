@@ -8,6 +8,7 @@
         <relativePath>org.kore.stammdaten:Stammdaten-pom</relativePath>
     </parent>
     <artifactId>Lagerverwaltung-rest-api</artifactId>
+    <groupId>org.kore.stammdaten.lager</groupId>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
