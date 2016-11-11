@@ -16,9 +16,7 @@
  */
 
 import { bootstrap } from 'angular2/platform/browser'
-import { HTTP_PROVIDERS } from 'angular2/http';
+//import { HTTP_PROVIDERS } from 'angular2/http';
 import { SimpleComponent } from './simple.component'
 
-bootstrap(SimpleComponent, [
-    HTTP_PROVIDERS
-]);
+bootstrap(SimpleComponent);

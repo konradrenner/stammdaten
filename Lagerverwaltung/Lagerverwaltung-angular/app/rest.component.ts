@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2016 Konrad Renner
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,21 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['angular2/platform/browser', './simple.component'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var browser_1, simple_component_1;
-    return {
-        setters:[
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
-            },
-            function (simple_component_1_1) {
-                simple_component_1 = simple_component_1_1;
-            }],
-        execute: function() {
-            browser_1.bootstrap(simple_component_1.SimpleComponent);
-        }
+import { Injectable } from 'angular2/core';
+import { Http } from 'angular2/http';
+
+@Injectable()
+export class BooksService {
+    constructor(private http: Http) {
     }
-});
-//# sourceMappingURL=boot.js.map
+
+    getBooks() {
+        return this.http.get('/books').map(res => res.json());
+    }
+}
