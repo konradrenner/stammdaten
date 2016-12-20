@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -5,13 +6,46 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Subscriber_1 = require('../Subscriber');
 var ArgumentOutOfRangeError_1 = require('../util/ArgumentOutOfRangeError');
-var empty_1 = require('../observable/empty');
-function take(total) {
-    if (total === 0) {
-        return new empty_1.EmptyObservable();
+var EmptyObservable_1 = require('../observable/EmptyObservable');
+/**
+ * Emits only the first `count` values emitted by the source Observable.
+ *
+ * <span class="informal">Takes the first `count` values from the source, then
+ * completes.</span>
+ *
+ * <img src="./img/take.png" width="100%">
+ *
+ * `take` returns an Observable that emits only the first `count` values emitted
+ * by the source Observable. If the source emits fewer than `count` values then
+ * all of its values are emitted. After that, it completes, regardless if the
+ * source completes.
+ *
+ * @example <caption>Take the first 5 seconds of an infinite 1-second interval Observable</caption>
+ * var interval = Rx.Observable.interval(1000);
+ * var five = interval.take(5);
+ * five.subscribe(x => console.log(x));
+ *
+ * @see {@link takeLast}
+ * @see {@link takeUntil}
+ * @see {@link takeWhile}
+ * @see {@link skip}
+ *
+ * @throws {ArgumentOutOfRangeError} When using `take(i)`, it delivers an
+ * ArgumentOutOrRangeError to the Observer's `error` callback if `i < 0`.
+ *
+ * @param {number} count The maximum number of `next` values to emit.
+ * @return {Observable<T>} An Observable that emits only the first `count`
+ * values emitted by the source Observable, or all of the values from the source
+ * if the source emits fewer than `count` values.
+ * @method take
+ * @owner Observable
+ */
+function take(count) {
+    if (count === 0) {
+        return new EmptyObservable_1.EmptyObservable();
     }
     else {
-        return this.lift(new TakeOperator(total));
+        return this.lift(new TakeOperator(count));
     }
 }
 exports.take = take;
@@ -22,11 +56,16 @@ var TakeOperator = (function () {
             throw new ArgumentOutOfRangeError_1.ArgumentOutOfRangeError;
         }
     }
-    TakeOperator.prototype.call = function (subscriber) {
-        return new TakeSubscriber(subscriber, this.total);
+    TakeOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new TakeSubscriber(subscriber, this.total));
     };
     return TakeOperator;
-})();
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var TakeSubscriber = (function (_super) {
     __extends(TakeSubscriber, _super);
     function TakeSubscriber(destination, total) {
@@ -40,9 +79,10 @@ var TakeSubscriber = (function (_super) {
             this.destination.next(value);
             if (this.count === total) {
                 this.destination.complete();
+                this.unsubscribe();
             }
         }
     };
     return TakeSubscriber;
-})(Subscriber_1.Subscriber);
+}(Subscriber_1.Subscriber));
 //# sourceMappingURL=take.js.map

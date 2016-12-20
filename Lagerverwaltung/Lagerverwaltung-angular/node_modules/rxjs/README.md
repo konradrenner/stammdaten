@@ -1,6 +1,9 @@
-[![Build Status](https://travis-ci.org/ReactiveX/RxJS.svg?branch=master)](https://travis-ci.org/ReactiveX/RxJS)
-[![Coverage Status](https://coveralls.io/repos/ReactiveX/RxJS/badge.svg?branch=master&service=github)](https://coveralls.io/github/ReactiveX/RxJS?branch=master)
+[![Build Status](https://travis-ci.org/ReactiveX/rxjs.svg?branch=master)](https://travis-ci.org/ReactiveX/rxjs)
+[![Coverage Status](https://coveralls.io/repos/github/ReactiveX/rxjs/badge.svg?branch=master)](https://coveralls.io/github/ReactiveX/rxjs?branch=master)
 [![npm version](https://badge.fury.io/js/%40reactivex%2Frxjs.svg)](http://badge.fury.io/js/%40reactivex%2Frxjs)
+[![Join the chat at https://gitter.im/Reactive-Extensions/RxJS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Reactive-Extensions/RxJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/rxjs5.svg)](https://saucelabs.com/u/rxjs5)
 
 # RxJS 5 (beta)
 
@@ -13,6 +16,7 @@ Reactive Extensions Library for JavaScript. This is a rewrite of [Reactive-Exten
 - [Maintainer Guidelines](doc/maintainer-guidelines.md)
 - [Creating Operators](doc/operator-creation.md)
 - [Migrating From RxJS 4 to RxJS 5](MIGRATION.md)
+- [API Documentation (WIP)](http://reactivex.io/rxjs)
 
 ## Important
 
@@ -37,17 +41,17 @@ Rx.Observable.of(1,2,3)
 To import only what you need by patching (this is useful for size-sensitive bundling):
 
 ```js
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 Observable.of(1,2,3).map(x => x + '!!!'); // etc
 ```
 
-To import what you need and use it with ES7 function bind (best overall method, if possible):
+To import what you need and use it with ES next function bind (best overall method, if possible):
 
 ```js
-import {Observable} from 'rxjs/Observable';
-import {map} from 'rxjs/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operator/map';
 
 Observable.of(1,2,3)::map(x => x + '!!!'); // etc
 ```
@@ -99,15 +103,21 @@ npm install @reactivex/rxjs
 If you are using npm **version 2** before this library has achieved a stable version, you need to specify the library version explicitly:
 
 ```sh
-npm install @reactivex/rxjs@5.0.0-alpha.10
+npm install @reactivex/rxjs@5.0.0-beta.1
 ```
 
 ### CDN
 
-For CDN, you can use [npmcdn](https://npmcdn.com). Just replace `version` with the current
-version on the link below:
+For CDN, you can use [unpkg](https://unpkg.com/):
 
-https://npmcdn.com/@reactivex/rxjs@version/dist/global/Rx.js
+5.0.0-beta.1 - 5.0.0-beta.11:
+
+https://unpkg.com/@reactivex/rxjs/dist/global/Rx.umd.js
+
+
+5.0.0-beta.12 or higher:
+
+https://unpkg.com/@reactivex/rxjs/dist/global/Rx.js
 
 #### Node.js Usage:
 
@@ -121,7 +131,7 @@ Rx.Observable.of('hello world')
 ## Goals
 
 - Provide better performance than preceding versions of RxJS
-- To model/follow the [ES7 Observable Spec](https://github.com/zenparsing/es-observable) to the observable.
+- To model/follow the [Observable Spec Proposal](https://github.com/zenparsing/es-observable) to the observable.
 - Provide more modular file structure in a variety of formats
 - Provide more debuggable call stacks than preceding versions of RxJS
 
@@ -140,6 +150,8 @@ The build and test structure is fairly primitive at the moment. There are variou
 - build_cover: runs `istanbul` code coverage against test cases
 - test: runs tests with `jasmine`, must have built prior to running.
 - tests2png: generates PNG marble diagrams from test cases.
+
+`npm run info` will list available script.
 
 ### Example
 

@@ -1,14 +1,19 @@
 import { Subject } from '../Subject';
 import { Observable } from '../Observable';
+import { Subscriber } from '../Subscriber';
 import { Subscription } from '../Subscription';
+/**
+ * @class ConnectableObservable<T>
+ */
 export declare class ConnectableObservable<T> extends Observable<T> {
-    source: Observable<T>;
+    protected source: Observable<T>;
     protected subjectFactory: () => Subject<T>;
-    subject: Subject<T>;
-    subscription: Subscription<T>;
+    protected _subject: Subject<T>;
+    protected _refCount: number;
+    protected _connection: Subscription;
     constructor(source: Observable<T>, subjectFactory: () => Subject<T>);
-    _subscribe(subscriber: any): Subscription<T>;
-    _getSubject(): Subject<T>;
-    connect(): Subscription<T>;
+    protected _subscribe(subscriber: Subscriber<T>): Subscription;
+    protected getSubject(): Subject<T>;
+    connect(): Subscription;
     refCount(): Observable<T>;
 }

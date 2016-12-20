@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -7,6 +8,14 @@ var tryCatch_1 = require('../util/tryCatch');
 var errorObject_1 = require('../util/errorObject');
 var subscribeToResult_1 = require('../util/subscribeToResult');
 var OuterSubscriber_1 = require('../OuterSubscriber');
+/**
+ * @param project
+ * @param seed
+ * @param concurrent
+ * @return {Observable<R>|WebSocketSubject<T>|Observable<T>}
+ * @method mergeScan
+ * @owner Observable
+ */
 function mergeScan(project, seed, concurrent) {
     if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
     return this.lift(new MergeScanOperator(project, seed, concurrent));
@@ -18,12 +27,17 @@ var MergeScanOperator = (function () {
         this.seed = seed;
         this.concurrent = concurrent;
     }
-    MergeScanOperator.prototype.call = function (subscriber) {
-        return new MergeScanSubscriber(subscriber, this.project, this.seed, this.concurrent);
+    MergeScanOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new MergeScanSubscriber(subscriber, this.project, this.seed, this.concurrent));
     };
     return MergeScanOperator;
-})();
+}());
 exports.MergeScanOperator = MergeScanOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var MergeScanSubscriber = (function (_super) {
     __extends(MergeScanSubscriber, _super);
     function MergeScanSubscriber(destination, project, acc, concurrent) {
@@ -43,7 +57,7 @@ var MergeScanSubscriber = (function (_super) {
             var ish = tryCatch_1.tryCatch(this.project)(this.acc, value);
             var destination = this.destination;
             if (ish === errorObject_1.errorObject) {
-                destination.error(ish.e);
+                destination.error(errorObject_1.errorObject.e);
             }
             else {
                 this.active++;
@@ -66,7 +80,7 @@ var MergeScanSubscriber = (function (_super) {
             this.destination.complete();
         }
     };
-    MergeScanSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex) {
+    MergeScanSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         var destination = this.destination;
         this.acc = innerValue;
         this.hasValue = true;
@@ -87,6 +101,6 @@ var MergeScanSubscriber = (function (_super) {
         }
     };
     return MergeScanSubscriber;
-})(OuterSubscriber_1.OuterSubscriber);
+}(OuterSubscriber_1.OuterSubscriber));
 exports.MergeScanSubscriber = MergeScanSubscriber;
 //# sourceMappingURL=mergeScan.js.map

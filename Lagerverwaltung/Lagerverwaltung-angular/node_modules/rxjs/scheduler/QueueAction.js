@@ -1,45 +1,47 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Subscription_1 = require('../Subscription');
+var AsyncAction_1 = require('./AsyncAction');
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var QueueAction = (function (_super) {
     __extends(QueueAction, _super);
     function QueueAction(scheduler, work) {
-        _super.call(this);
+        _super.call(this, scheduler, work);
         this.scheduler = scheduler;
         this.work = work;
     }
-    QueueAction.prototype.schedule = function (state) {
-        if (this.isUnsubscribed) {
-            return this;
+    QueueAction.prototype.schedule = function (state, delay) {
+        if (delay === void 0) { delay = 0; }
+        if (delay > 0) {
+            return _super.prototype.schedule.call(this, state, delay);
         }
+        this.delay = delay;
         this.state = state;
-        var scheduler = this.scheduler;
-        scheduler.actions.push(this);
-        scheduler.flush();
+        this.scheduler.flush(this);
         return this;
     };
-    QueueAction.prototype.execute = function () {
-        if (this.isUnsubscribed) {
-            throw new Error('How did did we execute a canceled Action?');
-        }
-        this.work(this.state);
+    QueueAction.prototype.execute = function (state, delay) {
+        return (delay > 0 || this.closed) ?
+            _super.prototype.execute.call(this, state, delay) :
+            this._execute(state, delay);
     };
-    QueueAction.prototype.unsubscribe = function () {
-        var scheduler = this.scheduler;
-        var actions = scheduler.actions;
-        var index = actions.indexOf(this);
-        this.work = void 0;
-        this.state = void 0;
-        this.scheduler = void 0;
-        if (index !== -1) {
-            actions.splice(index, 1);
+    QueueAction.prototype.requestAsyncId = function (scheduler, id, delay) {
+        if (delay === void 0) { delay = 0; }
+        // If delay is greater than 0, enqueue as an async action.
+        if (delay !== null && delay > 0) {
+            return _super.prototype.requestAsyncId.call(this, scheduler, id, delay);
         }
-        _super.prototype.unsubscribe.call(this);
+        // Otherwise flush the scheduler starting with this action.
+        return scheduler.flush(this);
     };
     return QueueAction;
-})(Subscription_1.Subscription);
+}(AsyncAction_1.AsyncAction));
 exports.QueueAction = QueueAction;
 //# sourceMappingURL=QueueAction.js.map

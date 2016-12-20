@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -7,6 +8,11 @@ var Observable_1 = require('../Observable');
 var Subscription_1 = require('../Subscription');
 var SubscriptionLoggable_1 = require('./SubscriptionLoggable');
 var applyMixins_1 = require('../util/applyMixins');
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var ColdObservable = (function (_super) {
     __extends(ColdObservable, _super);
     function ColdObservable(messages, scheduler) {
@@ -34,7 +40,7 @@ var ColdObservable = (function (_super) {
         }
     };
     return ColdObservable;
-})(Observable_1.Observable);
+}(Observable_1.Observable));
 exports.ColdObservable = ColdObservable;
 applyMixins_1.applyMixins(ColdObservable, [SubscriptionLoggable_1.SubscriptionLoggable]);
 //# sourceMappingURL=ColdObservable.js.map

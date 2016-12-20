@@ -1,9 +1,21 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Subscriber_1 = require('../Subscriber');
+/**
+ * Returns an Observable that skips `n` items emitted by an Observable.
+ *
+ * <img src="./img/skip.png" width="100%">
+ *
+ * @param {Number} the `n` of times, items emitted by source Observable should be skipped.
+ * @return {Observable} an Observable that skips values emitted by the source Observable.
+ *
+ * @method skip
+ * @owner Observable
+ */
 function skip(total) {
     return this.lift(new SkipOperator(total));
 }
@@ -12,11 +24,16 @@ var SkipOperator = (function () {
     function SkipOperator(total) {
         this.total = total;
     }
-    SkipOperator.prototype.call = function (subscriber) {
-        return new SkipSubscriber(subscriber, this.total);
+    SkipOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new SkipSubscriber(subscriber, this.total));
     };
     return SkipOperator;
-})();
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var SkipSubscriber = (function (_super) {
     __extends(SkipSubscriber, _super);
     function SkipSubscriber(destination, total) {
@@ -30,5 +47,5 @@ var SkipSubscriber = (function (_super) {
         }
     };
     return SkipSubscriber;
-})(Subscriber_1.Subscriber);
+}(Subscriber_1.Subscriber));
 //# sourceMappingURL=skip.js.map

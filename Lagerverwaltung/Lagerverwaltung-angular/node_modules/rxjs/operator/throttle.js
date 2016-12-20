@@ -1,13 +1,49 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var fromPromise_1 = require('../observable/fromPromise');
-var Subscriber_1 = require('../Subscriber');
-var tryCatch_1 = require('../util/tryCatch');
-var isPromise_1 = require('../util/isPromise');
-var errorObject_1 = require('../util/errorObject');
+var OuterSubscriber_1 = require('../OuterSubscriber');
+var subscribeToResult_1 = require('../util/subscribeToResult');
+/**
+ * Emits a value from the source Observable, then ignores subsequent source
+ * values for a duration determined by another Observable, then repeats this
+ * process.
+ *
+ * <span class="informal">It's like {@link throttleTime}, but the silencing
+ * duration is determined by a second Observable.</span>
+ *
+ * <img src="./img/throttle.png" width="100%">
+ *
+ * `throttle` emits the source Observable values on the output Observable
+ * when its internal timer is disabled, and ignores source values when the timer
+ * is enabled. Initially, the timer is disabled. As soon as the first source
+ * value arrives, it is forwarded to the output Observable, and then the timer
+ * is enabled by calling the `durationSelector` function with the source value,
+ * which returns the "duration" Observable. When the duration Observable emits a
+ * value or completes, the timer is disabled, and this process repeats for the
+ * next source value.
+ *
+ * @example <caption>Emit clicks at a rate of at most one click per second</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var result = clicks.throttle(ev => Rx.Observable.interval(1000));
+ * result.subscribe(x => console.log(x));
+ *
+ * @see {@link audit}
+ * @see {@link debounce}
+ * @see {@link delayWhen}
+ * @see {@link sample}
+ * @see {@link throttleTime}
+ *
+ * @param {function(value: T): Observable|Promise} durationSelector A function
+ * that receives a value from the source Observable, for computing the silencing
+ * duration for each source value, returned as an Observable or a Promise.
+ * @return {Observable<T>} An Observable that performs the throttle operation to
+ * limit the rate of emissions from the source.
+ * @method throttle
+ * @owner Observable
+ */
 function throttle(durationSelector) {
     return this.lift(new ThrottleOperator(durationSelector));
 }
@@ -16,65 +52,57 @@ var ThrottleOperator = (function () {
     function ThrottleOperator(durationSelector) {
         this.durationSelector = durationSelector;
     }
-    ThrottleOperator.prototype.call = function (subscriber) {
-        return new ThrottleSubscriber(subscriber, this.durationSelector);
+    ThrottleOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new ThrottleSubscriber(subscriber, this.durationSelector));
     };
     return ThrottleOperator;
-})();
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var ThrottleSubscriber = (function (_super) {
     __extends(ThrottleSubscriber, _super);
     function ThrottleSubscriber(destination, durationSelector) {
         _super.call(this, destination);
+        this.destination = destination;
         this.durationSelector = durationSelector;
     }
     ThrottleSubscriber.prototype._next = function (value) {
         if (!this.throttled) {
-            var destination = this.destination;
-            var duration = tryCatch_1.tryCatch(this.durationSelector)(value);
-            if (duration === errorObject_1.errorObject) {
-                destination.error(errorObject_1.errorObject.e);
-                return;
-            }
-            if (isPromise_1.isPromise(duration)) {
-                duration = fromPromise_1.PromiseObservable.create(duration);
-            }
-            this.add(this.throttled = duration._subscribe(new ThrottleDurationSelectorSubscriber(this)));
-            destination.next(value);
+            this.tryDurationSelector(value);
         }
     };
-    ThrottleSubscriber.prototype._error = function (err) {
-        this.clearThrottle();
-        _super.prototype._error.call(this, err);
+    ThrottleSubscriber.prototype.tryDurationSelector = function (value) {
+        var duration = null;
+        try {
+            duration = this.durationSelector(value);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.emitAndThrottle(value, duration);
     };
-    ThrottleSubscriber.prototype._complete = function () {
-        this.clearThrottle();
-        _super.prototype._complete.call(this);
+    ThrottleSubscriber.prototype.emitAndThrottle = function (value, duration) {
+        this.add(this.throttled = subscribeToResult_1.subscribeToResult(this, duration));
+        this.destination.next(value);
     };
-    ThrottleSubscriber.prototype.clearThrottle = function () {
+    ThrottleSubscriber.prototype._unsubscribe = function () {
         var throttled = this.throttled;
         if (throttled) {
-            throttled.unsubscribe();
             this.remove(throttled);
             this.throttled = null;
+            throttled.unsubscribe();
         }
     };
+    ThrottleSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        this._unsubscribe();
+    };
+    ThrottleSubscriber.prototype.notifyComplete = function () {
+        this._unsubscribe();
+    };
     return ThrottleSubscriber;
-})(Subscriber_1.Subscriber);
-var ThrottleDurationSelectorSubscriber = (function (_super) {
-    __extends(ThrottleDurationSelectorSubscriber, _super);
-    function ThrottleDurationSelectorSubscriber(parent) {
-        _super.call(this, null);
-        this.parent = parent;
-    }
-    ThrottleDurationSelectorSubscriber.prototype._next = function (unused) {
-        this.parent.clearThrottle();
-    };
-    ThrottleDurationSelectorSubscriber.prototype._error = function (err) {
-        this.parent.error(err);
-    };
-    ThrottleDurationSelectorSubscriber.prototype._complete = function () {
-        this.parent.clearThrottle();
-    };
-    return ThrottleDurationSelectorSubscriber;
-})(Subscriber_1.Subscriber);
+}(OuterSubscriber_1.OuterSubscriber));
 //# sourceMappingURL=throttle.js.map

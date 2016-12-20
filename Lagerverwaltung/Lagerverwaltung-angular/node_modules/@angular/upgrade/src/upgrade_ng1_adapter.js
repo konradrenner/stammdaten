@@ -40,7 +40,8 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
                 ],
                 ngOnInit: function () { },
                 ngOnChanges: function () { },
-                ngDoCheck: function () { }
+                ngDoCheck: function () { },
+                ngOnDestroy: function () { },
             });
     }
     UpgradeNg1ComponentAdapterBuilder.prototype.extractDirective = function (injector) {
@@ -70,18 +71,18 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
         }
         var context = (btcIsObject) ? this.directive.bindToController : this.directive.scope;
         if (typeof context == 'object') {
-            for (var name in context) {
-                if (context.hasOwnProperty(name)) {
-                    var localName = context[name];
+            for (var name_1 in context) {
+                if (context.hasOwnProperty(name_1)) {
+                    var localName = context[name_1];
                     var type = localName.charAt(0);
                     var typeOptions = localName.charAt(1);
                     localName = typeOptions === '?' ? localName.substr(2) : localName.substr(1);
-                    localName = localName || name;
-                    var outputName = 'output_' + name;
-                    var outputNameRename = outputName + ': ' + name;
-                    var outputNameRenameChange = outputName + ': ' + name + 'Change';
-                    var inputName = 'input_' + name;
-                    var inputNameRename = inputName + ': ' + name;
+                    localName = localName || name_1;
+                    var outputName = 'output_' + name_1;
+                    var outputNameRename = outputName + ': ' + name_1;
+                    var outputNameRenameChange = outputName + ': ' + name_1 + 'Change';
+                    var inputName = 'input_' + name_1;
+                    var inputNameRename = inputName + ': ' + name_1;
                     switch (type) {
                         case '=':
                             this.propertyOutputs.push(outputName);
@@ -120,20 +121,20 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
                 this.directive.template);
         }
         else if (this.directive.templateUrl) {
-            var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
+            var url_1 = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
                 this.directive.templateUrl;
-            var html = templateCache.get(url);
+            var html = templateCache.get(url_1);
             if (html !== undefined) {
                 this.linkFn = compileHtml(html);
             }
             else {
                 return new Promise(function (resolve, err) {
-                    httpBackend('GET', url, null, function (status /** TODO #9100 */, response /** TODO #9100 */) {
+                    httpBackend('GET', url_1, null, function (status /** TODO #9100 */, response /** TODO #9100 */) {
                         if (status == 200) {
-                            resolve(_this.linkFn = compileHtml(templateCache.put(url, response)));
+                            resolve(_this.linkFn = compileHtml(templateCache.put(url_1, response)));
                         }
                         else {
-                            err("GET " + url + " returned " + status + ": " + response);
+                            err("GET " + url_1 + " returned " + status + ": " + response);
                         }
                     });
                 });
@@ -158,9 +159,9 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
         var templateCache = injector.get(NG1_TEMPLATE_CACHE);
         var httpBackend = injector.get(NG1_HTTP_BACKEND);
         var $controller = injector.get(NG1_CONTROLLER);
-        for (var name in exportedComponents) {
-            if (exportedComponents.hasOwnProperty(name)) {
-                var exportedComponent = exportedComponents[name];
+        for (var name_2 in exportedComponents) {
+            if (exportedComponents.hasOwnProperty(name_2)) {
+                var exportedComponent = exportedComponents[name_2];
                 exportedComponent.directive = exportedComponent.extractDirective(injector);
                 exportedComponent.$controller = $controller;
                 exportedComponent.extractBindings();
@@ -242,15 +243,18 @@ var UpgradeNg1ComponentAdapter = (function () {
         }
     };
     UpgradeNg1ComponentAdapter.prototype.ngOnChanges = function (changes) {
-        for (var name in changes) {
-            if (changes.hasOwnProperty(name)) {
-                var change = changes[name];
-                this.setComponentProperty(name, change.currentValue);
-            }
+        var _this = this;
+        var ng1Changes = {};
+        Object.keys(changes).forEach(function (name) {
+            var change = changes[name];
+            _this.setComponentProperty(name, change.currentValue);
+            ng1Changes[_this.propertyMap[name]] = change;
+        });
+        if (this.destinationObj.$onChanges) {
+            this.destinationObj.$onChanges(ng1Changes);
         }
     };
     UpgradeNg1ComponentAdapter.prototype.ngDoCheck = function () {
-        var count = 0;
         var destinationObj = this.destinationObj;
         var lastValues = this.checkLastValues;
         var checkProperties = this.checkProperties;
@@ -266,7 +270,14 @@ var UpgradeNg1ComponentAdapter = (function () {
                 }
             }
         }
-        return count;
+        if (this.destinationObj.$doCheck && this.directive.controller) {
+            this.destinationObj.$doCheck();
+        }
+    };
+    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
+        if (this.destinationObj.$onDestroy && this.directive.controller) {
+            this.destinationObj.$onDestroy();
+        }
     };
     UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
@@ -282,24 +293,23 @@ var UpgradeNg1ComponentAdapter = (function () {
             return undefined;
         }
         else if (typeof require == 'string') {
-            var name = require;
+            var name_3 = require;
             var isOptional = false;
             var startParent = false;
             var searchParents = false;
-            var ch;
-            if (name.charAt(0) == '?') {
+            if (name_3.charAt(0) == '?') {
                 isOptional = true;
-                name = name.substr(1);
+                name_3 = name_3.substr(1);
             }
-            if (name.charAt(0) == '^') {
+            if (name_3.charAt(0) == '^') {
                 searchParents = true;
-                name = name.substr(1);
+                name_3 = name_3.substr(1);
             }
-            if (name.charAt(0) == '^') {
+            if (name_3.charAt(0) == '^') {
                 startParent = true;
-                name = name.substr(1);
+                name_3 = name_3.substr(1);
             }
-            var key = controllerKey(name);
+            var key = controllerKey(name_3);
             if (startParent)
                 $element = $element.parent();
             var dep = searchParents ? $element.inheritedData(key) : $element.data(key);

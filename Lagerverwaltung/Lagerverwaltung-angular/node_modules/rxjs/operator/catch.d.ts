@@ -1,4 +1,4 @@
-import { Observable } from '../Observable';
+import { Observable, ObservableInput } from '../Observable';
 /**
  * Catches errors on the observable to be handled by returning a new observable or throwing an error.
  * @param {function} selector a function that takes as arguments `err`, which is the error, and `caught`, which
@@ -6,5 +6,10 @@ import { Observable } from '../Observable';
  *  is returned by the `selector` will be used to continue the observable chain.
  * @return {Observable} an observable that originates from either the source or the observable returned by the
  *  catch `selector` function.
+ * @method catch
+ * @owner Observable
  */
-export declare function _catch<T>(selector: (err: any, caught: Observable<any>) => Observable<any>): Observable<T>;
+export declare function _catch<T, R>(selector: (err: any, caught: Observable<T>) => ObservableInput<R>): Observable<R>;
+export interface CatchSignature<T> {
+    <R>(selector: (err: any, caught: Observable<T>) => ObservableInput<R>): Observable<R>;
+}

@@ -1,7 +1,7 @@
-var Subscriber_1 = require('./Subscriber');
+"use strict";
 var root_1 = require('./util/root');
-var SymbolShim_1 = require('./util/SymbolShim');
-var rxSubscriber_1 = require('./symbol/rxSubscriber');
+var toSubscriber_1 = require('./util/toSubscriber');
+var observable_1 = require('./symbol/observable');
 /**
  * A representation of any set of values over any amount of time. This the most basic building block
  * of RxJS.
@@ -11,10 +11,10 @@ var rxSubscriber_1 = require('./symbol/rxSubscriber');
 var Observable = (function () {
     /**
      * @constructor
-     * @param {Function} subscribe the function that is
-     * called when the Observable is initially subscribed to. This function is given a Subscriber, to which new values
-     * can be `next`ed, or an `error` method can be called to raise an error, or `complete` can be called to notify
-     * of a successful completion.
+     * @param {Function} subscribe the function that is  called when the Observable is
+     * initially subscribed to. This function is given a Subscriber, to which new values
+     * can be `next`ed, or an `error` method can be called to raise an error, or
+     * `complete` can be called to notify of a successful completion.
      */
     function Observable(subscribe) {
         this._isScalar = false;
@@ -23,11 +23,11 @@ var Observable = (function () {
         }
     }
     /**
+     * Creates a new Observable, with this Observable as the source, and the passed
+     * operator defined as the new observable's operator.
      * @method lift
      * @param {Operator} operator the operator defining the operation to take on the observable
-     * @returns {Observable} a new observable with the Operator applied
-     * @description creates a new Observable, with this Observable as the source, and the passed
-     * operator defined as the new observable's operator.
+     * @return {Observable} a new observable with the Operator applied
      */
     Observable.prototype.lift = function (operator) {
         var observable = new Observable();
@@ -36,53 +36,42 @@ var Observable = (function () {
         return observable;
     };
     /**
-     * @method Symbol.observable
-     * @returns {Observable} this instance of the observable
-     * @description an interop point defined by the es7-observable spec https://github.com/zenparsing/es-observable
-     */
-    Observable.prototype[SymbolShim_1.SymbolShim.observable] = function () {
-        return this;
-    };
-    /**
+     * Registers handlers for handling emitted values, error and completions from the observable, and
+     *  executes the observable's subscriber function, which will take action to set up the underlying data stream
      * @method subscribe
-     * @param {Observer|Function} observerOrNext (optional) either an observer defining all functions to be called,
+     * @param {PartialObserver|Function} observerOrNext (optional) either an observer defining all functions to be called,
      *  or the first of three possible handlers, which is the handler for each value emitted from the observable.
      * @param {Function} error (optional) a handler for a terminal event resulting from an error. If no error handler is provided,
      *  the error will be thrown as unhandled
      * @param {Function} complete (optional) a handler for a terminal event resulting from successful completion.
-     * @returns {Subscription} a subscription reference to the registered handlers
-     * @description registers handlers for handling emitted values, error and completions from the observable, and
-     *  executes the observable's subscriber function, which will take action to set up the underlying data stream
+     * @return {ISubscription} a subscription reference to the registered handlers
      */
     Observable.prototype.subscribe = function (observerOrNext, error, complete) {
-        var subscriber;
-        if (observerOrNext && typeof observerOrNext === 'object') {
-            if (observerOrNext instanceof Subscriber_1.Subscriber) {
-                subscriber = observerOrNext;
-            }
-            else if (observerOrNext[rxSubscriber_1.rxSubscriber]) {
-                subscriber = observerOrNext[rxSubscriber_1.rxSubscriber]();
-            }
-            else {
-                subscriber = new Subscriber_1.Subscriber(observerOrNext);
-            }
+        var operator = this.operator;
+        var sink = toSubscriber_1.toSubscriber(observerOrNext, error, complete);
+        if (operator) {
+            operator.call(sink, this);
         }
         else {
-            var next = observerOrNext;
-            subscriber = Subscriber_1.Subscriber.create(next, error, complete);
+            sink.add(this._subscribe(sink));
         }
-        subscriber.add(this._subscribe(subscriber));
-        return subscriber;
+        if (sink.syncErrorThrowable) {
+            sink.syncErrorThrowable = false;
+            if (sink.syncErrorThrown) {
+                throw sink.syncErrorValue;
+            }
+        }
+        return sink;
     };
     /**
      * @method forEach
      * @param {Function} next a handler for each value emitted by the observable
-     * @param {any} [thisArg] a `this` context for the `next` handler function
      * @param {PromiseConstructor} [PromiseCtor] a constructor function used to instantiate the Promise
-     * @returns {Promise} a promise that either resolves on observable completion or
+     * @return {Promise} a promise that either resolves on observable completion or
      *  rejects with the handled error
      */
-    Observable.prototype.forEach = function (next, thisArg, PromiseCtor) {
+    Observable.prototype.forEach = function (next, PromiseCtor) {
+        var _this = this;
         if (!PromiseCtor) {
             if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
                 PromiseCtor = root_1.root.Rx.config.Promise;
@@ -94,42 +83,58 @@ var Observable = (function () {
         if (!PromiseCtor) {
             throw new Error('no Promise impl found');
         }
-        var nextHandler;
-        if (thisArg) {
-            nextHandler = function nextHandlerFn(value) {
-                var _a = nextHandlerFn, thisArg = _a.thisArg, next = _a.next;
-                return next.call(thisArg, value);
-            };
-            nextHandler.thisArg = thisArg;
-            nextHandler.next = next;
-        }
-        else {
-            nextHandler = next;
-        }
-        var promiseCallback = function promiseCallbackFn(resolve, reject) {
-            var _a = promiseCallbackFn, source = _a.source, nextHandler = _a.nextHandler;
-            source.subscribe(nextHandler, reject, resolve);
-        };
-        promiseCallback.source = this;
-        promiseCallback.nextHandler = nextHandler;
-        return new PromiseCtor(promiseCallback);
+        return new PromiseCtor(function (resolve, reject) {
+            var subscription = _this.subscribe(function (value) {
+                if (subscription) {
+                    // if there is a subscription, then we can surmise
+                    // the next handling is asynchronous. Any errors thrown
+                    // need to be rejected explicitly and unsubscribe must be
+                    // called manually
+                    try {
+                        next(value);
+                    }
+                    catch (err) {
+                        reject(err);
+                        subscription.unsubscribe();
+                    }
+                }
+                else {
+                    // if there is NO subscription, then we're getting a nexted
+                    // value synchronously during subscription. We can just call it.
+                    // If it errors, Observable's `subscribe` will ensure the
+                    // unsubscription logic is called, then synchronously rethrow the error.
+                    // After that, Promise will trap the error and send it
+                    // down the rejection path.
+                    next(value);
+                }
+            }, reject, resolve);
+        });
     };
     Observable.prototype._subscribe = function (subscriber) {
-        return this.source._subscribe(this.operator.call(subscriber));
+        return this.source.subscribe(subscriber);
+    };
+    /**
+     * An interop point defined by the es7-observable spec https://github.com/zenparsing/es-observable
+     * @method Symbol.observable
+     * @return {Observable} this instance of the observable
+     */
+    Observable.prototype[observable_1.$$observable] = function () {
+        return this;
     };
     // HACK: Since TypeScript inherits static properties too, we have to
     // fight against TypeScript here so Subject can have a different static create signature
     /**
-     * @static
+     * Creates a new cold Observable by calling the Observable constructor
+     * @static true
+     * @owner Observable
      * @method create
      * @param {Function} subscribe? the subscriber function to be passed to the Observable constructor
-     * @returns {Observable} a new cold observable
-     * @description creates a new cold Observable by calling the Observable constructor
+     * @return {Observable} a new cold observable
      */
     Observable.create = function (subscribe) {
         return new Observable(subscribe);
     };
     return Observable;
-})();
+}());
 exports.Observable = Observable;
 //# sourceMappingURL=Observable.js.map

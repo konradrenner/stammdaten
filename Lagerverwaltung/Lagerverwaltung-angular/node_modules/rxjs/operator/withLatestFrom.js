@@ -1,29 +1,48 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var tryCatch_1 = require('../util/tryCatch');
-var errorObject_1 = require('../util/errorObject');
 var OuterSubscriber_1 = require('../OuterSubscriber');
 var subscribeToResult_1 = require('../util/subscribeToResult');
 /**
- * @param {Observable} observables the observables to get the latest values from.
- * @param {Function} [project] optional projection function for merging values together. Receives all values in order
- *  of observables passed. (e.g. `a.withLatestFrom(b, c, (a1, b1, c1) => a1 + b1 + c1)`). If this is not passed, arrays
- *  will be returned.
- * @description merges each value from an observable with the latest values from the other passed observables.
- * All observables must emit at least one value before the resulting observable will emit
+ * Combines the source Observable with other Observables to create an Observable
+ * whose values are calculated from the latest values of each, only when the
+ * source emits.
  *
- * #### example
- * ```
- * A.withLatestFrom(B, C)
+ * <span class="informal">Whenever the source Observable emits a value, it
+ * computes a formula using that value plus the latest values from other input
+ * Observables, then emits the output of that formula.</span>
  *
- *  A:     ----a-----------------b---------------c-----------|
- *  B:     ---d----------------e--------------f---------|
- *  C:     --x----------------y-------------z-------------|
- * result: ---([a,d,x])---------([b,e,y])--------([c,f,z])---|
- * ```
+ * <img src="./img/withLatestFrom.png" width="100%">
+ *
+ * `withLatestFrom` combines each value from the source Observable (the
+ * instance) with the latest values from the other input Observables only when
+ * the source emits a value, optionally using a `project` function to determine
+ * the value to be emitted on the output Observable. All input Observables must
+ * emit at least one value before the output Observable will emit a value.
+ *
+ * @example <caption>On every click event, emit an array with the latest timer event plus the click event</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var timer = Rx.Observable.interval(1000);
+ * var result = clicks.withLatestFrom(timer);
+ * result.subscribe(x => console.log(x));
+ *
+ * @see {@link combineLatest}
+ *
+ * @param {Observable} other An input Observable to combine with the source
+ * Observable. More than one input Observables may be given as argument.
+ * @param {Function} [project] Projection function for combining values
+ * together. Receives all values in order of the Observables passed, where the
+ * first parameter is a value from the source Observable. (e.g.
+ * `a.withLatestFrom(b, c, (a1, b1, c1) => a1 + b1 + c1)`). If this is not
+ * passed, arrays will be emitted on the output Observable.
+ * @return {Observable} An Observable of projected values from the most recent
+ * values from each input Observable, or an array of the most recent values from
+ * each input Observable.
+ * @method withLatestFrom
+ * @owner Observable
  */
 function withLatestFrom() {
     var args = [];
@@ -38,16 +57,22 @@ function withLatestFrom() {
     return this.lift(new WithLatestFromOperator(observables, project));
 }
 exports.withLatestFrom = withLatestFrom;
+/* tslint:enable:max-line-length */
 var WithLatestFromOperator = (function () {
     function WithLatestFromOperator(observables, project) {
         this.observables = observables;
         this.project = project;
     }
-    WithLatestFromOperator.prototype.call = function (subscriber) {
-        return new WithLatestFromSubscriber(subscriber, this.observables, this.project);
+    WithLatestFromOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new WithLatestFromSubscriber(subscriber, this.observables, this.project));
     };
     return WithLatestFromOperator;
-})();
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
 var WithLatestFromSubscriber = (function (_super) {
     __extends(WithLatestFromSubscriber, _super);
     function WithLatestFromSubscriber(destination, observables, project) {
@@ -65,11 +90,11 @@ var WithLatestFromSubscriber = (function (_super) {
             this.add(subscribeToResult_1.subscribeToResult(this, observable, observable, i));
         }
     }
-    WithLatestFromSubscriber.prototype.notifyNext = function (observable, value, observableIndex, index) {
-        this.values[observableIndex] = value;
+    WithLatestFromSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        this.values[outerIndex] = innerValue;
         var toRespond = this.toRespond;
         if (toRespond.length > 0) {
-            var found = toRespond.indexOf(observableIndex);
+            var found = toRespond.indexOf(outerIndex);
             if (found !== -1) {
                 toRespond.splice(found, 1);
             }
@@ -80,24 +105,26 @@ var WithLatestFromSubscriber = (function (_super) {
     };
     WithLatestFromSubscriber.prototype._next = function (value) {
         if (this.toRespond.length === 0) {
-            var values = this.values;
-            var destination = this.destination;
-            var project = this.project;
-            var args = [value].concat(values);
-            if (project) {
-                var result = tryCatch_1.tryCatch(this.project).apply(this, args);
-                if (result === errorObject_1.errorObject) {
-                    destination.error(result.e);
-                }
-                else {
-                    destination.next(result);
-                }
+            var args = [value].concat(this.values);
+            if (this.project) {
+                this._tryProject(args);
             }
             else {
-                destination.next(args);
+                this.destination.next(args);
             }
         }
     };
+    WithLatestFromSubscriber.prototype._tryProject = function (args) {
+        var result;
+        try {
+            result = this.project.apply(this, args);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
     return WithLatestFromSubscriber;
-})(OuterSubscriber_1.OuterSubscriber);
+}(OuterSubscriber_1.OuterSubscriber));
 //# sourceMappingURL=withLatestFrom.js.map

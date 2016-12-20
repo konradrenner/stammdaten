@@ -12,7 +12,13 @@ export function stringify(obj) {
 }
 export function onError(e) {
     // TODO: (misko): We seem to not have a stack trace here!
-    console.log(e, e.stack);
+    if (console.error) {
+        console.error(e, e.stack);
+    }
+    else {
+        // tslint:disable-next-line:no-console
+        console.log(e, e.stack);
+    }
     throw e;
 }
 export function controllerKey(name) {

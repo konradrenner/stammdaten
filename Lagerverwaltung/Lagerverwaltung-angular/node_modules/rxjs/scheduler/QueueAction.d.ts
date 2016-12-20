@@ -1,12 +1,16 @@
+import { AsyncAction } from './AsyncAction';
 import { Subscription } from '../Subscription';
-import { Scheduler } from '../Scheduler';
-import { Action } from './Action';
-export declare class QueueAction<T> extends Subscription<T> implements Action {
-    scheduler: Scheduler;
-    work: (x?: any) => Subscription<T> | void;
-    state: any;
-    constructor(scheduler: Scheduler, work: (x?: any) => Subscription<T> | void);
-    schedule(state?: any): Action;
-    execute(): void;
-    unsubscribe(): void;
+import { QueueScheduler } from './QueueScheduler';
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+export declare class QueueAction<T> extends AsyncAction<T> {
+    protected scheduler: QueueScheduler;
+    protected work: (state?: T) => void;
+    constructor(scheduler: QueueScheduler, work: (state?: T) => void);
+    schedule(state?: T, delay?: number): Subscription;
+    execute(state: T, delay: number): any;
+    protected requestAsyncId(scheduler: QueueScheduler, id?: any, delay?: number): any;
 }

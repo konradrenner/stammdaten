@@ -6,12 +6,13 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { HashLocationStrategy, Location, PathLocationStrategy, PlatformLocation } from '@angular/common';
-import { ApplicationRef, Compiler, Injector, ModuleWithProviders, NgModuleFactoryLoader, OpaqueToken, Provider } from '@angular/core';
+import { ApplicationRef, Compiler, ComponentRef, Injector, ModuleWithProviders, NgModuleFactoryLoader, OpaqueToken, Provider } from '@angular/core';
 import { Route, Routes } from './config';
 import { ErrorHandler, Router } from './router';
 import { RouterOutletMap } from './router_outlet_map';
 import { RouterPreloader } from './router_preloader';
 import { ActivatedRoute } from './router_state';
+import { UrlHandlingStrategy } from './url_handling_strategy';
 import { UrlSerializer } from './url_tree';
 /**
  * @whatItDoes Is used in DI to configure the router.
@@ -139,12 +140,21 @@ export interface ExtraOptions {
      */
     preloadingStrategy?: any;
 }
-export declare function setupRouter(ref: ApplicationRef, urlSerializer: UrlSerializer, outletMap: RouterOutletMap, location: Location, injector: Injector, loader: NgModuleFactoryLoader, compiler: Compiler, config: Route[][], opts?: ExtraOptions): Router;
+export declare function setupRouter(ref: ApplicationRef, urlSerializer: UrlSerializer, outletMap: RouterOutletMap, location: Location, injector: Injector, loader: NgModuleFactoryLoader, compiler: Compiler, config: Route[][], opts?: ExtraOptions, urlHandlingStrategy?: UrlHandlingStrategy): Router;
 export declare function rootRoute(router: Router): ActivatedRoute;
-export declare function initialRouterNavigation(router: Router, ref: ApplicationRef, preloader: RouterPreloader, opts: ExtraOptions): () => void;
-export declare function provideRouterInitializer(): {
+export declare function initialRouterNavigation(router: Router, ref: ApplicationRef, preloader: RouterPreloader, opts: ExtraOptions): (bootstrappedComponentRef: ComponentRef<any>) => void;
+/**
+ * A token for the router initializer that will be called after the app is bootstrapped.
+ *
+ * @experimental
+ */
+export declare const ROUTER_INITIALIZER: OpaqueToken;
+export declare function provideRouterInitializer(): ({
+    provide: OpaqueToken;
+    useFactory: (router: Router, ref: ApplicationRef, preloader: RouterPreloader, opts: ExtraOptions) => (bootstrappedComponentRef: ComponentRef<any>) => void;
+    deps: (OpaqueToken | typeof Router | typeof RouterPreloader | typeof ApplicationRef)[];
+} | {
     provide: OpaqueToken;
     multi: boolean;
-    useFactory: (router: Router, ref: ApplicationRef, preloader: RouterPreloader, opts: ExtraOptions) => () => void;
-    deps: (OpaqueToken | typeof Router | typeof RouterPreloader | typeof ApplicationRef)[];
-};
+    useExisting: OpaqueToken;
+})[];

@@ -7,6 +7,7 @@
  */
 import { Type } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { UrlSegment, UrlSegmentGroup } from './url_tree';
 /**
  * @whatItDoes Represents router configuration.
  *
@@ -150,6 +151,9 @@ import { Observable } from 'rxjs/Observable';
  * When navigating to `/team/11/user/jim`, the router will instantiate the wrapper component with
  * the user component in it.
  *
+ * An empty path route inherits its parent's params and data. This is because it cannot have its
+ * own params, and, as a result, it often uses its parent's params and data as its own.
+ *
  * ### Matching Strategy
  *
  * By default the router will look at what is left in the url, and check if it starts with
@@ -215,7 +219,8 @@ import { Observable } from 'rxjs/Observable';
  * has to have the primary and aux outlets defined.
  *
  * The router will also merge the `params`, `data`, and `resolve` of the componentless parent into
- * the `params`, `data`, and `resolve` of the children.
+ * the `params`, `data`, and `resolve` of the children. This is done because there is no component
+ * that can inject the activated route of the componentless parent.
  *
  * This is especially useful when child components are defined as follows:
  *
@@ -256,6 +261,41 @@ import { Observable } from 'rxjs/Observable';
  */
 export declare type Routes = Route[];
 /**
+ * @whatItDoes Represents the results of the URL matching.
+ *
+ * * `consumed` is an array of the consumed URL segments.
+ * * `posParams` is a map of positional parameters.
+ *
+ * @experimental
+ */
+export declare type UrlMatchResult = {
+    consumed: UrlSegment[];
+    posParams?: {
+        [name: string]: UrlSegment;
+    };
+};
+/**
+ * @whatItDoes A function matching URLs
+ *
+ * @description
+ *
+ * A custom URL matcher can be provided when a combination of `path` and `pathMatch` isn't
+ * expressive enough.
+ *
+ * For instance, the following matcher matches html files.
+ *
+ * ```
+ * function htmlFiles(url: UrlSegment[]) {
+ *  return url.length === 1 && url[0].path.endsWith('.html') ? ({consumed: url}) : null;
+ * }
+ *
+ * const routes = [{ matcher: htmlFiles, component: HtmlCmp }];
+ * ```
+ *
+ * @experimental
+ */
+export declare type UrlMatcher = (segments: UrlSegment[], group: UrlSegmentGroup, route: Route) => UrlMatchResult;
+/**
  * @whatItDoes Represents the static data associated with a particular route.
  * See {@link Routes} for more details.
  * @stable
@@ -264,7 +304,7 @@ export declare type Data = {
     [name: string]: any;
 };
 /**
- *  @whatItDoes Represents the resolved data associated with a particular route.
+ * @whatItDoes Represents the resolved data associated with a particular route.
  * See {@link Routes} for more details.
  * @stable
  */
@@ -291,6 +331,7 @@ export declare type LoadChildren = string | LoadChildrenCallback;
 export interface Route {
     path?: string;
     pathMatch?: string;
+    matcher?: UrlMatcher;
     component?: Type<any>;
     redirectTo?: string;
     outlet?: string;

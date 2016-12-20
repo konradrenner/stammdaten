@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -6,6 +7,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 var Observable_1 = require('../Observable');
 var asap_1 = require('../scheduler/asap');
 var isNumeric_1 = require('../util/isNumeric');
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
 var SubscribeOnObservable = (function (_super) {
     __extends(SubscribeOnObservable, _super);
     function SubscribeOnObservable(source, delayTime, scheduler) {
@@ -27,19 +33,19 @@ var SubscribeOnObservable = (function (_super) {
         if (scheduler === void 0) { scheduler = asap_1.asap; }
         return new SubscribeOnObservable(source, delay, scheduler);
     };
-    SubscribeOnObservable.dispatch = function (_a) {
-        var source = _a.source, subscriber = _a.subscriber;
+    SubscribeOnObservable.dispatch = function (arg) {
+        var source = arg.source, subscriber = arg.subscriber;
         return source.subscribe(subscriber);
     };
     SubscribeOnObservable.prototype._subscribe = function (subscriber) {
         var delay = this.delayTime;
         var source = this.source;
         var scheduler = this.scheduler;
-        subscriber.add(scheduler.schedule(SubscribeOnObservable.dispatch, delay, {
+        return scheduler.schedule(SubscribeOnObservable.dispatch, delay, {
             source: source, subscriber: subscriber
-        }));
+        });
     };
     return SubscribeOnObservable;
-})(Observable_1.Observable);
+}(Observable_1.Observable));
 exports.SubscribeOnObservable = SubscribeOnObservable;
 //# sourceMappingURL=SubscribeOnObservable.js.map

@@ -1,6 +1,5 @@
-import { Observer } from './Observer';
 import { Subscriber } from './Subscriber';
+import { TeardownLogic } from './Subscription';
 export interface Operator<T, R> {
-    call<T, R>(subscriber: Subscriber<R>): Subscriber<T>;
+    call(subscriber: Subscriber<R>, source: any): TeardownLogic;
 }
-export declare function defaultCallFn<T, R>(observer: Observer<R>): Observer<T>;

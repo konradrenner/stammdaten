@@ -1,18 +1,20 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Observable_1 = require('../Observable');
-var VirtualTimeScheduler_1 = require('../scheduler/VirtualTimeScheduler');
 var Notification_1 = require('../Notification');
 var ColdObservable_1 = require('./ColdObservable');
 var HotObservable_1 = require('./HotObservable');
 var SubscriptionLog_1 = require('./SubscriptionLog');
+var VirtualTimeScheduler_1 = require('../scheduler/VirtualTimeScheduler');
+var defaultMaxFrame = 750;
 var TestScheduler = (function (_super) {
     __extends(TestScheduler, _super);
     function TestScheduler(assertDeepEqual) {
-        _super.call(this);
+        _super.call(this, VirtualTimeScheduler_1.VirtualAction, defaultMaxFrame);
         this.assertDeepEqual = assertDeepEqual;
         this.hotObservables = [];
         this.coldObservables = [];
@@ -21,16 +23,16 @@ var TestScheduler = (function (_super) {
     TestScheduler.prototype.createTime = function (marbles) {
         var indexOf = marbles.indexOf('|');
         if (indexOf === -1) {
-            throw new Error('Marble diagram for time should have a completion marker "|"');
+            throw new Error('marble diagram for time should have a completion marker "|"');
         }
         return indexOf * TestScheduler.frameTimeFactor;
     };
     TestScheduler.prototype.createColdObservable = function (marbles, values, error) {
         if (marbles.indexOf('^') !== -1) {
-            throw new Error('Cold observable cannot have subscription offset "^"');
+            throw new Error('cold observable cannot have subscription offset "^"');
         }
         if (marbles.indexOf('!') !== -1) {
-            throw new Error('Cold observable cannot have unsubscription marker "!"');
+            throw new Error('cold observable cannot have unsubscription marker "!"');
         }
         var messages = TestScheduler.parseMarbles(marbles, values, error);
         var cold = new ColdObservable_1.ColdObservable(messages, this);
@@ -39,7 +41,7 @@ var TestScheduler = (function (_super) {
     };
     TestScheduler.prototype.createHotObservable = function (marbles, values, error) {
         if (marbles.indexOf('!') !== -1) {
-            throw new Error('Hot observable cannot have unsubscription marker "!"');
+            throw new Error('hot observable cannot have unsubscription marker "!"');
         }
         var messages = TestScheduler.parseMarbles(marbles, values, error);
         var subject = new HotObservable_1.HotObservable(messages, this);
@@ -139,20 +141,20 @@ var TestScheduler = (function (_super) {
                     break;
                 case '^':
                     if (subscriptionFrame !== Number.POSITIVE_INFINITY) {
-                        throw new Error('Found a second subscription point \'^\' in a ' +
+                        throw new Error('found a second subscription point \'^\' in a ' +
                             'subscription marble diagram. There can only be one.');
                     }
                     subscriptionFrame = groupStart > -1 ? groupStart : frame;
                     break;
                 case '!':
                     if (unsubscriptionFrame !== Number.POSITIVE_INFINITY) {
-                        throw new Error('Found a second subscription point \'^\' in a ' +
+                        throw new Error('found a second subscription point \'^\' in a ' +
                             'subscription marble diagram. There can only be one.');
                     }
                     unsubscriptionFrame = groupStart > -1 ? groupStart : frame;
                     break;
                 default:
-                    throw new Error('There can only be \'^\' and \'!\' markers in a ' +
+                    throw new Error('there can only be \'^\' and \'!\' markers in a ' +
                         'subscription marble diagram. Found instead \'' + c + '\'.');
             }
         }
@@ -166,7 +168,7 @@ var TestScheduler = (function (_super) {
     TestScheduler.parseMarbles = function (marbles, values, errorValue, materializeInnerObservables) {
         if (materializeInnerObservables === void 0) { materializeInnerObservables = false; }
         if (marbles.indexOf('!') !== -1) {
-            throw new Error('Conventional marble diagrams cannot have the ' +
+            throw new Error('conventional marble diagrams cannot have the ' +
                 'unsubscription marker "!"');
         }
         var len = marbles.length;
@@ -216,6 +218,6 @@ var TestScheduler = (function (_super) {
         return testMessages;
     };
     return TestScheduler;
-})(VirtualTimeScheduler_1.VirtualTimeScheduler);
+}(VirtualTimeScheduler_1.VirtualTimeScheduler));
 exports.TestScheduler = TestScheduler;
 //# sourceMappingURL=TestScheduler.js.map
