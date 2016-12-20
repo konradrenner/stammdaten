@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {GithubService} from '../shared/github.service';
+import { VersandkostenHttpService } from '../shared/versandkosten-http.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'repo-list',
-  styleUrls: ['./repo-list.component.css'],
-  templateUrl: './repo-list.component.html',
+  selector: 'versandkosten-list',
+  styleUrls: ['./versandkosten-list.component.css'],
+  templateUrl: './versandkosten-list.component.html',
 })
-export class RepoListComponent implements OnInit {
+export class VersandkostenListComponent implements OnInit {
   org: string;
   repos: Observable<any>;
 
-  constructor(public github: GithubService, private route: ActivatedRoute) {
+  constructor(public github: VersandkostenHttpService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {GithubService} from '../shared/github.service';
+import { VersandkostenHttpService } from '../shared/versandkosten-http.service';
 
 @Component({
-  selector: 'repo-detail',
-  styleUrls: ['./repo-detail.component.css'],
-  templateUrl: './repo-detail.component.html'
+    selector: 'versandkosten-detail',
+  styleUrls: ['./versandkosten-detail.component.css'],
+  templateUrl: './versandkosten-detail.component.html'
 })
-export class RepoDetailComponent implements OnInit {
+export class VersandkostenDetailComponent implements OnInit {
   private org:string;
   private repo:string;
   public repoDetails:any = {};
 
-  constructor(public github:GithubService, private route:ActivatedRoute) {
+  constructor(public github: VersandkostenHttpService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

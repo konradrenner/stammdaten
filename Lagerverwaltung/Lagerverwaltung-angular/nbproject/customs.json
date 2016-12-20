@@ -1,0 +1,9 @@
+{
+    "elements": {
+        "router-outlet": {}
+    },
+    "attributes": {
+        "[routerlink]": {},
+        "*ngfor": {}
+    }
+}

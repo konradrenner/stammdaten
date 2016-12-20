@@ -16,8 +16,8 @@ var http_1 = require('@angular/http');
 var about_component_1 = require('./about/about.component');
 var home_component_1 = require('./home/home.component');
 var repo_browser_component_1 = require('./github/repo-browser/repo-browser.component');
-var repo_list_component_1 = require('./github/repo-list/repo-list.component');
-var repo_detail_component_1 = require('./github/repo-detail/repo-detail.component');
+var repo_list_component_1 = require('./github/versandkosten-list/versandkosten-list.component');
+var repo_detail_component_1 = require('./github/versandkosten-detail/versandkosten-detail.component');
 var contact_component_1 = require('./contact/contact.component');
 var AppModule = (function () {
     function AppModule() {
