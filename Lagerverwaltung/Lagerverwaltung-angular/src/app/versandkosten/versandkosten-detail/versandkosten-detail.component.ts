@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { VersandkostenHttpService } from '../shared/versandkosten-http.service';
+import { Versandkosten } from './../shared/versandkosten'
 
 @Component({
     selector: 'versandkosten-detail',
@@ -8,24 +9,21 @@ import { VersandkostenHttpService } from '../shared/versandkosten-http.service';
   templateUrl: './versandkosten-detail.component.html'
 })
 export class VersandkostenDetailComponent implements OnInit {
-  private org:string;
-  private repo:string;
-  public repoDetails:any = {};
+    private land: string;
+    public versandkostenDetails: Versandkosten;
 
-  constructor(public github: VersandkostenHttpService, private route: ActivatedRoute) {
+    constructor(public httpService: VersandkostenHttpService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.org = this.route.snapshot.parent.params['org'];
-      this.repo = params['repo'] || '';
-
-      if (this.repo) {
-        this.github.getRepoForOrg(this.org, this.repo)
-          .subscribe(repoDetails => {
-            this.repoDetails = repoDetails;
-          });
-      }
-    });
+      this.route.params.subscribe(params => {
+          this.land = this.route.snapshot.parent.params['land'];
+          if (this.land) {
+              this.httpService.getLand(this.land)
+                  .subscribe(versandkostenDetails => {
+                      this.versandkostenDetails = versandkostenDetails;
+                  });
+          }
+      });
   }
 }

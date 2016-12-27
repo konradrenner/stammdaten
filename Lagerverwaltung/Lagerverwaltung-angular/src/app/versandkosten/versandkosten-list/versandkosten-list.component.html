@@ -1,10 +1,19 @@
-<h3>Repo list</h3>
-<ul>
-	<li *ngFor="let repo of repos | async">
-    <a [routerLink]="['/github', repo.owner.login, repo.name]">
-      {{ repo.name }}
-    </a>
-  </li>
-</ul>
+<h3>Versandkosten</h3>
+<table>
+    <th>Land</th>
+    <th>Betrag</th>
+    <th>Freibetrag</th>
+    <th>Waehrung</th>
+    <tr *ngFor="let land of laender | async">
+        <td>
+        <a [routerLink]="['/versandkosten/detail', land.name]">
+            {{ land.name }}
+        </a>
+    </td>
+    <td>{{ land.betrag}}</td>
+    <td>{{ land.freibetrag}}</td>
+    <td>{{ land.waehrung}}</td>
+</tr>
+</table>
 
 <router-outlet></router-outlet>

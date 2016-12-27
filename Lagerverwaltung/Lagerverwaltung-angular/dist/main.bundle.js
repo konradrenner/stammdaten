@@ -30214,19 +30214,15 @@ var VersandkostenHttpService = (function () {
     function VersandkostenHttpService(http) {
         this.http = http;
     }
-    VersandkostenHttpService.prototype.getOrg = function (org) {
-        return this.makeRequest("orgs/" + org);
-    };
-    VersandkostenHttpService.prototype.getReposForOrg = function (org) {
-        return this.makeRequest("orgs/" + org + "/repos");
-    };
-    VersandkostenHttpService.prototype.getRepoForOrg = function (org, repo) {
-        return this.makeRequest("repos/" + org + "/" + repo);
-    };
-    VersandkostenHttpService.prototype.makeRequest = function (path) {
+    VersandkostenHttpService.prototype.getLand = function (land) {
         var params = new http_1.URLSearchParams();
-        params.set('per_page', '100');
-        var url = "https://api.github.com/" + path;
+        var url = "http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources/" + land;
+        return this.http.get(url, { search: params })
+            .map(function (res) { return res.json(); });
+    };
+    VersandkostenHttpService.prototype.getAlleLaender = function () {
+        var params = new http_1.URLSearchParams();
+        var url = "http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources";
         return this.http.get(url, { search: params })
             .map(function (res) { return res.json(); });
     };
@@ -44107,20 +44103,18 @@ var core_1 = __webpack_require__(0);
 var router_1 = __webpack_require__(207);
 var versandkosten_http_service_1 = __webpack_require__(211);
 var VersandkostenDetailComponent = (function () {
-    function VersandkostenDetailComponent(github, route) {
-        this.github = github;
+    function VersandkostenDetailComponent(httpService, route) {
+        this.httpService = httpService;
         this.route = route;
-        this.repoDetails = {};
     }
     VersandkostenDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
-            _this.org = _this.route.snapshot.parent.params['org'];
-            _this.repo = params['repo'] || '';
-            if (_this.repo) {
-                _this.github.getRepoForOrg(_this.org, _this.repo)
-                    .subscribe(function (repoDetails) {
-                    _this.repoDetails = repoDetails;
+            _this.land = _this.route.snapshot.parent.params['land'];
+            if (_this.land) {
+                _this.httpService.getLand(_this.land)
+                    .subscribe(function (versandkostenDetails) {
+                    _this.versandkostenDetails = versandkostenDetails;
                 });
             }
         });
@@ -44158,16 +44152,16 @@ var core_1 = __webpack_require__(0);
 var versandkosten_http_service_1 = __webpack_require__(211);
 var router_1 = __webpack_require__(207);
 var VersandkostenListComponent = (function () {
-    function VersandkostenListComponent(github, route) {
-        this.github = github;
+    function VersandkostenListComponent(httpService, route) {
+        this.httpService = httpService;
         this.route = route;
     }
     VersandkostenListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
-            _this.org = params['org'];
-            if (_this.org) {
-                _this.repos = _this.github.getReposForOrg(_this.org);
+            _this.land = params['land'];
+            if (_this.land) {
+                _this.laender = _this.httpService.getAlleLaender();
             }
         });
     };
@@ -62157,7 +62151,7 @@ module.exports = "<h3>About</h3>\n<p>Die Lagerverwaltung Applikationen sind mein
 /* 658 */
 /***/ function(module, exports) {
 
-module.exports = "<h3>\n  Angular 2 Seed\n</h3>\n<nav>\n\t<a [routerLink]=\"['/']\">\n    Home\n  </a>\n  |\n\t<a [routerLink]=\"['/about']\">\n    About\n  </a>\n  |\n\t<a [routerLink]=\"['/github', 'angular']\">\n    Github Repos\n  </a>\n  |\n\t<a [routerLink]=\"['/contact']\">\n    Contact Us\n  </a>\n</nav>\n\n<main>\n\t<router-outlet></router-outlet>\n</main>\n\n\n<footer>\n  © 2016\n</footer>\n"
+module.exports = "<h3>\n    Stammdaten - Lagerverwaltung\n</h3>\n<nav>\n\t<a [routerLink]=\"['/']\">\n    Home\n  </a>\n  |\n\t<a [routerLink]=\"['/about']\">\n    About\n  </a>\n  |\n  <a [routerLink]=\"['/versandkosten']\">\n      Versandkosten\n</a>\n  |\n</nav>\n\n<main>\n\t<router-outlet></router-outlet>\n</main>\n\n\n<footer>\n    Have a lot of fun...\n</footer>\n"
 
 /***/ },
 /* 659 */
@@ -62169,13 +62163,13 @@ module.exports = "<h3>Lagerverwaltung Home</h3>\n<p>Hallo bei der Lagerverwaltun
 /* 660 */
 /***/ function(module, exports) {
 
-module.exports = "<h2>{{ repoDetails.full_name }}</h2>\n\n<pre>this.repoDetails = {{ repoDetails | json }}</pre>\n"
+module.exports = "<h2>{{ land }}</h2>\n\n<pre>this.versandkostenDetails = {{ versandkostenDetails | json }}</pre>\n"
 
 /***/ },
 /* 661 */
 /***/ function(module, exports) {
 
-module.exports = "<h3>Repo list</h3>\n<ul>\n\t<li *ngFor=\"let repo of repos | async\">\n    <a [routerLink]=\"['/github', repo.owner.login, repo.name]\">\n      {{ repo.name }}\n    </a>\n  </li>\n</ul>\n\n<router-outlet></router-outlet>\n"
+module.exports = "<h3>Versandkosten</h3>\n<table>\n    <th>Land</th>\n    <th>Betrag</th>\n    <th>Freibetrag</th>\n    <th>Waehrung</th>\n    <tr *ngFor=\"let land of laender | async\">\n        <td>\n        <a [routerLink]=\"['/versandkosten/detail', land.name]\">\n            {{ land.name }}\n        </a>\n    </td>\n    <td>{{ land.betrag}}</td>\n    <td>{{ land.freibetrag}}</td>\n    <td>{{ land.waehrung}}</td>\n</tr>\n</table>\n\n<router-outlet></router-outlet>\n"
 
 /***/ },
 /* 662 */

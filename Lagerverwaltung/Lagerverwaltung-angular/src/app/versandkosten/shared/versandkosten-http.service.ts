@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { Versandkosten } from './../shared/versandkosten';
 
 @Injectable()
 export class VersandkostenHttpService {
   constructor(private http: Http) {}
 
-  getOrg(org: string) {
-    return this.makeRequest(`orgs/${org}`);
+  getLand(land: string): Observable<Versandkosten> {
+      let params = new URLSearchParams();
+
+      let url = `http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources/${land}`;
+      return this.http.get(url, { search: params })
+          .map((res) => res.json());
   }
 
-  getReposForOrg(org: string) {
-    return this.makeRequest(`orgs/${org}/repos`);
-  }
+  getAlleLaender(): Observable<Array<Versandkosten>> {
+      let params = new URLSearchParams();
 
-  getRepoForOrg(org: string, repo: string) {
-    return this.makeRequest(`repos/${org}/${repo}`);
-  }
-
-  private makeRequest(path: string) {
-    let params = new URLSearchParams();
-    params.set('per_page', '100');
-
-    let url = `https://api.github.com/${ path }`;
-    return this.http.get(url, {search: params})
-      .map((res) => res.json());
+      let url = `http://stammdaten-kuk.rhcloud.com/Lagerverwaltung-rest/webresources`;
+      return this.http.get(url, { search: params })
+          .map((res) => res.json());
   }
 }
