@@ -48,6 +48,10 @@ public class ArquillianTest {
     
     @Deployment
     public static Archive<?> createDeployment(){
+//        File postgresqlLibrary = Maven.resolver().loadPomFromFile("pom.xml")
+//            .resolve("org.postgresql:postgresql").withoutTransitivity()
+//            .asSingleFile();
+        
         File h2Library = Maven.resolver().loadPomFromFile("pom.xml")
             .resolve("com.h2database:h2").withoutTransitivity()
             .asSingleFile();

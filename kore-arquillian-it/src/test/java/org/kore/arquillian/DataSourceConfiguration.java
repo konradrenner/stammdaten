@@ -28,6 +28,14 @@ import javax.ejb.Startup;
  */
 @Startup
 @Singleton
+// PostgreSQL config with postgres docker image at 172.17.02
+//@DataSourceDefinition(name = "java:app/datasource",
+//    className = "org.postgresql.ds.PGPoolingDataSource",
+//    user = "postgres",
+//    password = "***",
+//    databaseName = "postgres",
+//    portNumber = 5432,
+//    serverName = "172.17.0.2")
 @DataSourceDefinition(name = "java:app/datasource",
     className = "org.h2.jdbcx.JdbcDataSource",
     url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",

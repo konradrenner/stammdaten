@@ -8,6 +8,7 @@
       <property name="javax.persistence.schema-generation.create-source" value="script" />
       <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/create.sql" />
       <property name="hibernate.show_sql" value="true" />
+      <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect" /> -->
     </properties>
   </persistence-unit>
 </persistence>
