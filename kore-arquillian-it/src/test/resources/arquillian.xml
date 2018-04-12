@@ -8,5 +8,4 @@
             <property name="modulePath">target/wildfly-10.0.0.Final/modules</property>
         </configuration>
     </container>
-    
 </arquillian>

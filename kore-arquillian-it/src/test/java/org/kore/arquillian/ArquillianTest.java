@@ -20,6 +20,7 @@ package org.kore.arquillian;
 
 import java.util.List;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import static org.hamcrest.CoreMatchers.is;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

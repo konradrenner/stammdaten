@@ -45,23 +45,6 @@
     </dependencyManagement>
     <profiles>
         <profile>
-            <id>openEJB</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-openejb-embedded-3.1</artifactId>
-                    <version>1.0.0.Alpha5</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.openejb</groupId>
-                    <artifactId>openejb-core</artifactId>
-                    <version>3.1.4</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>wildfly</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -112,8 +95,8 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.21.0</version>
                         <configuration>
-                            Fork every test because it will launch a separate AS instance
-                            <forkMode>always</forkMode>
+                            <!-- Fork every test because it will launch a separate AS instance -->
+                            <reuseForks>false</reuseForks>
                             <systemPropertyVariables>
                                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                             </systemPropertyVariables>
@@ -125,6 +108,7 @@
         </profile>
     </profiles>
     <build>
+        <!-- not using 'real' maven integation test via failsafe, because it lacks good support in netbeans -->
        <!-- <testSourceDirectory>src/it</testSourceDirectory>
         <testResources>
             <testResource>
