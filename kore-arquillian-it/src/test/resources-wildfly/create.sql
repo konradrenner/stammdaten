@@ -1,0 +1,1 @@
+create table wildflytest (id integer NOT NULL, text varchar(50), primary key(id));

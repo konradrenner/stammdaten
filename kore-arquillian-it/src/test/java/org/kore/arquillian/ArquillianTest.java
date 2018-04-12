@@ -18,9 +18,13 @@
  */
 package org.kore.arquillian;
 
+import java.io.File;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import static org.hamcrest.CoreMatchers.is;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -29,7 +33,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import static org.junit.Assert.assertThat;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,7 +48,18 @@ public class ArquillianTest {
     
     @Deployment
     public static Archive<?> createDeployment(){
-        JavaArchive ejbArchive = ShrinkWrap.create(JavaArchive.class, "myejbs.jar").addClass(ArquillianTestBean.class).addClass(TestdataEntity.class);
+        File h2Library = Maven.resolver().loadPomFromFile("pom.xml")
+            .resolve("com.h2database:h2").withoutTransitivity()
+            .asSingleFile();
+        
+        JavaArchive ejbArchive = ShrinkWrap
+                .create(JavaArchive.class, "myejbs.jar")
+                .addClass(ArquillianTestBean.class)
+                .addClass(TestdataEntity.class)
+                .addClass(DataSourceConfiguration.class)
+                .addAsResource("create.sql","META-INF/create.sql")
+                .addAsResource("test-persistence.xml","META-INF/persistence.xml");
+        
         JavaArchive ejbClientArchive = ShrinkWrap.create(JavaArchive.class, "myejbclients.jar").addClass(ArquillianTestService.class).addClass(Testdata.class);
         
         //Because the whole archive is build on our own here, it is also necessary to add the Test-class on our own
@@ -52,6 +69,7 @@ public class ArquillianTest {
                 .create(EnterpriseArchive.class,"myear.ear")
                 .addAsModule(ejbArchive)
                 .addAsModule(testClass)
+                .addAsLibrary(h2Library)
                 .addAsLibrary(ejbClientArchive);
         
         System.out.println("output:"+earArchive.toString(true));
@@ -62,6 +80,19 @@ public class ArquillianTest {
     @EJB
     private ArquillianTestService testservice;
     
+    @PersistenceContext
+    private EntityManager em;
+    
+    @Inject
+    private UserTransaction utx;
+    
+    @Before
+    public void prepareTestdata() throws Exception{
+        clearData();
+        insertData();
+    }
+          
+    
     @Test
     public void tryit(){
         List<Testdata> testdata = testservice.getTestdata();
@@ -71,5 +102,23 @@ public class ArquillianTest {
         
         assertThat(testdata.get(1).getId(), is(2));
         assertThat(testdata.get(1).getText(), is("Welt"));
+    }
+    
+    private void clearData() throws Exception{
+        utx.begin();
+        em.joinTransaction();
+        System.out.println("clearing data");
+        em.createNativeQuery("delete from wildflytest").executeUpdate();
+        utx.commit();
+    }
+    
+    private void insertData() throws Exception{
+        utx.begin();
+        em.joinTransaction();
+        System.out.println("inserting data");
+        em.createNativeQuery("insert into wildflytest(id,text) values(1,'Hallo')").executeUpdate();
+        em.createNativeQuery("insert into wildflytest(id,text) values(2,'Welt')").executeUpdate();
+        utx.commit();
+        em.clear();
     }
 }

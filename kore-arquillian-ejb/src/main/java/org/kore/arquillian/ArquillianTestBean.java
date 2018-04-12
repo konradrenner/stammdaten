@@ -4,9 +4,10 @@
  */
 package org.kore.arquillian;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,13 +15,13 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ArquillianTestBean implements ArquillianTestService{
+    
+    @PersistenceContext(unitName = "kore-arquillian-ejb")
+    private EntityManager em;
 
     @Override
     public List<Testdata> getTestdata() {
-        ArrayList<Testdata> ret = new ArrayList<>();
-        ret.add(new TestdataEntity(1, "Hallo"));
-        ret.add(new TestdataEntity(2, "Welt"));
-        return ret;
+        return em.createNamedQuery("TestdataEntity.findAll", Testdata.class).getResultList();
     }
 
 

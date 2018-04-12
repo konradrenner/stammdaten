@@ -5,11 +5,22 @@
  */
 package org.kore.arquillian;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 /**
  *
  * @author koni
  */
-public class TestdataEntity implements Testdata{
+@Entity
+@Table(name = "wildflytest")
+@NamedQuery(name = "TestdataEntity.findAll", query = "select value from TestdataEntity value")
+public class TestdataEntity implements Testdata, Serializable{
+    
+    @Id
     private int id;
     private String text;
 
