@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-Integrationtest file</actionName>
+            <displayName>Integrationtest file</displayName>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>failsafe:verify</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+            </properties>
+        </action>
+    </actions>
