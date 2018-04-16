@@ -125,6 +125,7 @@
                             <!-- Fork every test because it will launch a separate AS instance -->
                             <reuseForks>false</reuseForks>
                             <systemPropertyVariables>
+                                <jboss.home>target/wildfly-10.0.0.Final</jboss.home>
                                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>false</redirectTestOutputToFile>

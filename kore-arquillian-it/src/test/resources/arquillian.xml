@@ -31,8 +31,8 @@
 
     <container qualifier="wildfly-embedded" default="true">
         <configuration>
-            <property name="jbossHome">target/wildfly-10.0.0.Final/</property>
-            <property name="modulePath">target/wildfly-10.0.0.Final/modules</property>
+            <property name="jbossHome">${jboss.home}</property>
+            <property name="modulePath">${jboss.home}/modules</property>
         </configuration>
     </container>
 </arquillian>
