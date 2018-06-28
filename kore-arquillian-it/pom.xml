@@ -127,6 +127,7 @@
                             <systemPropertyVariables>
                                 <jboss.home>target/wildfly-10.0.0.Final</jboss.home>
                                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                                <arquillian.launch>wildfly-embedded</arquillian.launch>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>false</redirectTestOutputToFile>
                         </configuration>
@@ -201,6 +202,7 @@
                             <systemPropertyVariables>
                                 <jboss.home>target/wildfly-10.0.0.Final</jboss.home>
                                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                                <arquillian.launch>wildfly-managed</arquillian.launch>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>false</redirectTestOutputToFile>
                         </configuration>
