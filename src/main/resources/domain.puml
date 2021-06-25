@@ -1,0 +1,19 @@
+@startuml
+
+package "Author Aggregate"{
+    [Author] as author
+    [Book] as book
+    [BlogPost] as blogpost
+    [Publication] as publication
+    
+    author -down- publication
+
+    publication <-down- book
+    publication <-down- blogpost
+}
+
+[Publishing Company] as company
+
+company - author
+
+@enduml

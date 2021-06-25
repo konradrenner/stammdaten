@@ -1,0 +1,25 @@
+.default-table{
+    border-collapse: collapse;
+    border-spacing: 10px;
+    font-size:  14px;
+}
+
+.default-table-header{
+    text-align:center;
+    background:none repeat scroll 0 0 #333333;
+    border-bottom:1px solid #BBBBBB;
+    padding:16px;
+    color: #ffffff;
+}
+
+.default-table-odd-row{
+    text-align:center;
+    background: none repeat scroll 0 0 #FFFFFFF;
+    border-top:1px solid #BBBBBB;
+}
+
+.default-table-even-row{
+    text-align:center;
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-top:1px solid #BBBBBB;
+}

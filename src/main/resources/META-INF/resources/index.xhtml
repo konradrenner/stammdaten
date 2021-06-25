@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./simpleTemplate.xhtml">
+
+    <ui:define name="top">
+        <h1><h:outputText value="#{defaultBundle.authorsHeading}"></h:outputText></h1>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:dataTable value="#{authorController.authors}" var="author"
+                     styleClass="default-table"
+                     headerClass="default-table-header"
+                     rowClasses="default-table-odd-row,default-table-even-row">
+            <h:column>
+                <f:facet name="header"><h:outputLabel for="firstname" value="#{defaultBundle.firstname}"></h:outputLabel></f:facet>
+                <h:outputText id="firstname" value="#{author.firstname}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputLabel for="lastname" value="#{defaultBundle.lastname}"></h:outputLabel></f:facet>
+                <h:outputText id="lastname" value="#{author.lastname}"></h:outputText>
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

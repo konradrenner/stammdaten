@@ -1,18 +1,28 @@
-/StammdatenCoreDomain/target/
-/Lagerverwaltung-ejb/target/
-/Lagerverwaltung-web/target/
-/Lagerverwaltung/Lagerverwaltung-ear/target/
-/Lagerverwaltung-domain/target/
-/Stammdaten-coredomain/target/
-/Lagerverwaltung/Lagerverwaltung-ejb/target/
-/Lagerverwaltung/Lagerverwaltung-web/target/
-/Lagerverwaltung/Lagerverwaltung-domain/target/
-/Lagerverwaltung/Lagerverwaltung-domain/derby.log
-/Stammdaten-core/target/
-/Lagerverwaltung/Lagerverwaltung-rest/target/
-/Lagerverwaltung/SinglePageSite/nbproject/private/
-/Lagerverwaltung/Lagerverwaltung-rest-api/target/
-/Lagerverwaltung/Lagerverwaltung-fx/target/
-/Lagerverwaltung/Lagerverwaltung-droid/.nb-gradle/private/
-/Lagerverwaltung/Lagerverwaltung-droid/.nb-gradle/profiles/private/
-/Lagerverwaltung/Lagerverwaltung-ejb-it/target/
+# Created by https://www.toptal.com/developers/gitignore/api/maven
+# Edit at https://www.toptal.com/developers/gitignore?templates=maven
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# End of https://www.toptal.com/developers/gitignore/api/maven
+
+
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
