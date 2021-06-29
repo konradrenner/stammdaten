@@ -7,7 +7,7 @@
     <application>
         <resource-bundle>
             <base-name>
-                at.arz.blueprint.publishingcompany.boundary.jsf.messages
+                org.kore.blueprint.publishingcompany.boundary.jsf.messages
             </base-name>
             <var>defaultBundle</var>
         </resource-bundle>
