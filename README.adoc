@@ -8,10 +8,7 @@ Die fachliche Grundlage stellt eine Buchhandlung "publishing company" dar. In de
 
 Die folgende Skizze stellt eine Uebersicht ueber die Domain dar:
 
-[plantuml, domain-ueberblick ,png]
-----
-include::./src/main/resources/domain.puml[]
-----
+image::./images/domain-ueberblick.png[]
 
 == Aufbau
 
