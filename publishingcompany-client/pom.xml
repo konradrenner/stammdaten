@@ -15,6 +15,7 @@
         <attach.version>4.0.13</attach.version>
         <gluonfx.plugin.version>1.0.12</gluonfx.plugin.version>
         <javafx.plugin.version>0.0.8</javafx.plugin.version>
+        <graalvm.home>/usr/lib/jvm/graalvm</graalvm.home>
         <mainClassName>org.kore.blueprint.publishingcompany.PublishingcompanyMain</mainClassName>
     </properties>
 
@@ -130,6 +131,7 @@
                 <version>${gluonfx.plugin.version}</version>
                 <configuration>
                     <target>${gluonfx.target}</target>
+                    <graalvmHome>${graalvm.home}</graalvmHome>
                     <attachList>
                         <list>display</list>
                         <list>lifecycle</list>
@@ -137,8 +139,8 @@
                         <list>storage</list>
                     </attachList>
                     <reflectionList>
-                        <list>org.kore.blueprint.views.PrimaryPresenter</list>
-                        <list>org.kore.blueprint.views.SecondaryPresenter</list>
+                        <list>org.kore.blueprint.publishingcompany.views.PrimaryPresenter</list>
+                        <list>org.kore.blueprint.publishingcompany.views.SecondaryPresenter</list>
                     </reflectionList>
                     <mainClass>${mainClassName}</mainClass>
                 </configuration>
