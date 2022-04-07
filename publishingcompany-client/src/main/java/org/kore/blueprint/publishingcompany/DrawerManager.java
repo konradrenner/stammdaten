@@ -13,21 +13,19 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.scene.image.Image;
 
 import static org.kore.blueprint.publishingcompany.PublishingcompanyMain.PRIMARY_VIEW;
-import static org.kore.blueprint.publishingcompany.PublishingcompanyMain.SECONDARY_VIEW;
 
 public class DrawerManager {
 
     public static void buildDrawer(AppManager app) {
         NavigationDrawer drawer = app.getDrawer();
         
-        NavigationDrawer.Header header = new NavigationDrawer.Header("Gluon Application",
-                "Multi View Project",
+        NavigationDrawer.Header header = new NavigationDrawer.Header("Galactic Republic",
+                "Publishing Company",
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
         
-        final Item primaryItem = new ViewItem("Primary", MaterialDesignIcon.HOME.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
-        final Item secondaryItem = new ViewItem("Secondary", MaterialDesignIcon.DASHBOARD.graphic(), SECONDARY_VIEW);
-        drawer.getItems().addAll(primaryItem, secondaryItem);
+        final Item primaryItem = new ViewItem("Galactic Authors", MaterialDesignIcon.HOME.graphic(), PRIMARY_VIEW, ViewStackPolicy.SKIP);
+        drawer.getItems().addAll(primaryItem);
         
         if (Platform.isDesktop()) {
             final Item quitItem = new Item("Quit", MaterialDesignIcon.EXIT_TO_APP.graphic());

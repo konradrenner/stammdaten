@@ -1,7 +1,6 @@
 package org.kore.blueprint.publishingcompany;
 
-import org.kore.blueprint.publishingcompany.views.PrimaryView;
-import org.kore.blueprint.publishingcompany.views.SecondaryView;
+import org.kore.blueprint.publishingcompany.boundary.fx.PrimaryView;
 import com.gluonhq.charm.glisten.application.AppManager;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.application.Application;
@@ -14,14 +13,12 @@ import static com.gluonhq.charm.glisten.application.AppManager.HOME_VIEW;
 public class PublishingcompanyMain extends Application {
 
     public static final String PRIMARY_VIEW = HOME_VIEW;
-    public static final String SECONDARY_VIEW = "Secondary View";
 
     private final AppManager appManager = AppManager.initialize(this::postInit);
 
     @Override
     public void init() {
         appManager.addViewFactory(PRIMARY_VIEW, () -> new PrimaryView().getView());
-        appManager.addViewFactory(SECONDARY_VIEW, () -> new SecondaryView().getView());
 
         DrawerManager.buildDrawer(appManager);
     }

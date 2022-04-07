@@ -139,8 +139,7 @@
                         <list>storage</list>
                     </attachList>
                     <reflectionList>
-                        <list>org.kore.blueprint.publishingcompany.views.PrimaryPresenter</list>
-                        <list>org.kore.blueprint.publishingcompany.views.SecondaryPresenter</list>
+                        <list>org.kore.blueprint.publishingcompany.boundary.fx.PrimaryPresenter</list>
                     </reflectionList>
                     <mainClass>${mainClassName}</mainClass>
                 </configuration>
