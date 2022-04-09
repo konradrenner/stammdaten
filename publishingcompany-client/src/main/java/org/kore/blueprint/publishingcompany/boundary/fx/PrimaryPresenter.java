@@ -5,18 +5,28 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CardPane;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import java.util.function.Consumer;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javax.inject.Inject;
+import org.kore.blueprint.publishingcompany.Event;
+import org.kore.blueprint.publishingcompany.boundary.jaxrs.JaxRsAuthorRepository;
+import org.kore.blueprint.publishingcompany.entity.Author;
+import org.kore.blueprint.publishingcompany.entity.AuthorRepository;
 
 public class PrimaryPresenter {
 
     @FXML
-    private View primary;
+    View primary;
 
     @FXML
-    private CardPane<HBox> authors;
-     
+    CardPane<HBox> authors;
+    
+    @Inject
+    JaxRsAuthorRepository repo;    
+    
     public void initialize() {
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
@@ -34,13 +44,24 @@ public class PrimaryPresenter {
     }
     
     void initCards(){
-        authors.getItems().clear();
+        final ObservableList<HBox> items = authors.getItems();
+        items.clear();
         
-        Label firstname = new Label("Luke");
-        Label lastname = new Label("Skywalker");
+        Consumer<Event<Author>> eventHandler = event -> {
+            switch(event.type()){
+                case NEW:
+                    items.add(createAuthorBox(event.entity()));
+                    break;
+            }
+        };
         
-        HBox box = new HBox(firstname, lastname);
+        repo.addElementObserver(eventHandler);
+    }
+    
+    HBox createAuthorBox(Author author){
+        Label firstname = new Label(author.getName().firstname());
+        Label lastname = new Label(author.getName().lastname());
         
-        authors.getItems().add(box);
+        return new HBox(firstname, lastname);
     }
 }

@@ -3,6 +3,7 @@ package org.kore.blueprint.publishingcompany;
 import org.kore.blueprint.publishingcompany.boundary.fx.PrimaryView;
 import com.gluonhq.charm.glisten.application.AppManager;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import com.gluonhq.charm.glisten.mvc.View;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ public class PublishingcompanyMain extends Application {
 
     @Override
     public void init() {
-        appManager.addViewFactory(PRIMARY_VIEW, () -> new PrimaryView().getView());
+        appManager.addViewFactory(PRIMARY_VIEW, () -> (View) new PrimaryView().getView());
 
         DrawerManager.buildDrawer(appManager);
     }
