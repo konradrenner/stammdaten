@@ -12,9 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javax.inject.Inject;
 import org.kore.blueprint.publishingcompany.Event;
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.JaxRsAuthorRepository;
+import org.kore.blueprint.publishingcompany.boundary.LocalCacheAuthorRepository;
 import org.kore.blueprint.publishingcompany.entity.Author;
-import org.kore.blueprint.publishingcompany.entity.AuthorRepository;
 
 public class PrimaryPresenter {
 
@@ -25,7 +24,7 @@ public class PrimaryPresenter {
     CardPane<HBox> authors;
     
     @Inject
-    JaxRsAuthorRepository repo;    
+    LocalCacheAuthorRepository repo;    
     
     public void initialize() {
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
