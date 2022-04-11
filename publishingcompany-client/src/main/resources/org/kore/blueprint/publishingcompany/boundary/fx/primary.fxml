@@ -3,13 +3,13 @@
 <?import com.gluonhq.charm.glisten.control.CardPane?>
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@primary.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kore.blueprint.publishingcompany.boundary.fx.PrimaryPresenter">
    <center>
       <CardPane fx:id="authors" BorderPane.alignment="CENTER">
          <items>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <VBox prefHeight="100.0" prefWidth="200.0" />
          </items></CardPane>
    </center>
 </View>

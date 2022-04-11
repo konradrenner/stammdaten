@@ -5,11 +5,13 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CardPane;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import java.time.ZoneId;
 import java.util.function.Consumer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javax.inject.Inject;
 import org.kore.blueprint.publishingcompany.Event;
 import org.kore.blueprint.publishingcompany.boundary.LocalCacheAuthorRepository;
@@ -21,7 +23,7 @@ public class PrimaryPresenter {
     View primary;
 
     @FXML
-    CardPane<HBox> authors;
+    CardPane<VBox> authors;
     
     @Inject
     LocalCacheAuthorRepository repo;    
@@ -43,13 +45,16 @@ public class PrimaryPresenter {
     }
     
     void initCards(){
-        final ObservableList<HBox> items = authors.getItems();
+        final ObservableList<VBox> items = authors.getItems();
         items.clear();
         
         Consumer<Event<Author>> eventHandler = event -> {
             switch(event.type()){
                 case NEW:
-                    items.add(createAuthorBox(event.entity()));
+                    items.add(createAuthorBox(event));
+                    break;
+                case UPDATE:
+                    updateAuthorBox(event, items);
                     break;
             }
         };
@@ -57,10 +62,32 @@ public class PrimaryPresenter {
         repo.addElementObserver(eventHandler);
     }
     
-    HBox createAuthorBox(Author author){
+    VBox createAuthorBox(Event<Author> event){
+        Author author = event.entity();
         Label firstname = new Label(author.getName().firstname());
         Label lastname = new Label(author.getName().lastname());
         
-        return new HBox(firstname, lastname);
+        VBox vBox = new VBox(new HBox(firstname, lastname), new Label(event.modification().atZone(ZoneId.systemDefault()).toString()));
+        vBox.setId(createContainerId(author));
+        return vBox;
+    }
+
+    private static String createContainerId(Author author) {
+        return author.getName().firstname()+author.getName().lastname();
+    }
+    
+    void updateAuthorBox(Event<Author> updatedAuthor, ObservableList<VBox> items){
+        int i=0;
+        boolean exists = false;
+        for(;i<items.size();i++){
+            if(items.get(i).getId().equals(createContainerId(updatedAuthor.entity()))){
+                exists =true;
+                break;
+            }
+        }
+        if(exists){
+            items.remove(i);
+        }
+        items.add(createAuthorBox(updatedAuthor));
     }
 }

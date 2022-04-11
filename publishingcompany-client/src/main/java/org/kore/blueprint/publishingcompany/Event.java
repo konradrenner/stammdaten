@@ -4,11 +4,14 @@
  */
 package org.kore.blueprint.publishingcompany;
 
+import java.time.Instant;
+
+
 /**
  *
  * @author koni
  */
-public record Event<T>(T entity, Type type) {
+public record Event<T>(T entity, Type type, Instant modification) {
     public enum Type{
         NEW, UPDATE, DELETE;
     }

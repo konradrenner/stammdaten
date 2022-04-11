@@ -40,7 +40,7 @@ public class LocalCacheAuthorRepository implements AuthorRepository, SyncConsume
         TimerTask syncTask = TimerFactory.createSyncFromRemoteTask(this);
         syncTask.run();
         
-        new Timer().schedule(syncTask, 0, 60000);
+        new Timer().schedule(syncTask, 0, 1000);
     }
     
     @Override
@@ -57,13 +57,16 @@ public class LocalCacheAuthorRepository implements AuthorRepository, SyncConsume
         //conflict management: server or last update timestamp wins :-)
         clearItemsWhichAreNotInSetFromServer(data);
         Set<SyncItem<Author>> filtered = filterSyncItemsWhereLocalOnesAreNewer(data);
-        
+        applySyncItems(filtered);
     }
     
     void applySyncItems(Set<SyncItem<Author>> items){
         items.stream()
                 .map(item -> LocalCacheItem.fromServerItem(item.item()))
-                .forEach(cacheItem -> authors.put(cacheItem.getItem().getName(), cacheItem));
+                .forEach(cacheItem -> {
+                    authors.put(cacheItem.getItem().getName(), cacheItem);
+                    this.fireEvent(cacheItem);
+                   });
     }
     
     void clearNotAlteredItems(){
@@ -99,11 +102,24 @@ public class LocalCacheAuthorRepository implements AuthorRepository, SyncConsume
     
     public void addElementObserver(Consumer<Event<Author>> consumer){
         consumers.add(consumer);
-        authors.values().stream().map(item -> item.getItem()).forEach(this::fireNewEvent);
+        authors.values().stream().forEach(this::fireEvent);
     }
     
-    void fireNewEvent(Author newElement){
-        final Event<Author> event = new Event(newElement, Event.Type.NEW);
+    void fireEvent(LocalCacheItem<Author> newElement){
+        Event.Type type;
+        switch(newElement.getStatus()){
+            case NEW:
+                type = Event.Type.NEW;
+                break;
+            case DELETED:
+                type = Event.Type.DELETE;
+                break;
+            default:
+                type =  Event.Type.UPDATE;
+        }
+        
+        
+        final Event<Author> event = new Event(newElement.getItem(), type, newElement.getAlteringTimestamp());
         consumers.stream().forEach(consumer -> consumer.accept(event));
     }
 }
