@@ -63,6 +63,7 @@ public class LocalCacheAuthorRepository implements AuthorRepository, SyncConsume
     void applySyncItems(Set<SyncItem<Author>> items){
         items.stream()
                 .map(item -> LocalCacheItem.fromServerItem(item.item()))
+                .sorted()
                 .forEach(cacheItem -> {
                     authors.put(cacheItem.getItem().getName(), cacheItem);
                     this.fireEvent(cacheItem);

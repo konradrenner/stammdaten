@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author koni
  */
-public final class LocalCacheItem<T> {
+public final class LocalCacheItem<T extends Comparable> implements Comparable<LocalCacheItem<T>>{
     public enum Status{
         NEW, MODIFIED, DELETED, NOT_ALTERED;
     }
@@ -20,19 +20,19 @@ public final class LocalCacheItem<T> {
     private Status status;
     private final T item;
     
-    public static final <T> LocalCacheItem<T> localNewItem(T item){
+    public static final <T extends Comparable> LocalCacheItem<T> localNewItem(T item){
         return new LocalCacheItem(item, Status.NEW);
     }
     
-    public static final <T> LocalCacheItem<T> localUpdatedItem(T item){
+    public static final <T extends Comparable> LocalCacheItem<T> localUpdatedItem(T item){
         return new LocalCacheItem(item, Status.MODIFIED);
     }
     
-    public static final <T> LocalCacheItem<T> localDeletedItem(T item){
+    public static final <T extends Comparable> LocalCacheItem<T> localDeletedItem(T item){
         return new LocalCacheItem(item, Status.DELETED);
     }
     
-    public static final <T> LocalCacheItem<T> fromServerItem(T item){
+    public static final <T extends Comparable> LocalCacheItem<T> fromServerItem(T item){
         return new LocalCacheItem(item, Status.NOT_ALTERED);
     }
 
@@ -54,6 +54,11 @@ public final class LocalCacheItem<T> {
         return item;
     }
 
+    @Override
+    public int compareTo(LocalCacheItem<T> o) {
+        return item.compareTo(o.getItem());
+    }
+    
     @Override
     public String toString() {
         return "LocalCacheItem{" + "alteringTimestamp=" + alteringTimestamp + ", status=" + status + ", item=" + item + '}';

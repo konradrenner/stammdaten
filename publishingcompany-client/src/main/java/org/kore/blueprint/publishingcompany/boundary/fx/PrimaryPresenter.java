@@ -7,6 +7,7 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import java.time.ZoneId;
 import java.util.function.Consumer;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -45,18 +46,22 @@ public class PrimaryPresenter {
     }
     
     void initCards(){
+        
+        
         final ObservableList<VBox> items = authors.getItems();
         items.clear();
         
         Consumer<Event<Author>> eventHandler = event -> {
-            switch(event.type()){
-                case NEW:
-                    items.add(createAuthorBox(event));
-                    break;
-                case UPDATE:
-                    updateAuthorBox(event, items);
-                    break;
-            }
+                Platform.runLater(()->{
+                    switch(event.type()){
+                    case NEW:
+                        items.add(createAuthorBox(event));
+                        break;
+                    case UPDATE:
+                        updateAuthorBox(event, items);
+                        break;
+                }
+            });
         };
         
         repo.addElementObserver(eventHandler);
