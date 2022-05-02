@@ -1,23 +1,25 @@
-= publishingcompany-app
+= publishingcompany
 
-Diese Java Applikation stellt einen Architekturshowcase dar, fuer eine Applikation welche mit Ideen aus DDD und Clean Architecture, auf Basis des Quarkus, umgesetzt ist.
+This Java application represents an architecture showcase for an application which is implemented with ideas from DDD and Clean Architecture.
+
+It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
 == Domain
 
-Die fachliche Grundlage stellt eine Buchhandlung "publishing company" dar. In der Buchhandlung werden zu Autoren verschieden Publizierungen (Buecher oder Blog-Posts) verwaltet.
+The technical basis is a bookstore "publishing company". In the bookstore, various publications (books or blog posts) are managed for authors.
 
-Die folgende Skizze stellt eine Uebersicht ueber die Domain dar:
+The following sketch provides an overview of the domain:
 
 image::./images/domain-ueberblick.png[]
 
-== Aufbau
+== Architecture
 
-Der Showcase vereint Ideen aus den beiden Standardwerken "Domain Driven Design" und "Clean Architecture".
+The showcase combines ideas from the two standard works "Domain Driven Design" and "Clean Architecture".
 
-Bei der Package-Struktur wird auf das BCE-Konzept (Boundary-Control-Entity) gesetzt um eine einfache und standardisierte Struktur zu ermoeglichen.
+The package structure is based on the BCE concept (boundary control entity) to enable a simple and standardized structure.
 
-Alle 3 genannten Konzepte ergaenzen sich hervorragend, fuer die Kombination von Clean Architecture (im Artikel als Hexagonal angefuehrt, die Grundidee ist allerdings die gleiche) und BCE bietet folgender Link einen guten Einstieg: http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm .
+All 3 concepts mentioned complement each other perfectly, for the combination of Clean Architecture (indicated as hexagonal in the article, but the basic idea is the same) and BCE, the following link offers a good start: http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm .
 
-Schematisch dargestellt, ist die Applikation wie folgt aufgebaut:
+Shown schematically, the application is structured as follows:
 
 image::./images/clean_architcture.png[]
