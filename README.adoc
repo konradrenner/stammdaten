@@ -2,7 +2,7 @@
 
 This Java application represents an architecture showcase for an application which is implemented with ideas from DDD and Clean Architecture.
 
-It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
+It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms, e.g. with link:https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/[GitHub Actions]) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
 == Domain
 
