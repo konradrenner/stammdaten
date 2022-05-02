@@ -23,4 +23,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build Quarkus service
-      run: mvn -B package --file publishingcompany-service/pom.xml
+      run: mvn verify --file publishingcompany-service/pom.xml
