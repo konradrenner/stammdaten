@@ -1,0 +1,46 @@
+= Gluon - Multi View using FXML
+
+Gluon Applications are Java application written in JavaFX.
+These applications ensure that developers can create high performance, great looking, and cloud connected mobile apps from a single Java code base.
+
+This sample contains a simple Gluon application in combination with the link:http://afterburner.adam-bien.com/[afterburner.fx] framework which can be used to run, test and create a native application for any targeted device.
+The sample contains views represented as FXML and accessed in JavaFX using Controllers.
+For more information on FXML and why to use them, checkout this link:https://docs.oracle.com/javase/8/javafx/fxml-tutorial/why_use_fxml.htm[documentation].
+
+== Pre-requisites
+
+Please checkout the prerequisites to run this application link:https://github.com/gluonhq/gluonfx-maven-plugin#requirements[here].
+
+== Instructions
+
+> **Note**: The following are command line instructions. For IDE specific instructions please checkout link:https://docs.gluonhq.com/#_ide[IDE section] of the Gluon documenation.
+
+These application can run on the JVM on desktop platforms. To run the application, execute the following command:
+
+```
+mvn gluonfx:run
+```
+
+The same application can also run natively for on any targeted OS, including Android, iOS, Linux, Mac and Windows.
+
+To create a native image, execute the following command:
+
+```
+mvn gluonfx:build gluonfx:nativerun
+```
+
+> **Note**: The above commands are target-platform dependent and might change depending on the platform.
+For more details, please check
+    link:https://github.com/gluonhq/gluonfx-maven-plugin#2-goals[GluonFX Maven Goals].
+
+== Configuration
+
+To configure the GluonFX plugin, please checkout the link:https://docs.gluonhq.com/#_configuration[configuration documentation].
+
+== More information
+
+Here are some helpful links:
+
+* link:https://docs.gluonhq.com/[Gluon documentation]
+* link:https://github.com/gluonhq/gluonfx-maven-plugin[GluonFX Maven Plugin]
+* link:https://github.com/gluonhq/gluonfx-gradle-plugin[GluonFX Gradle Plugin]
