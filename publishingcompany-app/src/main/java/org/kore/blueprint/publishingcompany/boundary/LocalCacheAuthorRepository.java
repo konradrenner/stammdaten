@@ -7,6 +7,7 @@ package org.kore.blueprint.publishingcompany.boundary;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Timer;
@@ -31,16 +32,27 @@ public class LocalCacheAuthorRepository implements AuthorRepository, SyncConsume
     
     private Map<Name, LocalCacheItem<Author>> authors;
     private Queue<Consumer<Event<Author>>> consumers;
+    private Optional<Timer> timer;
     
     @PostConstruct
     void init(){
         consumers = new ConcurrentLinkedQueue<>();
         authors = new ConcurrentHashMap<>();
-        
+    }
+    
+    public void enableAutoSync(){
         TimerTask syncTask = TimerFactory.createSyncFromRemoteTask(this);
         syncTask.run();
         
-        new Timer().schedule(syncTask, 0, 1000);
+        Timer concreteTimer = new Timer();
+        
+        concreteTimer.schedule(syncTask, 0, 1000);
+        
+        timer = Optional.of(concreteTimer);
+    }
+    
+    public void disableAutoSync(){
+        timer.ifPresent(timer -> timer.cancel());
     }
     
     @Override
