@@ -30,11 +30,11 @@ jobs:
       - name: Gluon Build
         run: mvn -Pdesktop gluonfx:build gluonfx:package --file publishingcompany-app/pom.xml
             
-#      - name: Copy native image to staging
-#        run: cp -r target/gluonfx/x86_64-linux/HelloGluon* staging
+      - name: Copy native image to staging
+        run: cp -r publishingcompany-app/target/gluonfx/x86_64-linux/publishingcompany-app* staging
 
-#      - name: Upload
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Package
-#          path: staging
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: staging
