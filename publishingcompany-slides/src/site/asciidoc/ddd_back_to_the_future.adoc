@@ -1,0 +1,71 @@
+= Back to the future: How a 2004 book helps us design cloud native software
+Konrad Renner <github.com/konradrenner>
+2022-08-29
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../../main/java]
+
+== Introduction
+
+[%step]
+* Software Architect at ARZ Allgemeines Rechenzentrum GmbH
+* Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ enthusiast
+* link:github.com/konradrenner[GitHub - konradrenner]
+
+== Agenda
+
+[%step]
+* What is it about?
+* How can this time travel help us?
+* Are there other crazy ideas Doc?
+* Sounds pretty heavy. How does this all come together?
+* Let me know what you think about all this
+
+== What is it about?
+
+* Ubiquitous Language
+* Core vs. Generic Subdomains
+* Refactoring toward deeper insight
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+You've unlocked the super secret notes area.
+Neat huh?
+--
+
+=== Tactical and Strategic Design
+
+image::ddd_overview.png[scaledwidth=100%]
+
+== How can this time travel help us?
+
+todo
+
+== Are there other crazy ideas Doc?
+
+todo
+
+=== Event Storming
+
+todo
+
+=== Clean Architecture
+
+todo
+
+=== arc42
+
+todo
+
+== Sounds pretty heavy. How does this all come together?
+
+* Docs as Code
+* DevSecOps
+* Bounded Context - Microservice - K8s Namespace
+* publishing-company example
+
+== Let me know what you think about all this
+
+image::force.jpg[scaledwidth=100%]
