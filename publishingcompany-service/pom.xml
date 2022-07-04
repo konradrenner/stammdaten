@@ -20,6 +20,9 @@
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
+        <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>2.5.4</asciidoctorj.version>
+        <jruby.version>9.3.4.0</jruby.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -142,9 +145,55 @@
                     </execution>
                 </executions>
               </plugin>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.0</version>
+                <configuration>
+                    <generateReports>true</generateReports>
+                    <generateSitemap>true</generateSitemap>
+                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                    <locales>en</locales>
+                    <inputEncoding>UTF-8</inputEncoding>
+                    <outputEncoding>UTF-8</outputEncoding>
+                    <asciidoc>
+                        <!-- Optional site-wide AsciiDoc attributes -->
+                        <attributes>
+                            <icons>font</icons>
+                            <!-- Add required rouge styles in '/css/site.css' -->
+                            <source-highlighter>rouge</source-highlighter>
+                            <toclevels>2</toclevels>
+                        </attributes>
+                    </asciidoc>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
+                        <version>${asciidoctor.maven.plugin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
-
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
     <profiles>
         <!-- Use this profile to build a native executable using GraalVM -->
         <profile>
