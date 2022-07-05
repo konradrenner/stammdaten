@@ -9,9 +9,10 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 == Introduction
 
 [%step]
-* Software Architect at ARZ Allgemeines Rechenzentrum GmbH
-* Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ enthusiast
-* link:github.com/konradrenner[GitHub - konradrenner]
+* Speaker of the day: *Konrad Renner*
+* Day to day job: *Software Architect at ARZ Allgemeines Rechenzentrum GmbH*
+* Some personal things: *Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ* enthusiast
+* Direct link to digital life: *link:github.com/konradrenner[GitHub - konradrenner]*
 
 == Agenda
 
@@ -24,24 +25,75 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == What is it about?
 
+[%step]
 * Ubiquitous Language
-* Core vs. Generic Subdomains
+* Distillation and Context
 * Refactoring toward deeper insight
 
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-You've unlocked the super secret notes area.
-Neat huh?
+* *Ubiquitous Language most important part*
+** Hard to define und extract, much work is needed
+** It always has a Context where it is "valid"
+** Example: Doc Browns DeLorean DMC-12
+*** When Doc Brown talks about a timemachine, he means his DMC-12
+*** When a mechanic gets his fingers on the DMC-12, he is repairing a car
+* *Distillation and Context*
+** You can think about Problem space and Solution Space
+** _Distillation_: Distill the core domain out of your business domain
+** Put most of your effort in your core domain
+** _Context_: The area in which a word or some kind of "structure" has the same meaning everywhere
+** Example: Doc Browns DeLorean DMC-12
+*** Core Domain is the timetravel functionality
+*** Subdomain is, that the DeLorean is possible to drive
+*** Both need energy to function
+**** In case of the driving functionality there just has to be any engine
+**** But in case of the timetravel functionality there must be an atomic reactor
+**** So in one case, the solution is "any engine" and in the other case it is "atomic reactor"
+* *Refactoring toward deeper insight*
+** Design and implementation is an ongoing process
+** Agile and DDD are a perfect match
 --
 
-=== Tactical and Strategic Design
+=== Strategic and Tactical Design
 
 image::ddd_overview.png[scaledwidth=100%]
 
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Strategic Design
+** "Big Picture"
+** Communication paths betweens contexts
+* Tactical Design
+** Model within a Bounded Context
+* _Examples for technical communication discusions will come in the next slides!_
+--
+
 == How can this time travel help us?
 
-todo
+image::tragedy.jpg[scaledwidth=100%]
+
+=== DDD for "cloud native software architecture"
+
+[%step]
+* Focus on your core domain, not technical aspects
+* Put all relevant stakeholder together
+** Establish a common understanding of strategic AND tactical design
+* Build Microservices/Self-Contained-Systems based on Bounded Context
+** Maybe a Bounded Context can also help by defining K8s Namespaces ;-)
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* One of the most common questions in my day to day work is, how to size Microservices or siblings (e.g. SCS)
+** Just use the Bounded Contexts
+* The Context Map helps to understand how communication flows through the system
+** The relationship types helps in discusions about the technical communication
+*** Shared Kernel: Create a library
+*** Open Host Service: Maybe RESTful with OpenAPI powered Published Language
+--
 
 == Are there other crazy ideas Doc?
 
