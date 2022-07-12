@@ -6,6 +6,10 @@ Konrad Renner <github.com/konradrenner>
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
 
+== Domain Driven Design
+
+image::ddd.jpg[]
+
 == Introduction
 
 [%step]
@@ -73,14 +77,14 @@ image::ddd_overview.png[scaledwidth=100%]
 
 == How can this time travel help us?
 
-image::tragedy.jpg[scaledwidth=100%]
+image::tragedy.jpg[]
 
 === DDD for "cloud native software architecture"
 
 [%step]
 * Focus on your core domain, not technical aspects
-* Put all relevant stakeholder together
-** Establish a common understanding of strategic AND tactical design
+* Establish a common understanding of strategic AND tactical design
+** Merge the people, split the software
 * Build Microservices/Self-Contained-Systems based on Bounded Context
 ** Maybe a Bounded Context can also help by defining K8s Namespaces ;-)
 
@@ -95,29 +99,81 @@ image::tragedy.jpg[scaledwidth=100%]
 *** Open Host Service: Maybe RESTful with OpenAPI powered Published Language
 --
 
+=== Strategic Design - Context Map
+
+image::bc.jpeg[]
+
+=== Tactical Design - Aggregate
+
+image::domain-ueberblick.png[]
+
 == Are there other crazy ideas Doc?
 
-todo
+[%step]
+* _Disclaimer:_ The following tooling are just my personal favorites
+* Start with link:https://www.eventstorming.com/[Event Storming]
+* Document architecture with link:https://arc42.org/overview[arc42 template]
+* Take out the pain of documentation with link:https://docs-as-co.de/[Documentation As Code]
+* Structure code on basis of link:https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html[Clean Architecture]
+
 
 === Event Storming
 
-todo
+image::event_storming.png[]
 
 === Clean Architecture
 
-todo
-
-=== arc42
-
-todo
+image::CleanArchitecture.jpeg[]
 
 == Sounds pretty heavy. How does this all come together?
 
-* Docs as Code
-* DevSecOps
-* Bounded Context - Microservice - K8s Namespace
-* publishing-company example
+[%step]
+* link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example]
+* Uses link:https://quarkus.io/[Quarkus] as _"Kubernetes native Java stack"_
+* Boundary-Control-Entity approach for implementing Clean Architecture on top of DDD
+* Architecture automatically checked with link:https://www.archunit.org/[ArchUnit]
+* arc42 published via maven site plugin
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Some think, Java is not the cool or hip enough nowadays
+** They did not try Quarkus yet
+** rock solid tooling, massive community, native performance and state of the art dev experience
+* DDD and Clean Architecture are a perfect match
+** Use BCE and you also get a standardized und clear structuring of your projects
+* Let the tooling do the "boring" work for you
+** Automatic versioning and releasing
+** Automatic publishing
+** Automatic testing
+* Single source of truth for all aspects
+** Architecture, Security, Code, Config
+** Every change is tracked in your favorite VCS and absolutly traceable
+** Maybe you use GitOps to further improve automation
+--
+
+=== Time for an example
+
+image::code.jpg[]
+
+== But...
+
+[%step]
+* _Organizations which design systems […] are constrained to produce designs which are copies of the communication structures of these organizations._ - Melvin E. Conway
+* Have a look at link:https://teamtopologies.com/[Team Topologies]
+** Approach to modern software delivery with awareness of
+*** Conway’s Law, team cognitive load and responsive organization evolution
+
+=== Team Topologies
+
+image::team-topologies.png[]
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Like DDD it "just" formalizes some good practices and ideas
+--
 
 == Let me know what you think about all this
 
-image::force.jpg[scaledwidth=100%]
+image::force.jpg[]
