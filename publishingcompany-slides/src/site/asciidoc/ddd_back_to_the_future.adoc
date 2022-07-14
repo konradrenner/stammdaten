@@ -181,9 +181,49 @@ endlegend
 
 image::event_storming.png[]
 
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* What you see here is just the first step in a "Big Picture" workshop
+* Key idea is, to have all relevant stakeholder in one room
+** They put their view in brain storming fashion on an "endless" wall, in form of events
+** Events are always past tense
+** They discuss the outcomes
+*** Consensus is not required, it could be a signal for different meanings of an event; mark heavy discussion with a hotspot sticky
+* Next iteration step would be integration of people and external systems on the wall
+* Then you can start modelling your processes with the integration of commands, policies and read models
+** Picture that explain (nearly) everthing
+--
+
+=== Event Storming
+
+image::event_storming_2.png[]
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Yellow: People
+* Blue: Command
+* Orange: Event
+* Purple: Policy
+* Green: Read Model
+* Pink: External System
+--
+
 === Clean Architecture
 
 image::CleanArchitecture.jpeg[]
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* The most important part is flow of control
+** Never ever make inner circles depend on outer!
+** Technical aspects must never enter the domain logic
+*** If so: your code will e.g. not be unit testable (you cannot mock away technical aspects sufficient)
+* This architecture perfectly fits with the "Layered Architecture" as described in the DDD book
+* An example is just 2 slides away
+--
 
 == Sounds pretty heavy. How does this all come together?
 
@@ -215,6 +255,16 @@ image::CleanArchitecture.jpeg[]
 === Time for an example
 
 image::code.jpg[]
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Disclaimer: The link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example] has just little todo with back to the future :-) (one book entry)
+* This example "lives", so it is in parts unfinished an will change from time to time
+* It demonstrates all of the tools discussed, except context mapping
+** It just contains the "Author Aggregate" from the "Author Context" (1:1 mapping)
+* It consists of an Web UI (JSF), REST API and an Cross Compiled Mobile/Desktop Companion App
+--
 
 == But...
 

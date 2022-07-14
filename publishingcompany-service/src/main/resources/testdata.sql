@@ -37,6 +37,9 @@ values ('5f2e352e-a391-46fe-9a60-865cd615d6eb', 'Fred', 'Feuerstein');
 insert into author (id,firstname,lastname)
 values ('6e723a3c-bd25-471c-8d1c-6c019b36d357', 'Sheev', 'Palpatine');
 
+insert into author (id,firstname,lastname)
+values ('4e723a3c-bd25-471c-8d1c-6c019b36d357', 'Doc', 'Brown');
+
 insert into publication (id,publicationtype,title,description,price,currency,pages,url,publishingDate)
 values ('9783866801929', 1, 'The Tragedy of Darth Plagueis The Wise', 'Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise he could use the Force to influence the midichlorians to create life',999.99,'GCRDT',999,null,'1970-01-01 00:00:42');
 
