@@ -99,13 +99,55 @@ image::tragedy.jpg[]
 *** Open Host Service: Maybe RESTful with OpenAPI powered Published Language
 --
 
-=== Strategic Design - Context Map
+=== Strategic Design
 
-image::bc.jpeg[]
+[plantuml,bounded-context]
+----
+skinparam componentStyle rectangle
 
-=== Tactical Design - Aggregate
+title Back to the future - Context Map
 
-image::domain-ueberblick.png[]
+cloud "Car Context" {
+  [Engine]
+  [Car]
+  
+  () ACL as timemachine_acl
+  
+  Car - Engine
+  timemachine_acl- Car
+}
+
+cloud "Timemachine Context" {
+  [Timemachine]
+  [Inventor]
+  [Driver]
+  [Flux Capacitor] as flux
+  
+  Timemachine -up- Inventor
+  Timemachine -up- Driver
+  Timemachine --up- flux
+  
+  Timemachine --> timemachine_acl : Open Host Service
+}
+
+cloud "Terrorist Context" {
+  [Betrayer]
+  [Terrorist]
+  
+  () ACL as betrayer_acl
+  
+  Betrayer- Terrorist
+  betrayer_acl - Betrayer
+  
+  betrayer_acl <-- Inventor : Confirmist
+}
+
+legend bottom
+  |= |= Description |
+  | -> | Arrow points from Upstream to Downstream|
+  | ACL | Anti-Corruption-Layer|
+endlegend
+----
 
 == Are there other crazy ideas Doc?
 
