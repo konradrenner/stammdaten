@@ -79,6 +79,24 @@ image::ddd_overview.png[scaledwidth=100%]
 
 image::tragedy.jpg[]
 
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
+* The cut of Microservices can be a tragedy if you take an inappropriate approach
+* inappropriate approaches would be
+** pure technical
+** based on organizational circumstances
+* Why can they end in a tragedy?
+** Because inappropriate cut Microservices can lead to unnecessary remote communication
+** In the worst case you transform a build- and runtime monolithic app with local transactions, to a runtime monolithic app with distributed transactions
+*** Sooner or later this will lead to a real resilience tragedy
+* Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
+* So this "time travel" to the 2004 book, can help us find more effective approach
+** As the book subtitle states: Tackling complexity in the heart of software
+** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
+--
+
 === DDD for "cloud native software architecture"
 
 [%step]
@@ -177,3 +195,12 @@ image::team-topologies.png[]
 == Let me know what you think about all this
 
 image::force.jpg[]
+
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* Thank you for the possibilty to share my thoughts on this topic
+* In closing, I have only two things to say
+** Never stop refactoring, there is no "perfect" or "everlasting" solution
+** And may the force be with you :-)
+--
