@@ -184,6 +184,11 @@ image::event_storming.png[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
+* The key idea of EventStorming is
+. See the system as a whole 
+. Find a problem worth solving (Distillation)
+. Gather the best immediately available information
+. Start implementing a solution from the best possible starting point (Context)
 * What you see here is just the first step in a "Big Picture" workshop
 * Key idea is, to have all relevant stakeholder in one room
 ** They put their view in brain storming fashion on an "endless" wall, in form of events
