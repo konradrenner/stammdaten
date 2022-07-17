@@ -294,5 +294,6 @@ image::force.jpg[]
 * Thank you for the possibilty to share my thoughts on this topic
 * In closing, I have only two things to say
 ** Never stop refactoring, there is no "perfect" or "everlasting" solution
+** Software development is a learning process, working code is a nice side effect
 ** And may the force be with you :-)
 --
