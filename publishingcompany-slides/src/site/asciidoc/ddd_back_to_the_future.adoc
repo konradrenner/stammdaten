@@ -207,12 +207,12 @@ image::event_storming_2.png[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* Yellow: People
-* Blue: Command
-* Orange: Event
-* Purple: Policy
-* Green: Read Model
-* Pink: External System
+* Yellow: People, Actor or Persona
+* Blue: Command or Action (triggered from people, system or time based event)
+* Orange: Event (consists at least of a noun and past tense verb)
+* Purple: Policy or Business Rule, glue between event and thereafter command(Whenever [event(s)] the [command(s]) 
+* Green: Read Model (information/data that needs to be available to take a given decision)
+* Pink: (External) System or part of a system 
 --
 
 === Clean Architecture
