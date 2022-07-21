@@ -58,6 +58,7 @@ image::ddd.jpg[]
 * *Refactoring toward deeper insight*
 ** Design and implementation is an ongoing process
 ** Agile and DDD are a perfect match
+** Think of products, not projects
 --
 
 === Strategic and Tactical Design
@@ -72,7 +73,8 @@ image::ddd_overview.png[scaledwidth=100%]
 ** Communication paths betweens contexts
 * Tactical Design
 ** Model within a Bounded Context
-* _Examples for technical communication discusions will come in the next slides!_
+** Aggregates not just encapsulate, they are also important for consistency
+* _Examples for technical communication possibilities will come in the next slides!_
 --
 
 == How can this time travel help us?
@@ -213,6 +215,7 @@ image::event_storming_2.png[]
 * Purple: Policy or Business Rule, glue between event and thereafter command(Whenever [event(s)] the [command(s]) 
 * Green: Read Model (information/data that needs to be available to take a given decision)
 * Pink: (External) System or part of a system 
+* Red: HotSpot (open question, noticed for later discussion)
 --
 
 === Clean Architecture
@@ -235,9 +238,9 @@ image::CleanArchitecture.jpeg[]
 [%step]
 * link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example]
 * Uses link:https://quarkus.io/[Quarkus] as _"Kubernetes native Java stack"_
-* Boundary-Control-Entity approach for implementing Clean Architecture on top of DDD
+* link:https://en.wikipedia.org/wiki/Entity-control-boundary[Boundary-Control-Entity] pattern for implementing "lightweight" Clean Architecture on top of DDD
 * Architecture automatically checked with link:https://www.archunit.org/[ArchUnit]
-* arc42 published via maven site plugin
+* link:https://arc42.org/overview[arc42] published via link:https://maven.apache.org/plugins/maven-site-plugin/[maven site plugin]
 
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
@@ -251,7 +254,7 @@ image::CleanArchitecture.jpeg[]
 ** Automatic versioning and releasing
 ** Automatic publishing
 ** Automatic testing
-* Single source of truth for all aspects
+* The (Git) Repo is the single source of truth for all aspects
 ** Architecture, Security, Code, Config
 ** Every change is tracked in your favorite VCS and absolutly traceable
 ** Maybe you use GitOps to further improve automation
@@ -280,8 +283,6 @@ image::code.jpg[]
 *** Conway’s Law, team cognitive load and responsive organization evolution
 
 === Team Topologies
-
-* For quick intro have a look on the link:https://github.com/TeamTopologies/Team-Topologies-Community-Materials[GitHub Community Materials Repo]
 
 image::team-topologies.png[]
 
@@ -320,6 +321,6 @@ image::force.jpg[]
 * Thank you for the possibilty to share my thoughts on this topic
 * In closing, I have only two things to say
 ** Never stop refactoring, there is no "perfect" or "everlasting" solution
-** Software development is a learning process, working code is a nice side effect
-** And may the force be with you :-)
+*** Software development is a learning process, working code is a nice side effect
+** And: *may the force be with you*
 --
