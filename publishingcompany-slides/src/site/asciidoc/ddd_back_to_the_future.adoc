@@ -281,12 +281,33 @@ image::code.jpg[]
 
 === Team Topologies
 
+* For quick intro have a look on the link:https://github.com/TeamTopologies/Team-Topologies-Community-Materials[GitHub Community Materials Repo]
+
 image::team-topologies.png[]
 
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
 * Like DDD it "just" formalizes some good practices and ideas
+* Stream aligned teams are the "heart" because the are aligned on value streams
+** These are based on top of the DevOps ideas
+** The other teams are "just" supporting them in which they take away cognitive load
+** So the other team types are just required, if the cognitive load will get to high for a stream aligned teams
+** The other teams may consists "internally" also of stream aligned teams 
+* Complicated subsystem team:
+** Parts of the system which not directly mapped to the value stream, but are a requirement "to function"
+** Think on the flux capacitor: one team just focuses on this complicated part, whereas the stream aligned teams will do improvements on the integration with the Delorean
+* Enabling team:
+** Disclaimer: This is not Architecture Department, but a team of specialists
+** They help to spread knowledge about new things in the organization and tech world
+** They also evaluate if "trends" are applyable and how
+* Platform team:
+** They are building and maintain e.g. the tools which are required, so that stream aligned teams can work effective AND efficient
+** Think on the Delorean: A Platform team would have built it and will repair things, whereas the stream aligned teams will focus on the time travel functionalities
+* The interaction modes helps visualising and so understanding the dependencies between teams
+** Collaboration: strong delivery dependencies (e.g. stream aligned and complicated subsystem team)
+** X as a Service: Decoupling and standardization (mostly used when interaction with a platform team is needed)
+** Facilitating: helping or being helped by another team (mostly the case when a stream aligned teams "gets knowledge" from an enabling team)
 --
 
 == Let me know what you think about all this
