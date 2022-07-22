@@ -91,8 +91,9 @@ image::tragedy.jpg[]
 ** based on organizational circumstances
 * Why can they end in a tragedy?
 ** Because inappropriate cut Microservices can lead to unnecessary remote communication
-** In the worst case you transform a build- and runtime monolithic app with local transactions, to a runtime monolithic app with distributed transactions
+** In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
 *** Sooner or later this will lead to a real resilience tragedy
+*** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
