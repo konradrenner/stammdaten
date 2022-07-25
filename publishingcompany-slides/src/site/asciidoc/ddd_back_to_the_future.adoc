@@ -192,6 +192,7 @@ image::event_storming.png[]
 . Find a problem worth solving (Distillation)
 . Gather the best immediately available information
 . Start implementing a solution from the best possible starting point (Context)
+* You just need a room with a long enough wall, many coloured stickies, something to write, the "right" people (and no table in the middle)
 * What you see here is just the first step in a "Big Picture" workshop
 * Key idea is, to have all relevant stakeholder in one room
 ** They put their view in brain storming fashion on an "endless" wall, in form of events
@@ -217,6 +218,7 @@ image::event_storming_2.png[]
 * Green: Read Model (information/data that needs to be available to take a given decision)
 * Pink: (External) System or part of a system 
 * Red: HotSpot (open question, noticed for later discussion)
+* Precise Notation or explorations are not required and could harm creativity (e.g. it is not important if the yellow means people or Persona)
 --
 
 === Clean Architecture
