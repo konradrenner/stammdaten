@@ -11,7 +11,6 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>2.7.2.Final</quarkus.platform.version>
@@ -22,6 +21,8 @@
         <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.4</asciidoctorj.version>
+        <asciidoctorj.pdf.version>2.1.6</asciidoctorj.pdf.version>
+        <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
         <jruby.version>9.3.4.0</jruby.version>
     </properties>
     <dependencyManagement>
@@ -144,33 +145,40 @@
                         </goals>
                     </execution>
                 </executions>
-              </plugin>
-              <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.0</version>
-                <configuration>
-                    <generateReports>true</generateReports>
-                    <generateSitemap>true</generateSitemap>
-                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
-                    <locales>en</locales>
-                    <inputEncoding>UTF-8</inputEncoding>
-                    <outputEncoding>UTF-8</outputEncoding>
-                    <asciidoc>
-                        <!-- Optional site-wide AsciiDoc attributes -->
-                        <attributes>
-                            <icons>font</icons>
-                            <!-- Add required rouge styles in '/css/site.css' -->
-                            <source-highlighter>rouge</source-highlighter>
-                            <toclevels>2</toclevels>
-                        </attributes>
-                    </asciidoc>
-                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <groupId>de.elnarion.maven</groupId>
+                <version>1.5.3</version>
+                <executions>
+                      <execution>
+                              <id>generate-aggregate-plantuml</id>
+                              <goals>
+                                      <goal>generate</goal>
+                              </goals>
+                              <phase>process-sources</phase>
+                              <configuration>
+                                      <outputFilename>author_aggregate.puml</outputFilename>
+                                      <outputDirectory>src/site/asciidoc/plantuml</outputDirectory>
+                                      <maxVisibilityMethods>PUBLIC</maxVisibilityMethods>
+                                      <removeFields>true</removeFields>
+                                      <scanPackages>
+                                            <scanPackage>org.kore.blueprint.publishingcompany.control</scanPackage>
+                                            <scanPackage>org.kore.blueprint.publishingcompany.author</scanPackage>
+                                    </scanPackages>
+                              </configuration>
+                      </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctor-maven-plugin</artifactId>
-                        <version>${asciidoctor.maven.plugin.version}</version>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj.pdf.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.jruby</groupId>
@@ -182,7 +190,46 @@
                         <artifactId>asciidoctorj</artifactId>
                         <version>${asciidoctorj.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>${asciidoctorj.diagram.version}</version>
+                    </dependency>
                 </dependencies>
+                <configuration>
+                    <sourceDirectory>src/site/asciidoc</sourceDirectory>
+                    <attributes>
+                        <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                    </attributes>
+                    <argLine>
+                        --add-opens java.base/sun.nio.ch=org.jruby.dist
+                        --add-opens java.base/sun.nio.ch=ALL-UNNAMED 
+                        --add-opens java.base/java.io=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-pdf-doc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <requires>
+                                <require>asciidoctor-diagram</require>
+                            </requires>
+                            <attributes>
+                                <source-highlighter>rouge</source-highlighter>
+                                <icons>font</icons>
+                                <pagenums/>
+                                <toc/>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

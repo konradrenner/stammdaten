@@ -3,6 +3,8 @@
 
 == Building Block View
 
+TODO naming corresponding to c4 instead of levels
+
 [role="arc42help"]
 ****
 .Content
