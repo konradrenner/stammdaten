@@ -91,8 +91,9 @@ image::tragedy.jpg[]
 ** based on organizational circumstances
 * Why can they end in a tragedy?
 ** Because inappropriate cut Microservices can lead to unnecessary remote communication
-** In the worst case you transform a build- and runtime monolithic app with local transactions, to a runtime monolithic app with distributed transactions
+** In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
 *** Sooner or later this will lead to a real resilience tragedy
+*** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
@@ -191,6 +192,7 @@ image::event_storming.png[]
 . Find a problem worth solving (Distillation)
 . Gather the best immediately available information
 . Start implementing a solution from the best possible starting point (Context)
+* You just need a room with a long enough wall, many coloured stickies, something to write, the "right" people (and no table in the middle)
 * What you see here is just the first step in a "Big Picture" workshop
 * Key idea is, to have all relevant stakeholder in one room
 ** They put their view in brain storming fashion on an "endless" wall, in form of events
@@ -200,6 +202,9 @@ image::event_storming.png[]
 * Next iteration step would be integration of people and external systems on the wall
 * Then you can start modelling your processes with the integration of commands, policies and read models
 ** Picture that explain (nearly) everthing
+* And then you could also do Software Design with the help of this tool (e.g. for designing Aggregates)
+* But be aware, that every time you dive deeper, the required person's will change. And maybe you have to step back at some point of time
+** Have a look at chapters "system scope and context" and "building block views" and "runtime views" of arc42, if you are interested in how to document outcomes
 --
 
 === Event Storming
@@ -216,6 +221,7 @@ image::event_storming_2.png[]
 * Green: Read Model (information/data that needs to be available to take a given decision)
 * Pink: (External) System or part of a system 
 * Red: HotSpot (open question, noticed for later discussion)
+* Precise Notation or explorations are not required and could harm creativity (e.g. it is not important if the yellow means people or Persona)
 --
 
 === Clean Architecture
