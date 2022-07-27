@@ -3,12 +3,18 @@
 
 === Business Context
 
-The Business Context could be the result of "Big Picture" Event Storming sessions. It is important that the "problem space" (domain) can be understood on a "high" level (this is exactly the idea behind a Big Picture Event Storming Session).
+The Business Context could be the result of "Big Picture" Event Storming workshops. It is important that the "problem space" (domain) can be understood on a "high" level (this is exactly the idea behind a Big Picture Event Storming Workshop).
+
+The results of such a workshop are also the basis of technical decisions (e.g. a Bounded Context could be a 1:1 mapping to a Microservice).
 
 image::bigpicture_event_storming.png[]
 
 === Technical Context
 
-The basis for the technical context could be "System Context Diagram" of an link:https://c4model.com/[C4-Model]. The benefit for using C4-Model is, that you have a more or less standardized template for visual modelling of technical parts of your software.
+The technical context or the link:https://c4model.com/[C4 System Context Diagram] can be derived directly from the results of a Big Picture Workshop (external systems and actors are a fundamental part of such a workshop).
+
+Put simply, the technical context outlines the technical communication (e.g. communication protocols) between the external systems and your own system.  The internal architecture of your own system is not of interest at this point (this will be derived and described in the course of the next chapter).
+
+The benefit of using C4-Model is, that you have a standardized template for visual modelling from technical parts of your software.
 
 *_TODO_* diagram with plantuml and C4 plugin: https://github.com/plantuml-stdlib/C4-PlantUML
