@@ -156,15 +156,17 @@
                               <goals>
                                       <goal>generate</goal>
                               </goals>
-                              <phase>process-sources</phase>
+                              <!-- sadly this plugin only works in this phase -->
+                              <phase>generate-test-sources</phase>
                               <configuration>
                                       <outputFilename>author_aggregate.puml</outputFilename>
                                       <outputDirectory>src/site/asciidoc/plantuml</outputDirectory>
                                       <maxVisibilityMethods>PUBLIC</maxVisibilityMethods>
                                       <removeFields>true</removeFields>
                                       <scanPackages>
-                                            <scanPackage>org.kore.blueprint.publishingcompany.control</scanPackage>
-                                            <scanPackage>org.kore.blueprint.publishingcompany.author</scanPackage>
+                                          <scanPackage>org.kore.blueprint.publishingcompany.author</scanPackage>
+                                          <scanPackage>org.kore.blueprint.publishingcompany.author.events</scanPackage>
+                                          <scanPackage>org.kore.blueprint.publishingcompany.control</scanPackage>
                                     </scanPackages>
                               </configuration>
                       </execution>
@@ -210,7 +212,8 @@
                 <executions>
                     <execution>
                         <id>generate-pdf-doc</id>
-                        <phase>generate-resources</phase>
+                        <!-- because it needs to be after plantuml generation -->
+                        <phase>process-test-sources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
