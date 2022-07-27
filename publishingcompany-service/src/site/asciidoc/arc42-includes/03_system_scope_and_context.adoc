@@ -3,7 +3,7 @@
 
 === Business Context
 
-The Business Context could be the result of "Big Picture" Event Storming sessions. It is important that the "problem space" (domain) can be understood on a "high" level.
+The Business Context could be the result of "Big Picture" Event Storming sessions. It is important that the "problem space" (domain) can be understood on a "high" level (this is exactly the idea behind a Big Picture Event Storming Session).
 
 image::bigpicture_event_storming.png[]
 
