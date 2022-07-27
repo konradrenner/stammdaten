@@ -1,6 +1,7 @@
 [[section-runtime-view]]
 == Runtime View
 
+TODO describe how it connects with "picture that explains everything" from event storming.
 
 [role="arc42help"]
 ****
