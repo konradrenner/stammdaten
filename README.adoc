@@ -1,6 +1,6 @@
 = publishingcompany
 
-This Java application represents an architecture showcase for an application which is implemented with ideas from DDD and Clean Architecture.
+This Java application represents an architecture showcase for an application which is implemented with ideas from link:https://de.wikipedia.org/wiki/Domain-driven_Design[DDD] and link:https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html[Clean Architecture].
 
 It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms, e.g. with link:https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/[GitHub Actions]) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
@@ -13,6 +13,8 @@ The following sketch provides an overview of the domain:
 image::./images/domain-ueberblick.png[]
 
 == Architecture
+
+You find a detailed architecture documentation, based on the link:https://arc42.org/overview[arc42-Template] in the link:./publishingcompany-service/src/site/asciidoc/arc42.adoc[site-folder of the publishingcompany-service]. The mentioned document is thought as an showcase for how to connect arc42, DDD, link:https://www.eventstorming.com/[Event Storming] and link:https://c4model.com/[C4-Model] with the ideas of link:https://docs-as-co.de/[docs-as-code].
 
 The showcase combines ideas from the two standard works "Domain Driven Design" and "Clean Architecture".
 
