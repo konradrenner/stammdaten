@@ -9,6 +9,8 @@ The results of such a workshop are also the basis of technical decisions (e.g. a
 
 image::bigpicture_event_storming.png[]
 
+Another part of this chapter could be context map, distilled from the "big picture", if your system consists of more than one Bounded Context (which is normally the case).
+
 === Technical Context
 
 The technical context or the link:https://c4model.com/[C4 System Context Diagram] can be derived directly from the results of a Big Picture Workshop (external systems and actors are a fundamental part of such a workshop).
