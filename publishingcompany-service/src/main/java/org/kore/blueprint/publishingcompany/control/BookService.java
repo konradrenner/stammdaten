@@ -35,7 +35,7 @@ public class BookService {
     public Book changeBookPrice(@NotNull @Valid ChangeBookPriceCommand command) {
         Author author = repo.find(command.getAuthorId()).orElseThrow(AuthorNotFound::new);
 
-        // Eine exemplarische 'komplizierte' Business Logik
+        // Example business logic, strictly speaking, this should be in Author class (because it is the aggregate root), so it is just here for showcasing a service
         Book book = author.getBook(command.getISBN()).orElseThrow(BookNotFound::new);
         Price newPrice = command.getNewPrice();
 

@@ -5,8 +5,4 @@ This Java application represents an architecture showcase for an application whi
 
 It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms, e.g. with link:https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/[GitHub Actions]) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
-The showcase combines ideas from the two standard works "Domain Driven Design" and "Clean Architecture".
-
-The package structure is based on the BCE concept (boundary control entity) to enable a simple and standardized structure.
-
 This document is based on the arc42 template but only uses the parts of the template to exemplify how the ideas of DDD can be connected to it.
