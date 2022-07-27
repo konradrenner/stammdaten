@@ -1,6 +1,7 @@
 [[section-design-decisions]]
 == Architecture Decisions
 
+Add a part "compliance" (described in clean architecture book), so that one can understand how it is checked that the decision will be complied
 
 [role="arc42help"]
 ****
