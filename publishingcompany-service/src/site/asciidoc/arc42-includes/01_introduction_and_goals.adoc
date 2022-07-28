@@ -1,8 +1,16 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-This Java application represents an architecture showcase for an application which is implemented with ideas from DDD and Clean Architecture.
+This Java application represents an architecture showcase for an application which is implemented with ideas from link:https://de.wikipedia.org/wiki/Domain-driven_Design[DDD] and link:https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html[Clean Architecture].
 
 It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms, e.g. with link:https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/[GitHub Actions]) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
-This document is based on the arc42 template but only uses the parts of the template to exemplify how the ideas of DDD can be connected to it.
+This document is based on the link:https://arc42.org/overview[arc42-Template] template but only uses the parts of the template to exemplify how the ideas of DDD can be connected to it.
+
+This document is not a fully filled arc42 template, but supplements that I find useful or explanations how arc42, DDD, link:https://c4model.com/[C4-Model] and link:https://docs-as-co.de/[docs-as-code] can be combined.
+
+Except for "link:https://www.eventstorming.com/[Event Storming] Workshop result pictures", all diagrams are created with link:https://plantuml.com/[plantuml]. 
+
+Since plantuml diagrams, like asciidoc documents, are basically plain text files, this has the advantage, among other things, that the VCS used can display diffs correctly and so every change is absolutely traceable.
+
+In the case of C4 models, the appropriate link:https://github.com/plantuml-stdlib/C4-PlantUML[extension for plantuml] is set so that these models can also be created with plantuml.

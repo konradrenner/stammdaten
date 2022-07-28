@@ -1,6 +1,6 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-The showcase combines ideas from the two standard works "Domain Driven Design" and "Clean Architecture".
+The showcase combines ideas from the two standard works "link:https://de.wikipedia.org/wiki/Domain-driven_Design[Domain Driven Design]" and "link:https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html[Clean Architecture]".
 
-The package structure is based on the BCE concept (boundary control entity) to enable a simple and standardized structure.
+The package structure is based on the link:http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm[BCE concept] (boundary control entity) to enable a simple and standardized structure.

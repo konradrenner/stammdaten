@@ -1,6 +1,8 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
 
+A picture says more than a thousand words, use text to write additions or more in-depth descriptions of the picture.
+
 === Business Context
 
 The Business Context could be the result of "Big Picture" Event Storming workshops. It is important that the "problem space" (domain) can be understood on a "high" level (this is exactly the idea behind a Big Picture Event Storming Workshop).
@@ -20,3 +22,8 @@ Put simply, the technical context outlines the technical communication (e.g. com
 The benefit of using C4-Model is, that you have a standardized template for visual modelling from technical parts of your software.
 
 *_TODO_* diagram with plantuml and C4 plugin: https://github.com/plantuml-stdlib/C4-PlantUML
+
+[plantuml, system_context]
+----
+include::../plantuml/system_context.puml[]
+----
