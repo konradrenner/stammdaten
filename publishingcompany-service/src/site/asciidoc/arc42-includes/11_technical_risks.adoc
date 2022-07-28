@@ -1,6 +1,8 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+Todo just link description with addition of possibilty to document security threats
+
 
 [role="arc42help"]
 ****
