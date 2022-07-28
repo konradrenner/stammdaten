@@ -1,6 +1,8 @@
 [[section-glossary]]
 == Glossary
 
+Todo this is where wordings for different contexts has to be documented 
+
 [role="arc42help"]
 ****
 .Contents
