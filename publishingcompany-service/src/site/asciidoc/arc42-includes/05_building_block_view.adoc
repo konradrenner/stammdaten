@@ -1,6 +1,4 @@
 [[section-building-block-view]]
-
-
 == Building Block View
 
 The truth of how a system is implemented, is in the code. This alone, however, is rarely enough to understand a system as a whole. Therefore it is necessary to offer the possibility to dive deeper and deeper into the system, starting from a relatively high level of flight.
