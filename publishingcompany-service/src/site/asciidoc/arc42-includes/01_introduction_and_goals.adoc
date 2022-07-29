@@ -5,9 +5,9 @@ This Java application represents an architecture showcase for an application whi
 
 It consists of an client app based on JavaFX/Gluon (ready for cross compiling on different platforms, e.g. with link:https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/[GitHub Actions]) and a server part based on Quarkus (which exposes its functionality with some RESTful endpoints and a tiny UI created with JSF).
 
-This document is based on the link:https://arc42.org/overview[arc42-Template] template but only uses the parts of the template to exemplify how the ideas of DDD can be connected to it.
+This document is based on the link:https://arc42.org/overview[arc42-Template] template but only extends some parts of the template to exemplify how the ideas of arc42, DDD, link:https://c4model.com/[C4-Model] and link:https://docs-as-co.de/[docs-as-code] can be connected.
 
-This document is not a fully filled arc42 template, but supplements that I find useful or explanations how arc42, DDD, link:https://c4model.com/[C4-Model] and link:https://docs-as-co.de/[docs-as-code] can be combined.
+If you are looking for a complete example of a fully filled arc42 template, you make have a look at the link:https://www.dokchess.de/[DokChess] example from the arc42 team.
 
 Except for "link:https://www.eventstorming.com/[Event Storming] Workshop result pictures", all diagrams are created with link:https://plantuml.com/[plantuml]. 
 
