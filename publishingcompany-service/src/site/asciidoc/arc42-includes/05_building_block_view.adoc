@@ -10,6 +10,7 @@ Building Block View (level 2) => Component diagram: view on the aggregate(s) of 
 Building Block View (level 3) => Class diagram: must generated with e.g. maven plugin (or it will be outdated to fast)
 
 TODO note that the truth of how a system is implemented is in the code.  this alone, however, is rarely enough to understand a system as a whole.  therefore it is necessary to offer the possibility to dive deeper and deeper into the system, starting from a relatively high level of flight.
+Just control and entity package required. Boundary is impl detail and viewable in deploy and container diagram 
 
 [plantuml, author_aggregate]
 ----
