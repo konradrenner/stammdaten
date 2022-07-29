@@ -3,9 +3,9 @@
 
 == Building Block View
 
-The truth of how a system is implemented is in the code. This alone, however, is rarely enough to understand a system as a whole. Therefore it is necessary to offer the possibility to dive deeper and deeper into the system, starting from a relatively high level of flight.
+The truth of how a system is implemented, is in the code. This alone, however, is rarely enough to understand a system as a whole. Therefore it is necessary to offer the possibility to dive deeper and deeper into the system, starting from a relatively high level of flight.
 
-These possiblity is offered by the "Building Block Views". The following table gives an overview of how the building block views, C4 Diagram and DDD are connectable.
+These possiblity is offered by the "Building Block Views". The following table gives an overview of how the building block views, C4 diagrams and DDD are connectable.
 
 .Building Block Views Mapping
 [%header,cols=3*] 
