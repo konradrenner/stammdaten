@@ -3,9 +3,10 @@
 //
 // ====================================
 
-= image:arc42-logo.png[arc42] Template
+= image:./images/arc42-logo.png[arc42] Template
 // toc-title definition MUST follow document title without blank line!
 :toc-title: Table of Contents
+:includes-dir: arc42-includes/
 
 //additional style for arc42 help callouts
 ifdef::backend-html5[]
@@ -23,10 +24,10 @@ ifdef::backend-html5[]
 endif::backend-html5[]
 
 // configure EN settings for asciidoc
-include::arc42-includes/config.adoc[]
+include::{includes-dir}config.adoc[]
 
 <<<<
-include::arc42-includes/about-arc42.adoc[]
+include::{includes-dir}about-arc42.adoc[]
 
 // horizontal line
 ***
@@ -36,50 +37,50 @@ include::arc42-includes/about-arc42.adoc[]
 
 <<<<
 // 1. Introduction and Goals
-include::arc42-includes/01_introduction_and_goals.adoc[]
+include::{includes-dir}01_introduction_and_goals.adoc[]
 
 <<<<
 // 2. Architecture Constraints
-include::arc42-includes/02_architecture_constraints.adoc[]
+include::{includes-dir}02_architecture_constraints.adoc[]
 
 <<<<
 // 3. System Scope and Context
-include::arc42-includes/03_system_scope_and_context.adoc[]
+include::{includes-dir}03_system_scope_and_context.adoc[]
 
 <<<<
 // 4. Solution Strategy
-include::arc42-includes/04_solution_strategy.adoc[]
+include::{includes-dir}04_solution_strategy.adoc[]
 
 <<<<
 // 5. Building Block View
-include::arc42-includes/05_building_block_view.adoc[]
+include::{includes-dir}05_building_block_view.adoc[]
 
 <<<<
 // 6. Runtime View
-include::arc42-includes/06_runtime_view.adoc[]
+include::{includes-dir}06_runtime_view.adoc[]
 
 <<<<
 // 7. Deployment View
-include::arc42-includes/07_deployment_view.adoc[]
+include::{includes-dir}07_deployment_view.adoc[]
 
 <<<<
 // 8. Concepts
-include::arc42-includes/08_concepts.adoc[]
+include::{includes-dir}08_concepts.adoc[]
 
 <<<<
 // 9. Architecture Decisions
-include::arc42-includes/09_architecture_decisions.adoc[]
+include::{includes-dir}09_architecture_decisions.adoc[]
 
 <<<<
 // 10. Quality Requirements
-include::arc42-includes/10_quality_requirements.adoc[]
+include::{includes-dir}10_quality_requirements.adoc[]
 
 <<<<
 // 11. Technical Risks
-include::arc42-includes/11_technical_risks.adoc[]
+include::{includes-dir}11_technical_risks.adoc[]
 
 <<<<
 // 12. Glossary
-include::arc42-includes/12_glossary.adoc[]
+include::{includes-dir}12_glossary.adoc[]
 
 

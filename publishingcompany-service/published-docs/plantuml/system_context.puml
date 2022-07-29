@@ -1,0 +1,19 @@
+@startuml System Context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!include DEVICONS/java.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(author, "Author", "Author of book or blog post")
+System(service, "Publishing-Company System", "Technology", "System for managing authors and their corresponding publications", $sprite="java")
+System(app, "Mobile + Desktop Apps", "Mobile and Desktop Apps which are owned by the Publishing-Company", $sprite="java")
+System_Ext(external, "External Clients", "3rd Party Apps")
+System_Ext(exchange, "Exchange System", "System to convert from one currency to another", $sprite="java")
+
+Rel(author, service, "Administer own publications", "JSF Web-UI")
+Rel(app, service, "Gets authors and publications for presentation", "http")
+Rel(external, service, "Gets authors and publications for presentation", "http")
+Rel(service, exchange, "Convert amount of money")
+@enduml

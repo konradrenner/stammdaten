@@ -1,0 +1,39 @@
+@startuml
+
+class org.kore.blueprint.publishingcompany.control.AuthorFactoryProducer {
+	{method} +produce () : org.kore.blueprint.publishingcompany.entity.author.AuthorFactory
+}
+
+
+interface org.kore.blueprint.publishingcompany.control.AuthorRepository {
+	{method}  {abstract} +find ( paramUUID1 : java.util.UUID ) : java.util.Optional
+	{method}  {abstract} +findAll () : java.util.Set
+	{method}  {abstract} +insert ( paramAuthor1 : org.kore.blueprint.publishingcompany.entity.author.Author ) : org.kore.blueprint.publishingcompany.entity.author.Author
+	{method}  {abstract} +update ( paramAuthor1 : org.kore.blueprint.publishingcompany.entity.author.Author ) : java.util.Optional
+}
+
+
+class org.kore.blueprint.publishingcompany.control.BookService {
+	{method} +changeBookPrice ( paramChangeBookPriceCommand1 : org.kore.blueprint.publishingcompany.control.ChangeBookPriceCommand ) : org.kore.blueprint.publishingcompany.entity.author.Book
+}
+
+
+interface org.kore.blueprint.publishingcompany.control.ChangeBookPriceCommand {
+	{method}  {abstract} +getAuthorId () : java.util.UUID
+	{method}  {abstract} +getISBN () : org.kore.blueprint.publishingcompany.entity.author.ISBN
+	{method}  {abstract} +getNewPrice () : org.kore.blueprint.publishingcompany.entity.author.Price
+}
+
+
+interface org.kore.blueprint.publishingcompany.control.CurrencyService {
+	{method}  {abstract} +evaluateExchangeRatio ( paramCurrency1 : org.kore.blueprint.publishingcompany.entity.author.Currency , paramCurrency2 : org.kore.blueprint.publishingcompany.entity.author.Currency ) : java.math.BigDecimal
+}
+
+
+
+
+org.kore.blueprint.publishingcompany.control.BookService -->  org.kore.blueprint.publishingcompany.control.AuthorRepository : repo
+org.kore.blueprint.publishingcompany.control.BookService -->  org.kore.blueprint.publishingcompany.control.CurrencyService : service
+
+
+@enduml

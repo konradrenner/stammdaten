@@ -13,6 +13,7 @@ image::bigpicture_event_storming.png[]
 
 Another part of this chapter could be context map, distilled from the "big picture", if your system consists of more than one Bounded Context (which is normally the case).
 
+<<<<
 === Technical Context
 
 The technical context or the link:https://c4model.com/[C4 System Context Diagram] can be derived directly from the results of a Big Picture Workshop (external systems and actors are a fundamental part of such a workshop).
@@ -24,7 +25,7 @@ The benefit of using C4-Model is, that you have a standardized template for visu
 
 [plantuml, system_context]
 ----
-include::../plantuml/system_context.puml[]
+include::{sourcedir}/plantuml/system_context.puml[]
 ----
 
 For further Information see https://docs.arc42.org/section-3/[Context and Scope] in the arc42 documentation.

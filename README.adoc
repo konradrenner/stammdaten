@@ -14,7 +14,7 @@ image::./images/domain-ueberblick.png[]
 
 == Architecture
 
-You find a detailed architecture documentation, based on the link:https://arc42.org/overview[arc42-Template] in the link:./publishingcompany-service/src/site/asciidoc/arc42.adoc[site-folder of the publishingcompany-service]. The mentioned document is thought as an showcase for how to connect arc42, DDD, link:https://www.eventstorming.com/[Event Storming] and link:https://c4model.com/[C4-Model] with the ideas of link:https://docs-as-co.de/[docs-as-code].
+You find a detailed architecture documentation, based on the link:https://arc42.org/overview[arc42-Template] in the link:./publishingcompany-service/src/site/asciidoc/arc42.adoc[site-folder of the publishingcompany-service] (the rendered link:.publishingcompany-service/published-docs/arc42.pdf[arc42 PDF] which is created during each build is located in the link:./publishingcompany-service/published-docs/[published-docs] folder). The mentioned document is thought as an showcase for how to connect arc42, DDD, link:https://www.eventstorming.com/[Event Storming] and link:https://c4model.com/[C4-Model] with the ideas of link:https://docs-as-co.de/[docs-as-code].
 
 The showcase combines ideas from the two standard works "Domain Driven Design" and "Clean Architecture".
 

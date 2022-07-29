@@ -200,13 +200,13 @@
                 </dependencies>
                 <configuration>
                     <sourceDirectory>src/site/asciidoc</sourceDirectory>
+                    <outputDirectory>published-docs/</outputDirectory>
                     <attributes>
-                        <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                        <sourcedir>${project.basedir}/src/site/asciidoc</sourcedir>
+                        <images>images</images> 
                     </attributes>
                     <argLine>
-                        --add-opens java.base/sun.nio.ch=org.jruby.dist
-                        --add-opens java.base/sun.nio.ch=ALL-UNNAMED 
-                        --add-opens java.base/java.io=ALL-UNNAMED
+                        --add-opens java.base/sun.nio.ch=org.jruby.dist --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED
                     </argLine>
                 </configuration>
                 <executions>

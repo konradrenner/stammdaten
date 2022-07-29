@@ -35,11 +35,12 @@ The necessary informations about this layer are visible in the container diagram
 
 For further information see https://docs.arc42.org/section-5/[Building Block View] in the arc42 documentation.
 
+<<<<
 === Class diagram
 
-NOTE: This diagram is optional and should just be used when required to understand parts of a system.
+NOTE: This diagram is optional and should just be used when required to understand parts of a system. In this case, it is just an example of how to get the plantuml generated during build from a maven plugin.
 
 [plantuml, author_aggregate]
 ----
-include::../plantuml/author_aggregate.puml[]
+include::{sourcedir}/plantuml/author_aggregate.puml[]
 ----
