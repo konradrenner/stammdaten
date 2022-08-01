@@ -38,13 +38,14 @@ image::ddd.jpg[]
 [NOTE.speaker]
 --
 * *Ubiquitous Language most important part*
-** Hard to define und extract, much work is needed
+** Hard to define and extract, much work is needed
 ** It always has a Context where it is "valid"
 ** Example: Doc Browns DeLorean DMC-12
 *** When Doc Brown talks about a timemachine, he means his DMC-12
 *** When a mechanic gets his fingers on the DMC-12, he is repairing a car
 * *Distillation and Context*
 ** You can think about Problem space and Solution Space
+** Example: Problem Space - How to build a time machine; Solution Space - How a time machine is actually built
 ** _Distillation_: Distill the core domain out of your business domain
 ** Put most of your effort in your core domain
 ** _Context_: The area in which a word or some kind of "structure" has the same meaning everywhere
