@@ -38,10 +38,11 @@ image::ddd.jpg[]
 [NOTE.speaker]
 --
 * *Ubiquitous Language most important part*
-** Ubiquitous: appearing everywhere => users, architects, product owner, developer and code
+** Ubiquitous: appearing everywhere => users, architects, product owner, developer and of course in code too
 ** The meanings of words are "context sensitive"
 * *Distillation and Context*
 ** You can think about Problem space and Solution Space
+** Example: Problem Space - How to build a time machine; Solution Space - How a time machine is actually built
 ** _Distillation_: Distill the core domain out of your business domain
 ** Put most of your effort in your core domain
 ** Example Distillation: Doc Browns DeLorean DMC-12
@@ -88,7 +89,7 @@ image::tragedy.jpg[]
 * Why can they end in a tragedy?
 ** Because inappropriate cut Microservices can lead to unnecessary remote communication
 ** In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
-*** Sooner or later this will lead to a real resilience tragedy
+*** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 *** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
 * So this "time travel" to the 2004 book, can help us find more effective approach
@@ -242,7 +243,6 @@ image::CleanArchitecture.jpeg[]
 * Uses link:https://quarkus.io/[Quarkus] as _"Kubernetes native Java stack"_
 * link:https://en.wikipedia.org/wiki/Entity-control-boundary[Boundary-Control-Entity] pattern for implementing "lightweight" Clean Architecture on top of DDD
 * Architecture automatically checked with link:https://www.archunit.org/[ArchUnit]
-* link:https://arc42.org/overview[arc42] published via link:https://maven.apache.org/plugins/maven-site-plugin/[maven site plugin]
 
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
