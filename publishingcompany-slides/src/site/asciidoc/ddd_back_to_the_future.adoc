@@ -235,7 +235,10 @@ image::CleanArchitecture.jpeg[]
 ** Never ever make inner circles depend on outer!
 ** Technical aspects must never enter the domain logic
 *** If so: your code will e.g. not be unit testable (you cannot mock away technical aspects sufficient)
-* This architecture perfectly fits with the "Layered Architecture" as described in the DDD book
+* This architecture perfectly fits with the "Layered Architecture" and Tactical design as described in the DDD book
+** Enterprise Business Rules: Entities and Aggregates 
+** Application Business Rules: Domain Services, Repository contracts (e.g. Java Interface)
+** Interface Adapters: Repository implementations 
 * An example is just 2 slides away
 --
 
@@ -255,6 +258,9 @@ image::CleanArchitecture.jpeg[]
 ** rock solid tooling, massive community, native performance and state of the art dev experience
 * DDD and Clean Architecture are a perfect match
 ** Use BCE and you also get a standardized und clear structuring of your projects
+*** Boundary: Interface Adapters
+*** Control: Application Business Rules
+*** Entity: Enterprise Business Rules
 * Let the tooling do the "boring" work for you
 ** Automatic versioning and releasing
 ** Automatic publishing
