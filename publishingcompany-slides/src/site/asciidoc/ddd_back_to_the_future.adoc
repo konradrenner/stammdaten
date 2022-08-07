@@ -87,7 +87,8 @@ image::tragedy.jpg[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
+* First of all: Because "It’s developer’s (mis)understanding, not expert knowledge that gets released into production" - Alberto Brandolini
+* And more technically spoken: There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
 * The cut of Microservices can be a tragedy if you take an inappropriate approach
 * inappropriate approaches would be
 ** pure technical
