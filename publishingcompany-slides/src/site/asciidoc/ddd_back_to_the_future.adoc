@@ -179,7 +179,7 @@ endlegend
 
 === Event Storming
 
-image::event_storming.png[]
+image::level-of-storming.png[]
 
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
@@ -190,17 +190,19 @@ image::event_storming.png[]
 . Gather the best immediately available information
 . Start implementing a solution from the best possible starting point (Context)
 * You just need a room with a long enough wall, many coloured stickies, something to write, the "right" people (and no table in the middle)
-* What you see here is just the first step in a "Big Picture" workshop
-* Key idea is, to have all relevant stakeholder in one room
+* Invite all relevant stakeholder in the room
 ** They put their view in brain storming fashion on an "endless" wall, in form of events
 ** Events are always past tense
 ** They discuss the outcomes
 *** Consensus is not required, it could be a signal for different meanings of an event; mark heavy discussion with a hotspot sticky
-* Next iteration step would be integration of people and external systems on the wall
-* Then you can start modelling your processes with the integration of commands, policies and read models
+* Start with a Big Picture workshop
+** Helps crossing knowledge silo boundaries
+** You get many hints about possible Bounded Contexts
+* Then you can start modelling your processes in the contexts with the integration of commands, policies and read models
 ** Picture that explain (nearly) everthing (see picture in next slide)
-* And then you could also do Software Design with the help of this tool (e.g. for designing Aggregates)
+* And then you could dive even deeper into Software Design (for discovering/designing Aggregates)
 ** Aggregates are the "state machines" between commands and events
+** Think of behavior, not data!
 * But be aware, that every time you dive deeper, the required person's will change. And maybe you have to step back at some point of time
 ** Have a look at chapters "system scope and context" and "building block views" and "runtime views" of arc42, if you are interested in how to document outcomes
 --
