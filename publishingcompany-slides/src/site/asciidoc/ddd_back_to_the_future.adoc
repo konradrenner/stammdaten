@@ -6,10 +6,12 @@ Konrad Renner <github.com/konradrenner>
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
 
+<<<<
 == Domain Driven Design
 
 image::ddd.jpg[]
 
+<<<<
 == Introduction
 
 [%step]
@@ -18,6 +20,7 @@ image::ddd.jpg[]
 * Some personal things: *Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ* enthusiast
 * Direct link to digital life: *link:github.com/konradrenner[GitHub - konradrenner]*
 
+<<<<
 == Agenda
 
 [%step]
@@ -27,6 +30,7 @@ image::ddd.jpg[]
 * Sounds pretty heavy. How does this all come together?
 * Let me know what you think about all this
 
+<<<<
 == What is it about?
 
 [%step]
@@ -58,6 +62,7 @@ image::ddd.jpg[]
 ** Think of products, not projects
 --
 
+<<<<
 === Strategic and Tactical Design
 
 image::ddd_overview.png[scaledwidth=100%]
@@ -74,6 +79,7 @@ image::ddd_overview.png[scaledwidth=100%]
 * _Examples for technical communication possibilities will come in the next slides!_
 --
 
+<<<<
 == How can this time travel help us?
 
 image::tragedy.jpg[]
@@ -97,13 +103,14 @@ image::tragedy.jpg[]
 ** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
 --
 
+<<<<
 === DDD for "cloud native software architecture"
 
 [%step]
 * Focus on your core domain, not technical aspects
 * Establish a common understanding of strategic AND tactical design
 ** Merge the people, split the software
-* Build Microservices/Self-Contained-Systems based on Bounded Context
+* Build Microservices or Self-Contained-Systems based on Bounded Context
 ** Maybe a Bounded Context can also help by defining K8s Namespaces ;-)
 
 // Press the `*s*` key to access speaker notes.
@@ -111,12 +118,9 @@ image::tragedy.jpg[]
 --
 * One of the most common questions in my day to day work is, how to size Microservices or siblings (e.g. SCS)
 ** Just use the Bounded Contexts
-* The Context Map helps to understand how communication flows through the system
-** The relationship types helps in discusions about the technical communication
-*** Shared Kernel: Create a library
-*** Open Host Service: Maybe RESTful with OpenAPI powered Published Language
 --
 
+<<<<
 === Strategic Design
 
 [plantuml,bounded-context]
@@ -167,6 +171,20 @@ legend bottom
 endlegend
 ----
 
+// Press the `*s*` key to access speaker notes.
+[NOTE.speaker]
+--
+* The Context Map helps to understand how communication flows through the system
+** The relationship types helps in discusions about the technical communication
+*** Confirmist 
+**** Upstream has no motivation to provide for the downstream team’s need
+**** Maybe a lib, which is developed without regard to the downstream (maybe because it was create for another downstream in form of a customer-supplier relationship)
+*** Open Host Service
+**** Access to a system is provided by clearly defined services, using a clearly defined protocol
+**** Maybe RESTful services with OpenAPI powered Published Language
+--
+
+<<<<
 == Are there other crazy ideas Doc?
 
 [%step]
@@ -176,7 +194,7 @@ endlegend
 * Take out the pain of documentation with link:https://docs-as-co.de/[Documentation As Code]
 * Structure code on basis of link:https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html[Clean Architecture]
 
-
+<<<<
 === Event Storming
 
 image::level-of-storming.png[]
@@ -202,11 +220,13 @@ image::level-of-storming.png[]
 ** Picture that explain (nearly) everthing (see picture in next slide)
 * And then you could dive even deeper into Software Design (for discovering/designing Aggregates)
 ** Aggregates are the "state machines" between commands and events
+** It is not just Process Modelling with Aggregates because many processes can be connected with an Aggregate (think of a combination of processes with focus on Aggregates)
 ** Think of behavior, not data!
 * But be aware, that every time you dive deeper, the required person's will change. And maybe you have to step back at some point of time
 ** Have a look at chapters "system scope and context" and "building block views" and "runtime views" of arc42, if you are interested in how to document outcomes
 --
 
+<<<<
 === Event Storming
 
 image::event_storming_2.png[]
@@ -224,6 +244,7 @@ image::event_storming_2.png[]
 * Precise Notation or explorations are not required and could harm creativity (e.g. it is not important if the yellow means people or Persona)
 --
 
+<<<<
 === Clean Architecture
 
 image::CleanArchitecture.jpeg[]
@@ -242,6 +263,7 @@ image::CleanArchitecture.jpeg[]
 * An example is just 2 slides away
 --
 
+<<<<
 == Sounds pretty heavy. How does this all come together?
 
 [%step]
@@ -271,6 +293,7 @@ image::CleanArchitecture.jpeg[]
 ** Maybe you use GitOps to further improve automation
 --
 
+<<<<
 === Time for an example
 
 image::code.jpg[]
@@ -285,6 +308,7 @@ image::code.jpg[]
 * It consists of an Web UI (JSF), REST API and an Cross Compiled Mobile/Desktop Companion App
 --
 
+<<<<
 == But...
 
 [%step]
@@ -293,6 +317,7 @@ image::code.jpg[]
 ** Approach to modern software delivery with awareness of
 *** Conway’s Law, team cognitive load and responsive organization evolution
 
+<<<<
 === Team Topologies
 
 image::team-topologies.png[]
@@ -322,6 +347,7 @@ image::team-topologies.png[]
 ** Facilitating: helping or being helped by another team (mostly the case when a stream aligned teams "gets knowledge" from an enabling team)
 --
 
+<<<<
 == Let me know what you think about all this
 
 image::force.jpg[]
