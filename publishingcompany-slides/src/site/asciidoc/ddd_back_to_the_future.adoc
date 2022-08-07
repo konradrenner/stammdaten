@@ -70,10 +70,10 @@ image::ddd_overview.png[scaledwidth=100%]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* Strategic Design
+* *Strategic Design*
 ** "Big Picture"
 ** Communication paths betweens contexts
-* Tactical Design
+* *Tactical Design*
 ** Model within a Bounded Context
 ** Aggregates not just encapsulate, they are also important for consistency
 * _Examples for technical communication possibilities will come in the next slides!_
@@ -87,13 +87,13 @@ image::tragedy.jpg[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* First of all: Because "It’s developer’s (mis)understanding, not expert knowledge that gets released into production" - Alberto Brandolini
-* And more technically spoken: There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
+* *First of all*: Because _"It’s developer’s (mis)understanding, not expert knowledge that gets released into production"_ - Alberto Brandolini
+* *And more technically spoken*: There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
 * The cut of Microservices can be a tragedy if you take an inappropriate approach
 * inappropriate approaches would be
 ** pure technical
 ** based on organizational circumstances
-* Why can they end in a tragedy?
+* *Why can this end in a tragedy?*
 ** Because inappropriate cut Microservices can lead to unnecessary remote communication
 ** In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
 *** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
@@ -108,9 +108,9 @@ image::tragedy.jpg[]
 === DDD for "cloud native software architecture"
 
 [%step]
-* Focus on your core domain, not technical aspects
+* *Focus on your core domain, not technical aspects*
 * Establish a common understanding of strategic AND tactical design
-** Merge the people, split the software
+** *Merge the people, split the software*
 * Build Microservices or Self-Contained-Systems based on Bounded Context
 ** Maybe a Bounded Context can also help by defining K8s Namespaces ;-)
 
@@ -175,7 +175,7 @@ endlegend
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* The Context Map helps to understand how communication flows through the system
+* *The Context Map helps to understand how communication flows through the system*
 ** The relationship types helps in discusions about the technical communication
 *** Confirmist 
 **** Upstream has no motivation to provide for the downstream team’s need
@@ -203,8 +203,8 @@ image::level-of-storming.png[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* The key idea of EventStorming is
-. See the system as a whole 
+* *The key idea of EventStorming is*
+. *See the system as a whole* 
 . Find a problem worth solving (Distillation)
 . Gather the best immediately available information
 . Start implementing a solution from the best possible starting point (Context)
@@ -254,7 +254,7 @@ image::CleanArchitecture.jpeg[]
 [NOTE.speaker]
 --
 * The most important part is flow of control
-** Never ever make inner circles depend on outer!
+** *Never ever make inner circles depend on outer!*
 ** Technical aspects must never enter the domain logic
 *** If so: your code will e.g. not be unit testable (you cannot mock away technical aspects sufficient)
 * This architecture perfectly fits with the "Layered Architecture" and Tactical design as described in the DDD book
@@ -291,7 +291,7 @@ image::CleanArchitecture.jpeg[]
 * The (Git) Repo is the single source of truth for all aspects
 ** Architecture, Security, Code, Config
 ** Every change is tracked in your favorite VCS and absolutly traceable
-** Maybe you use GitOps to further improve automation
+** Maybe you *use GitOps to further improve automation*
 --
 
 <<<<
@@ -326,7 +326,7 @@ image::team-topologies.png[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* Like DDD it "just" formalizes some good practices and ideas
+* *Like DDD it "just" formalizes some good practices and ideas*
 * Stream aligned teams are the "heart" because the are aligned on value streams
 ** These are based on top of the DevOps ideas
 ** The other teams are "just" supporting them in which they take away cognitive load
@@ -359,6 +359,6 @@ image::force.jpg[]
 * Thank you for the possibilty to share my thoughts on this topic
 * In closing, I have only two things to say
 ** Never stop refactoring, there is no "perfect" or "everlasting" solution
-*** Software development is a learning process, working code is a nice side effect
+*** _Software development is a learning process, working code is a nice side effect_
 ** And: *may the force be with you*
 --
