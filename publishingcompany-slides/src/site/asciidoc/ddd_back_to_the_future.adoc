@@ -87,14 +87,14 @@ image::tragedy.jpg[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* *First of all*: Because _"It’s developer’s (mis)understanding, not expert knowledge that gets released into production"_ - Alberto Brandolini
-* *And more technically spoken*: There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away
-* The cut of Microservices can be a tragedy if you take an inappropriate approach
-* inappropriate approaches would be
-** pure technical
-** based on organizational circumstances
-* *Why can this end in a tragedy?*
-** Because inappropriate cut Microservices can lead to unnecessary remote communication
+* There is a tragedy that not only concerns Marty McFly and Doc Brown, but also a galaxy far, far away 
+* First part of the tragedy could be a misunderstanding of the domain because: *_"It’s developer’s understanding, not expert knowledge that gets released into production"_* - Alberto Brandolini
+* The second part of the tragedy could be, that the cut of Microservices was based on an inappropriate approach
+* Inappropriate approaches would be:
+** Pure technical
+** Based on organizational circumstances
+* Why can this second part also end in a tragedy?
+** Because *inappropriate cut Microservices can lead to unnecessary or even dangerous remote communication*
 ** In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
 *** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 *** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
@@ -214,12 +214,12 @@ image::level-of-storming.png[]
 ** Events are always past tense
 ** They discuss the outcomes
 *** Consensus is not required, it could be a signal for different meanings of an event; mark heavy discussion with a hotspot sticky
-* Start with a Big Picture workshop
+* *Start with a Big Picture workshop*
 ** Helps crossing knowledge silo boundaries
 ** You get many hints about possible Bounded Contexts
-* Then you can start modelling your processes in the contexts with the integration of commands, policies and read models
+* *Then you can start modelling your processes* in the contexts with the integration of commands, policies and read models
 ** Picture that explain (nearly) everthing (see picture in next slide)
-* And then you could dive even deeper into Software Design (for discovering/designing Aggregates)
+* *And then you could dive even deeper into Software Design* (for discovering/designing Aggregates)
 ** Aggregates are the "state machines" between commands and events
 ** It is not just Process Modelling with Aggregates because many processes can be connected with an Aggregate (think of a combination of processes with focus on Aggregates)
 ** Think of behavior, not data!
@@ -235,13 +235,13 @@ image::event_storming_2.png[]
 // Press the `*s*` key to access speaker notes.
 [NOTE.speaker]
 --
-* Yellow: People, Actor or Persona
-* Blue: Command or Action (triggered from people, system or time based event)
-* Orange: Event (consists at least of a noun and past tense verb)
-* Purple: Policy or Business Rule, glue between event and thereafter command(Whenever [event(s)] the [command(s]) 
-* Green: Read Model (information/data that needs to be available to take a given decision)
-* Pink: (External) System or part of a system 
-* Red: HotSpot (open question, noticed for later discussion)
+* _Yellow_: People, Actor or Persona
+* _Blue_: Command or Action (triggered from people, system or time based event)
+* _Orange_: Event (consists at least of a noun and past tense verb)
+* _Purple_: Policy or Business Rule, glue between event and thereafter command(Whenever [event(s)] the [command(s]) 
+* _Green_: Read Model (information/data that needs to be available to take a given decision)
+* _Pink_: (External) System or part of a system 
+* _Red_: HotSpot (open question, noticed for later discussion)
 * Precise Notation or explorations are not required and could harm creativity (e.g. it is not important if the yellow means people or Persona)
 --
 
@@ -258,9 +258,9 @@ image::CleanArchitecture.jpeg[]
 ** Technical aspects must never enter the domain logic
 *** If so: your code will e.g. not be unit testable (you cannot mock away technical aspects sufficient)
 * This architecture perfectly fits with the "Layered Architecture" and Tactical design as described in the DDD book
-** Enterprise Business Rules: Entities and Aggregates 
-** Application Business Rules: Domain Services, Repository contracts (e.g. Java Interface)
-** Interface Adapters: Repository implementations 
+** *Enterprise Business Rules*: _Entities and Aggregates_
+** *Application Business Rules*: _Domain Services, Repository contracts_ (e.g. Java Interface)
+** *Interface Adapters*: _Repository implementations_
 * An example is just 2 slides away
 --
 
@@ -281,9 +281,9 @@ image::CleanArchitecture.jpeg[]
 ** rock solid tooling, massive community, native performance and state of the art dev experience
 * DDD and Clean Architecture are a perfect match
 ** Use BCE and you also get a standardized und clear structuring of your projects
-*** Boundary: Interface Adapters
-*** Control: Application Business Rules
-*** Entity: Enterprise Business Rules
+*** *Boundary*: _Interface Adapters_
+*** *Control*: _Application Business Rules_
+*** *Entity*: _Enterprise Business Rules_
 * Let the tooling do the "boring" work for you
 ** Automatic versioning and releasing
 ** Automatic publishing
@@ -327,25 +327,25 @@ image::team-topologies.png[]
 [NOTE.speaker]
 --
 * *Like DDD it "just" formalizes some good practices and ideas*
-* Stream aligned teams are the "heart" because the are aligned on value streams
+* *Stream aligned teams* are the "heart" because the are aligned on value streams
 ** These are based on top of the DevOps ideas
 ** The other teams are "just" supporting them in which they take away cognitive load
 ** So the other team types are just required, if the cognitive load will get to high for a stream aligned teams
 ** The other teams may consists "internally" also of stream aligned teams 
-* Complicated subsystem team:
+* *Complicated subsystem team*:
 ** Parts of the system which not directly mapped to the value stream, but are a requirement "to function"
 ** Think on the flux capacitor: one team just focuses on this complicated part, whereas the stream aligned teams will do improvements on the integration with the Delorean
-* Enabling team:
+* *Enabling team*:
 ** Disclaimer: This is not Architecture Department, but a team of specialists
 ** They help to spread knowledge about new things in the organization and tech world
 ** They also evaluate if "trends" are applyable and how
-* Platform team:
+* *Platform team*:
 ** They are building and maintain e.g. the tools which are required, so that stream aligned teams can work effective AND efficient
 ** Think on the Delorean: A Platform team would have built it and will repair things, whereas the stream aligned teams will focus on the time travel functionalities
 * The interaction modes helps visualising and so understanding the dependencies between teams
-** Collaboration: strong delivery dependencies (e.g. stream aligned and complicated subsystem team)
-** X as a Service: Decoupling and standardization (mostly used when interaction with a platform team is needed)
-** Facilitating: helping or being helped by another team (mostly the case when a stream aligned teams "gets knowledge" from an enabling team)
+** *Collaboration*: strong delivery dependencies (e.g. stream aligned and complicated subsystem team)
+** *X as a Service*: Decoupling and standardization (mostly used when interaction with a platform team is needed)
+** *Facilitating*: helping or being helped by another team (mostly the case when a stream aligned teams "gets knowledge" from an enabling team)
 --
 
 <<<<
