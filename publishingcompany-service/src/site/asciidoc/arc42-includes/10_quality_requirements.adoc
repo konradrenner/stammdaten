@@ -1,4 +1,10 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
+Quality goals and quality requirements can be derived using Big Picture Event Storming workshops.
+
+These arise either implicitly, e.g. through external systems (keyword interoperability) or can be explicitly represented, e.g. through hotspots.
+
+Results from process modeling workshops can be used as a basis for quality scenarios.  In the form of an additional description, the connection to quality requirements can subsequently be established.
+
 See https://docs.arc42.org/section-10/[Quality Requirements] in the arc42 documentation.
