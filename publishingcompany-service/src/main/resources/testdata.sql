@@ -25,7 +25,7 @@ create table publicationauthor(
   publicationID varchar(13) not null,
   primary key (authorID, publicationID),
   foreign key (authorID) references author(id),
-  foreign key (publicationID) references publication(id),
+  foreign key (publicationID) references publication(id)
 );
 
 insert into author (id,firstname,lastname)
