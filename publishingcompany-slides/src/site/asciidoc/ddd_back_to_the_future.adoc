@@ -16,7 +16,7 @@ image::ddd.jpg[]
 
 [%step]
 * Speaker of the day: *Konrad Renner*
-* Day to day job: *Software Architect at ARZ Allgemeines Rechenzentrum GmbH*
+* Profession: *Software Architecture*
 * Some personal things: *Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ* enthusiast
 * Direct link to digital life: *link:github.com/konradrenner[GitHub - konradrenner]*
 
