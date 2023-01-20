@@ -104,7 +104,13 @@ image::monolith.jpg[]
 [NOTE.speaker]
 --
 * Because *inappropriate cut Microservices can lead to unnecessary or even dangerous remote communication*
+* One might think that the "smaller" a microservice is, the less complex it is
+** This is true for the local complexity of this specific microservice, but it is not true for the whole system
+** The smaller a microservice is cut, the more communication with other services is necessary and this in turn increases the complexity of the overall system
+*** The much more important type of complexity is global complexity (the complexity of the whole system) because it has a much higher impact on different non-functional requirements on the whole system, than one part ot the whole system
+*** It's less about black and white thinking (monolith vs microservice) and more about creating a balance
 * In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
+** As stated above: too high global complexity is worse then local complexity
 ** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 ** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
