@@ -27,6 +27,11 @@ dist/
 nbdist/
 .nb-gradle/
 
+### Eclipse ###
+.classpath
+.project
+**eclipse**
+
 ### asciidoctor tmp files ###
 .asciidoctor
 
