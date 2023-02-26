@@ -1,0 +1,4 @@
+language: java
+app:  mvn exec:java -Dexec.mainClass="org.kore.Main"
+imports:
+  - k8s
