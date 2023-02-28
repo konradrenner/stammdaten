@@ -16,7 +16,7 @@ public class Main extends Chart
     public Main(final Construct scope, final String id, final ChartProps options) {
         super(scope, id, options);
         
-        new RustComponent(this, "app");
+        new QuarkusComponent(this, "app");
     }
 
     public static void main(String[] args) {
