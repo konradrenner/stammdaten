@@ -47,7 +47,7 @@ public class QuarkusComponent extends Construct{
         final int portNumber = 80;
         final int containerPortNumber = 8000;
         final int replicas = 2;
-        final String image = "kore/publishingcompany-service:0.1.0";
+        final String image = "kore/publishingcompany-service:1.0-SNAPSHOT";
         final String name = "publishingcompany-service";
         
 
