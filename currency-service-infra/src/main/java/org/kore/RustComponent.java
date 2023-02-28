@@ -122,7 +122,7 @@ public class RustComponent extends Construct{
         final HttpIngressPath ingressPath = new HttpIngressPath.Builder()
                 .backend(ingressBackend)
                 .pathType("Prefix")
-                .path("/rust")
+                .path("/conversion-rates")
                 .build();
         
         final HttpIngressRuleValue ingresrulevalue = new HttpIngressRuleValue.Builder()
