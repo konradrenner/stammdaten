@@ -9,9 +9,9 @@ struct ConversionRate {
   conversionRate: f64, 
 }
 
-#[get("/conversion-rates?fromCurrency=<fromCurrency>&toCurrency=<toCurrency>")]
+#[get("/conversion-rates?<fromCurrency>&<toCurrency>")]
 fn conversionRates(fromCurrency: &str, toCurrency: &str) -> String {
-    let rateValue = 0.8;
+    let mut rateValue = 0.8;
 
     let loweredFrom = fromCurrency.to_uppercase();
     let loweredTo = toCurrency.to_uppercase();

@@ -2,6 +2,7 @@
 name = "currency-service"
 version = "0.1.0"
 edition = "2021"
+docker_tag = "kore/currency-service:0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
