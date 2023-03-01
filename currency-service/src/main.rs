@@ -29,7 +29,12 @@ fn conversionRates(fromCurrency: &str, toCurrency: &str) -> String {
     serde_json::to_string(&cRate).unwrap()
 }
 
+#[get("/conversion-rates/default")]
+fn defaultCurrency() -> &'static str {
+    "1.00"
+}
+
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![conversionRates])
+    rocket::build().mount("/", routes![conversionRates, defaultCurrency])
 }

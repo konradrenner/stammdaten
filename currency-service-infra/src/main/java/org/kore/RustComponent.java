@@ -47,7 +47,7 @@ public class RustComponent extends Construct{
         final int portNumber = 80;
         final int containerPortNumber = 8000;
         final int replicas = 2;
-        final String image = "kore/currency-service:0.1.0";
+        final String image = "kore/currency-service:0.1.1";
         final String name = "currency-service";
         
 
