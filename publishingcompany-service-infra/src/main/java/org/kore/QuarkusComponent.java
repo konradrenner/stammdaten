@@ -7,6 +7,7 @@ package org.kore;
 import imports.k8s.Container;
 import imports.k8s.ContainerPort;
 import imports.k8s.DeploymentSpec;
+import imports.k8s.EnvVar;
 import imports.k8s.HttpGetAction;
 import imports.k8s.HttpIngressPath;
 import imports.k8s.HttpIngressRuleValue;
@@ -96,7 +97,12 @@ public class QuarkusComponent extends Construct{
                 .periodSeconds(Integer.valueOf(5))
                 .initialDelaySeconds(3)
                 .build();
-        
+
+        EnvVar otelEndpoint = new EnvVar.Builder()
+                .name("QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT")
+                .value("http://10.244.0.16:4317")
+                .build();
+
         
         final LabelSelector labelSelector = new LabelSelector.Builder().matchLabels(selector).build();
         final ObjectMeta objectMeta = new ObjectMeta.Builder().labels(selector).build();
@@ -111,8 +117,9 @@ public class QuarkusComponent extends Construct{
             .image(image)
             .ports(containerPorts)
             .livenessProbe(livenessProbe)
-            .readinessProbe(readyProbe)
-            .build();
+                .readinessProbe(readyProbe)
+                .env(List.of(otelEndpoint))
+                .build();
         containers.add(container);
         final PodSpec podSpec = new PodSpec.Builder()
             .containers(containers)
