@@ -7,6 +7,7 @@ package org.kore;
 import imports.k8s.Container;
 import imports.k8s.ContainerPort;
 import imports.k8s.DeploymentSpec;
+import imports.k8s.HttpGetAction;
 import imports.k8s.HttpIngressPath;
 import imports.k8s.HttpIngressRuleValue;
 import imports.k8s.IngressBackend;
@@ -24,6 +25,7 @@ import imports.k8s.LabelSelector;
 import imports.k8s.ObjectMeta;
 import imports.k8s.PodSpec;
 import imports.k8s.PodTemplateSpec;
+import imports.k8s.Probe;
 import imports.k8s.ServiceBackendPort;
 import imports.k8s.ServicePort;
 import imports.k8s.ServiceSpec;
@@ -73,6 +75,29 @@ public class QuarkusComponent extends Construct{
         KubeService kubeService = new KubeService(this, "service", serviceProps);
 
         // Defining a Deployment
+        HttpGetAction livenessAction = new HttpGetAction.Builder()
+                .port(IntOrString.fromNumber(Integer.valueOf(containerPortNumber)))
+                .path("/q/health/live")
+                .build();
+        
+        Probe livenessProbe = new Probe.Builder()
+                .httpGet(livenessAction)
+                .periodSeconds(Integer.valueOf(5))
+                .initialDelaySeconds(3)
+                .build();
+        
+        HttpGetAction readynessAction = new HttpGetAction.Builder()
+                .port(IntOrString.fromNumber(Integer.valueOf(containerPortNumber)))
+                .path("/q/health/ready")
+                .build();
+        
+        Probe readyProbe = new Probe.Builder()
+                .httpGet(readynessAction)
+                .periodSeconds(Integer.valueOf(5))
+                .initialDelaySeconds(3)
+                .build();
+        
+        
         final LabelSelector labelSelector = new LabelSelector.Builder().matchLabels(selector).build();
         final ObjectMeta objectMeta = new ObjectMeta.Builder().labels(selector).build();
         final List<ContainerPort> containerPorts = new ArrayList<>();
@@ -85,6 +110,8 @@ public class QuarkusComponent extends Construct{
             .name(name)
             .image(image)
             .ports(containerPorts)
+            .livenessProbe(livenessProbe)
+            .readinessProbe(readyProbe)
             .build();
         containers.add(container);
         final PodSpec podSpec = new PodSpec.Builder()
