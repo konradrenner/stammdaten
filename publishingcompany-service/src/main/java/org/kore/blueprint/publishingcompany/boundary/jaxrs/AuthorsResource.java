@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -41,6 +43,8 @@ import javax.ws.rs.core.UriInfo;
 @Path("/authors")
 public class AuthorsResource {
 
+    private static final Logger LOG = Logger.getLogger(AuthorsResource.class.getName());
+
     @Inject
     AuthorRepository repo;
 
@@ -56,8 +60,13 @@ public class AuthorsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<@Valid AuthorModel> getAllAuthors() {
+
+        LOG.info("loading all authors");
+
         Collection<AuthorModel> models = new ArrayList<>();
         repo.findAll().stream().map(AuthorModel::new).forEach(models::add);
+
+        LOG.log(Level.INFO, "found authors:{0}", models);
 
         return models;
     }
@@ -66,7 +75,13 @@ public class AuthorsResource {
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAuthor(@PathParam("uuid") @NotNull @Pattern(regexp = AuthorModel.UUID_REGEX) String uuid) {
+
+        LOG.log(Level.INFO, "searching for author with uuid:{0}", uuid);
+
         Optional<Author> author = repo.find(UUID.fromString(uuid));
+
+        LOG.log(Level.INFO, "found author:{0}", author.orElse(null));
+
 
         if (author.isPresent()) {
             return Response.ok(new AuthorModel(author.get())).build();
@@ -77,6 +92,9 @@ public class AuthorsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAuthor(@NotNull @Valid AuthorModel model) {
+
+        LOG.log(Level.INFO, "creating author:{0}", model);
+
         AuthorFactory.WithPublicationBuilder builder = authorFactory.createAuthor(UUID.randomUUID()).firstname(model.firstname).lastname(model.lastname);
 
         model.blogPosts.stream().map(this::mapBlogPost).forEach(builder::addBlogPost);
@@ -88,8 +106,11 @@ public class AuthorsResource {
             UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
             uriBuilder.path(createdAuthor.getId().toString());
 
+            LOG.log(Level.INFO, "author created with uuid:{0}", createdAuthor.getId());
+
             return Response.created(uriBuilder.build()).build();
         } catch (AuthorAlreadyCreated alreadyThere) {
+            LOG.log(Level.WARNING, "author already exists");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -98,12 +119,19 @@ public class AuthorsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     public Response updateBook(@PathParam("uuid") String authorId, @PathParam("isbn") String isbn, BookModel book) {
+
+        LOG.log(Level.INFO, "updating book => authorId: {0}; isbn: {1}; new book-data: {2}", new String[]{authorId, isbn, book.toString()});
+
         UpdateBookRequest request = new UpdateBookRequest(authorId, isbn, book.price, book.currency);
 
         try {
             bookService.changeBookPrice(request);
+
+            LOG.log(Level.INFO, "update done");
+
             return Response.ok().build();
         } catch (AuthorNotFound | BookNotFound nf) {
+            LOG.log(Level.WARNING, "book or author not found:{0}", nf);
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -114,7 +142,12 @@ public class AuthorsResource {
     public Response getBook(
             @PathParam("uuid") @NotNull @Pattern(regexp = AuthorModel.UUID_REGEX) String authorId,
             @PathParam("isbn") @NotNull @NotBlank @Size(min = 13, max = 13) String isbn) {
+
+        LOG.log(Level.INFO, "searching book => authorId: {0}; isbn: {1}", new String[]{authorId, isbn});
+
         Optional<Book> book = repo.find(UUID.fromString(authorId)).flatMap(author -> author.getBook(new ISBN(isbn)));
+
+        LOG.log(Level.INFO, "book:{0}", book.orElse(null));
 
         if (book.isPresent()) {
             return Response.ok(new BookModel(book.get())).build();
