@@ -31,7 +31,7 @@ public class CorrectTechnologyUsageInBoundaryTest {
                     "javax.enterprise..",
                     "javax.inject..",
                     "javax.ws.rs..",
-                    "org.kore.blueprint.publishingcompany.boundary.jaxrs..",
+                    "..jaxrs..",
                     "org.kore.blueprint.publishingcompany.control..",
                     "org.kore.blueprint.publishingcompany.entity..");
 

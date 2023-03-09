@@ -44,6 +44,6 @@ public class CleanArchitectureTest {
 
     @ArchTest
     static final ArchRule jaxrsresources_must_reside_in_a_jaxrs_package
-            = classes().that().areAnnotatedWith(Path.class).should().resideInAPackage("..boundary.jaxrs..")
+            = classes().that().areAnnotatedWith(Path.class).should().resideInAPackage("..jaxrs..")
                     .as("JAX RS Resources should reside in a package '..jaxrs..'");
 }
