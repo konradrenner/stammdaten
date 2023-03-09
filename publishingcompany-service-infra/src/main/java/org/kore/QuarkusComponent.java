@@ -123,7 +123,7 @@ public class QuarkusComponent extends Construct{
             .ports(containerPorts)
             .livenessProbe(livenessProbe)
                 .readinessProbe(readyProbe)
-                .env(List.of(otelEndpoint))
+                .env(List.of(otelEndpoint, currencyServiceEndpoint))
                 .build();
         containers.add(container);
         final PodSpec podSpec = new PodSpec.Builder()
