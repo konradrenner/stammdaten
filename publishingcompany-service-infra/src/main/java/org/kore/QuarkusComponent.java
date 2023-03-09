@@ -100,7 +100,12 @@ public class QuarkusComponent extends Construct{
 
         EnvVar otelEndpoint = new EnvVar.Builder()
                 .name("QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT")
-                .value("http://10.244.0.16:4317")
+                .value("http://my-release-signoz-otel-collector.platform.svc.cluster.local:4317")
+                .build();
+
+        EnvVar currencyServiceEndpoint = new EnvVar.Builder()
+                .name("QUARKUS_REST-CLIENT_CURRENCY-SERVICE-API_URL")
+                .value("http://currency-service.default.svc.cluster.local")
                 .build();
 
         
