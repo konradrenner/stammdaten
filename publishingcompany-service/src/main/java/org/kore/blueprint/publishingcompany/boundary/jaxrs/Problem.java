@@ -8,9 +8,9 @@ import java.util.Collections;
  *
  * @author koni
  */
-public record ClientProblem(String type, String title, int status, String detail, String instance, TraceContext traceContext, Collection<InvalidParam> invalidParams) {
+public record Problem(String type, String title, int status, String detail, String instance, TraceContext traceContext, Collection<InvalidParam> invalidParams) {
 
-    public ClientProblem(String title, int status, String detail, String instance, TraceContext traceContext) {
+    public Problem(String title, int status, String detail, String instance, TraceContext traceContext) {
         this("about:blank", title, status, detail, instance, traceContext, Collections.emptyList());
     }
 

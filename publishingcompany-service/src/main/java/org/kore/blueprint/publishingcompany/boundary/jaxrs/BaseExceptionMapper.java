@@ -13,7 +13,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  *
  * @author koni
  */
-abstract class BaseExceptionMapper<T extends Exception> implements ExceptionMapper<T> {
+abstract class BaseExceptionMapper<T extends Throwable> implements ExceptionMapper<T> {
 
     private static final Logger LOG = Logger.getLogger(BaseExceptionMapper.class.getName());
     private static final String RESPONSE_TYPE = "application/problem+json";
@@ -26,7 +26,7 @@ abstract class BaseExceptionMapper<T extends Exception> implements ExceptionMapp
 
         LOG.log(Level.SEVERE, "A problem occured, so that the request cannot be fulfilled:{0}", e.getMessage());
 
-        ClientProblem problemData = createClientProblem(e);
+        Problem problemData = createClientProblem(e);
 
         LOG.log(Level.INFO, "created problem data:{0}", problemData);
 
@@ -36,24 +36,24 @@ abstract class BaseExceptionMapper<T extends Exception> implements ExceptionMapp
                 .build();
     }
 
-    ClientProblem createClientProblem(T exception) {
-        return new ClientProblem("Error caused by client",
+    Problem createClientProblem(T exception) {
+        return new Problem("The server failed to fulfill the request",
                 getStatusCode(),
-                "The request contains bad syntax or cannot be fulfilled",
+                "An unexpected condition was encoutered",
                 info.getPath(),
                 getTraceContext());
     }
 
     int getStatusCode() {
-        return Response.Status.BAD_REQUEST.getStatusCode();
+        return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
     }
 
-    final ClientProblem.TraceContext getTraceContext() {
+    final Problem.TraceContext getTraceContext() {
         Span span = Span.current();
 
         SpanContext spanContext = span.getSpanContext();
 
-        return new ClientProblem.TraceContext(spanContext.getTraceId(), spanContext.getSpanId());
+        return new Problem.TraceContext(spanContext.getTraceId(), spanContext.getSpanId());
     }
 
     final UriInfo getUriInfo() {

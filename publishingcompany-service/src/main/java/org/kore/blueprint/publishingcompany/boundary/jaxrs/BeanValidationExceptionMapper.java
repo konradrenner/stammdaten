@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
@@ -23,7 +24,13 @@ public class BeanValidationExceptionMapper extends BaseExceptionMapper<Constrain
     private static final String PROBLEM_TYPE = "validation-problem";
 
     @Override
-    ClientProblem createClientProblem(ConstraintViolationException exception) {
+    int getStatusCode() {
+        return Response.Status.BAD_REQUEST.getStatusCode();
+    }
+
+
+    @Override
+    Problem createClientProblem(ConstraintViolationException exception) {
 
         LOG.log(Level.SEVERE, "ConstraintViolationException occured:{0}", exception.getMessage());
 
@@ -33,17 +40,17 @@ public class BeanValidationExceptionMapper extends BaseExceptionMapper<Constrain
 
         Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
 
-        Collection<ClientProblem.InvalidParam> invalidParams = new ArrayList<>(constraintViolations.size());
+        Collection<Problem.InvalidParam> invalidParams = new ArrayList<>(constraintViolations.size());
 
         constraintViolations.stream().map(cv -> {
             String property = cv.getPropertyPath().toString();
             String invalidValue = Optional.ofNullable(cv.getInvalidValue()).map(value -> value.toString()).orElse(null);
             String reason = cv.getMessage();
 
-            return new ClientProblem.InvalidParam(property, reason, invalidValue);
+            return new Problem.InvalidParam(property, reason, invalidValue);
         }).forEachOrdered(invalid -> invalidParams.add(invalid));
 
-        return new ClientProblem(type,
+        return new Problem(type,
                 "Validation problems occured",
                 getStatusCode(),
                 "Request, query or body parameters did not validate",
