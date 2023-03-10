@@ -103,14 +103,19 @@ public class AuthorsResourceIT {
     public void testCreateIncorrectTestauthorEndpoint() throws Exception {
         AuthorModel createTestdata = createTestdata();
         createTestdata.firstname = null;
+        createTestdata.lastname = " ";
 
         given().contentType(ContentType.JSON)
                 .body(createTestdata)
                 .when()
                 .post("/authors")
                 .then()
+                .log()
+                .body()
                 .assertThat()
-                .statusCode(400);
+                .statusCode(400)
+                .header("Content-Type", "application/problem+json")
+                .body(containsString("/validation-problem"));
     }
 
     AuthorModel createTestdata() throws MalformedURLException {
