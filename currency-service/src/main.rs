@@ -1,4 +1,6 @@
 use serde::{Serialize};
+use rocket::response::content;
+use serde_json::json;
 
 #[macro_use] extern crate rocket;
 
@@ -10,7 +12,7 @@ struct ConversionRate {
 }
 
 #[get("/conversion-rates?<fromCurrency>&<toCurrency>")]
-fn conversionRates(fromCurrency: &str, toCurrency: &str) -> String {
+fn conversionRates(fromCurrency: &str, toCurrency: &str) -> content::RawJson<String> {
     let mut rateValue = 0.8;
 
     let loweredFrom = fromCurrency.to_uppercase();
@@ -26,7 +28,9 @@ fn conversionRates(fromCurrency: &str, toCurrency: &str) -> String {
         conversionRate: rateValue,
     };
 
-    serde_json::to_string(&cRate).unwrap()
+    let json = serde_json::to_string(&cRate).unwrap();
+
+    content::RawJson(json)
 }
 
 

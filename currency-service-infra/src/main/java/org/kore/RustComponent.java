@@ -55,6 +55,10 @@ public class RustComponent extends Construct{
 
         // Defining a LoadBalancer Service
 //        final String serviceType = "LoadBalancer";
+        ObjectMeta serviceMetadata = new ObjectMeta.Builder()
+                .name(name)
+                .build();
+
         final Map<String, String> selector = new HashMap<>();
         selector.put("app", name);
         final List<ServicePort> servicePorts = new ArrayList<>();
@@ -66,11 +70,12 @@ public class RustComponent extends Construct{
         final ServiceSpec serviceSpec = new ServiceSpec.Builder()
 //            .type(serviceType)
             .selector(selector)
-            .ports(servicePorts)
-            .build();
+                .ports(servicePorts)
+                .build();
         final KubeServiceProps serviceProps = new KubeServiceProps.Builder()
-            .spec(serviceSpec)
-            .build();
+                .spec(serviceSpec)
+                .metadata(serviceMetadata)
+                .build();
 
         KubeService kubeService = new KubeService(this, "service", serviceProps);
 

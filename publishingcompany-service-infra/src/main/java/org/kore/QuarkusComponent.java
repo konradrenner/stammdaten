@@ -56,6 +56,10 @@ public class QuarkusComponent extends Construct{
 
         // Defining a LoadBalancer Service
 //        final String serviceType = "LoadBalancer";
+        ObjectMeta serviceMetadata = new ObjectMeta.Builder()
+                .name(name)
+                .build();
+
         final Map<String, String> selector = new HashMap<>();
         selector.put("app", name);
         final List<ServicePort> servicePorts = new ArrayList<>();
@@ -70,8 +74,9 @@ public class QuarkusComponent extends Construct{
             .ports(servicePorts)
             .build();
         final KubeServiceProps serviceProps = new KubeServiceProps.Builder()
-            .spec(serviceSpec)
-            .build();
+                .spec(serviceSpec)
+                .metadata(serviceMetadata)
+                .build();
 
         KubeService kubeService = new KubeService(this, "service", serviceProps);
 
@@ -99,13 +104,13 @@ public class QuarkusComponent extends Construct{
                 .build();
 
         EnvVar otelEndpoint = new EnvVar.Builder()
-                .name("QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT")
+                .name("OPENTELEMETRY_TRACER_EXPORTER_ENDPOINT")
                 .value("http://my-release-signoz-otel-collector.platform.svc.cluster.local:4317")
                 .build();
 
         EnvVar currencyServiceEndpoint = new EnvVar.Builder()
-                .name("QUARKUS_REST-CLIENT_CURRENCY-SERVICE-API_URL")
-                .value("http://currency-service.default.svc.cluster.local")
+                .name("CURRENCY_SERVICE_API_MP_REST_URL")
+                .value("http://currency-service")
                 .build();
 
         
