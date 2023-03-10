@@ -118,7 +118,7 @@ public class AuthorsResource {
     @Path("/{uuid}/books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
-    public Response updateBook(@PathParam("uuid") String authorId, @PathParam("isbn") String isbn, @NotNull BookModel book) {
+    public Response updateBook(@PathParam("uuid") String authorId, @PathParam("isbn") String isbn, @Valid @NotNull BookModel book) {
 
         LOG.log(Level.INFO, "updating book => authorId: {0}; isbn: {1}; new book-data: {2}", new String[]{authorId, isbn, book.toString()});
 

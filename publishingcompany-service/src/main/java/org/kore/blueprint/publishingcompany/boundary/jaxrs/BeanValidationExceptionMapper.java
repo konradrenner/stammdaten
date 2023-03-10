@@ -1,15 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.kore.blueprint.publishingcompany.boundary.jaxrs;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.UriInfo;
@@ -20,12 +16,17 @@ import javax.ws.rs.ext.Provider;
  * @author koni
  */
 @Provider
-public class BeanValidationExceptionMapper extends DefaultExceptionMapper<ConstraintViolationException> {
+public class BeanValidationExceptionMapper extends BaseExceptionMapper<ConstraintViolationException> {
+
+    private static final Logger LOG = Logger.getLogger(BeanValidationExceptionMapper.class.getName());
 
     private static final String PROBLEM_TYPE = "validation-problem";
 
     @Override
     ClientProblem createClientProblem(ConstraintViolationException exception) {
+
+        LOG.log(Level.SEVERE, "ConstraintViolationException occured:{0}", exception.getMessage());
+
         UriInfo uriInfo = getUriInfo();
 
         String type = uriInfo.getBaseUriBuilder().path(PROBLEM_TYPE).build().toString();

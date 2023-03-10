@@ -140,6 +140,7 @@ public class AuthorsResourceIT {
         book.isbn = "7893865801929";
         book.description = "Hallo Welt!";
         book.title = "Hallo";
+        book.pages = 1;
         book.publishingDate = LocalDateTime.now();
         book.price = new BigDecimal("10.00");
         book.currency = Currency.GCRDT.name();
