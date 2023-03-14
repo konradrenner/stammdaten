@@ -4,38 +4,38 @@
  */
 package org.kore.k8s.services.infra;
 
+import imports.k8s.Container;
+import imports.k8s.ContainerPort;
+import imports.k8s.DeploymentSpec;
+import imports.k8s.EnvVar;
+import imports.k8s.HttpGetAction;
+import imports.k8s.HttpIngressPath;
+import imports.k8s.HttpIngressRuleValue;
+import imports.k8s.IngressBackend;
+import imports.k8s.IngressRule;
+import imports.k8s.IngressServiceBackend;
+import imports.k8s.IngressSpec;
+import imports.k8s.IntOrString;
+import imports.k8s.KubeDeployment;
+import imports.k8s.KubeDeploymentProps;
+import imports.k8s.KubeIngress;
+import imports.k8s.KubeIngressProps;
+import imports.k8s.KubeService;
+import imports.k8s.KubeServiceProps;
+import imports.k8s.LabelSelector;
+import imports.k8s.ObjectMeta;
+import imports.k8s.PodSpec;
+import imports.k8s.PodTemplateSpec;
+import imports.k8s.Probe;
+import imports.k8s.ServiceBackendPort;
+import imports.k8s.ServicePort;
+import imports.k8s.ServiceSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.cdk8s.plus25.k8s.Container;
-import org.cdk8s.plus25.k8s.ContainerPort;
-import org.cdk8s.plus25.k8s.DeploymentSpec;
-import org.cdk8s.plus25.k8s.EnvVar;
-import org.cdk8s.plus25.k8s.HttpGetAction;
-import org.cdk8s.plus25.k8s.HttpIngressPath;
-import org.cdk8s.plus25.k8s.HttpIngressRuleValue;
-import org.cdk8s.plus25.k8s.IngressBackend;
-import org.cdk8s.plus25.k8s.IngressRule;
-import org.cdk8s.plus25.k8s.IngressServiceBackend;
-import org.cdk8s.plus25.k8s.IngressSpec;
-import org.cdk8s.plus25.k8s.IntOrString;
-import org.cdk8s.plus25.k8s.KubeDeployment;
-import org.cdk8s.plus25.k8s.KubeDeploymentProps;
-import org.cdk8s.plus25.k8s.KubeIngress;
-import org.cdk8s.plus25.k8s.KubeIngressProps;
-import org.cdk8s.plus25.k8s.KubeService;
-import org.cdk8s.plus25.k8s.KubeServiceProps;
-import org.cdk8s.plus25.k8s.LabelSelector;
-import org.cdk8s.plus25.k8s.ObjectMeta;
-import org.cdk8s.plus25.k8s.PodSpec;
-import org.cdk8s.plus25.k8s.PodTemplateSpec;
-import org.cdk8s.plus25.k8s.Probe;
-import org.cdk8s.plus25.k8s.ServiceBackendPort;
-import org.cdk8s.plus25.k8s.ServicePort;
-import org.cdk8s.plus25.k8s.ServiceSpec;
 import software.constructs.Construct;
 
 /**
@@ -60,7 +60,7 @@ public class WebServiceConstruct extends Construct {
 
     public static interface WithContainerImage {
 
-        Builder WithContainerImage(String image);
+        Builder withContainerImage(String image);
     }
 
     public static interface Builder {
@@ -75,7 +75,11 @@ public class WebServiceConstruct extends Construct {
 
         Builder withReplicas(int replicas);
 
-        void register();
+        Builder withPortNumber(int port);
+
+        Builder withContainerPortNumber(int port);
+
+        void addToChart();
     }
 
     public class WebServiceConstructBuilder implements WithName, WithContainerImage, Builder {
@@ -103,7 +107,7 @@ public class WebServiceConstruct extends Construct {
         }
 
         @Override
-        public Builder WithContainerImage(String image) {
+        public Builder withContainerImage(String image) {
             Objects.requireNonNull(image);
             this.image = image;
             return this;
@@ -147,7 +151,26 @@ public class WebServiceConstruct extends Construct {
         }
 
         @Override
-        public void register() {
+        public Builder withPortNumber(int port) {
+            if (port <= 0) {
+                throw new IllegalArgumentException("port must be greater than 0");
+            }
+            this.portNumber = port;
+            return this;
+        }
+
+        @Override
+        public Builder withContainerPortNumber(int port) {
+            if (port <= 0) {
+                throw new IllegalArgumentException("container port must be greater than 0");
+            }
+            this.containerPortNumber = port;
+            return this;
+        }
+
+
+        @Override
+        public void addToChart() {
 // Defining a LoadBalancer Service
 //        final String serviceType = "LoadBalancer";
             ObjectMeta serviceMetadata = new ObjectMeta.Builder()
