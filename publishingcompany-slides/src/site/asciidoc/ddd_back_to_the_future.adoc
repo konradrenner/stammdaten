@@ -76,6 +76,7 @@ image::ddd_overview.png[scaledwidth=100%]
 * *Tactical Design*
 ** Model within a Bounded Context
 ** Aggregates not just encapsulate, they are also important for consistency
+*** Aggregates map nicely to the concept of entities as described in the position paper link:https://www.ics.uci.edu/~cs223/papers/cidr07p15.pdf[Life beyond distributed transactions]
 * _Examples for technical communication possibilities will come in the next slides!_
 --
 
@@ -114,6 +115,7 @@ image::monolith.jpg[]
 ** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 ** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
+** But of course solving many security problems (e.g. Zero Trust with mTLS) and link:https://devopscon.io/blog/service-mesh-vs-framework-resilience-in-distributed-systems-with-istio-or-hystrix/[resilience problems] on the infrastructure layer
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
 ** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
