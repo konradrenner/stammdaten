@@ -111,11 +111,12 @@ image::monolith.jpg[]
 *** The much more important type of complexity is global complexity (the complexity of the whole system) because it has a much higher impact on different non-functional requirements on the whole system, than one part ot the whole system
 *** It's less about black and white thinking (monolith vs microservice) and more about creating a balance
 * In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
+** If you are faced with the need of distributed transactions, there is already a great comparison about link:https://developers.redhat.com/articles/2021/09/21/distributed-transaction-patterns-microservices-compared[different distributed transaction patterns]
 ** As stated above: too high global complexity is worse then local complexity
 ** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 ** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
-* Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
-** But of course solving many security problems (e.g. Zero Trust with mTLS) and link:https://devopscon.io/blog/service-mesh-vs-framework-resilience-in-distributed-systems-with-istio-or-hystrix/[resilience problems] on the infrastructure layer
+* Service Mesh Tooling (e.g. Istio, Linkerd, Consul) and similar solutions are often only symptom treatments, but do not solve the problems at the cause
+** But of course Service Mesh Tooling can solve many security problems (e.g. Zero Trust with mTLS) and link:https://devopscon.io/blog/service-mesh-vs-framework-resilience-in-distributed-systems-with-istio-or-hystrix/[resilience problems] on the infrastructure layer
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
 ** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
