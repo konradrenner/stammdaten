@@ -9,17 +9,19 @@ import org.kore.blueprint.publishingcompany.entity.author.Publication;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 /**
  * Vorteil wenn JPA und Domain Entitaeten entkoppelt sind:
@@ -42,7 +44,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "publication")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "publicationtype")
+@DiscriminatorColumn(name = "publicationtype", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("null")
 public abstract class PersistentPublication implements Serializable {
 
     @Id

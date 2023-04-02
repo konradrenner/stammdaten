@@ -27,10 +27,10 @@ public class CorrectTechnologyUsageInBoundaryTest {
             .should()
             .onlyAccessClassesThat()
             .resideInAnyPackage("java..",
-                    "javax.validation..",
-                    "javax.enterprise..",
-                    "javax.inject..",
-                    "javax.ws.rs..",
+                    "jakarta.validation..",
+                    "jakarta.enterprise..",
+                    "jakarta.inject..",
+                    "jakarta.ws.rs..",
                     "io.opentelemetry.api..",
                     "..jaxrs..",
                     "org.kore.blueprint.publishingcompany.control..",
@@ -42,11 +42,11 @@ public class CorrectTechnologyUsageInBoundaryTest {
             .should()
             .onlyAccessClassesThat()
             .resideInAnyPackage("java..",
-                    "javax.validation..",
-                    "javax.enterprise..",
-                    "javax.inject..",
-                    "javax.persistence..",
-                    "javax.transaction..",
+                    "jakarta.validation..",
+                    "jakarta.enterprise..",
+                    "jakarta.inject..",
+                    "jakarta.persistence..",
+                    "jakarta.transaction..",
                     "org.kore.blueprint.publishingcompany.boundary.jpa..",
                     "org.kore.blueprint.publishingcompany.control..",
                     "org.kore.blueprint.publishingcompany.entity..");

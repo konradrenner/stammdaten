@@ -25,5 +25,5 @@ public class TechnologyFreeDomainTest {
     ArchRule domain_objects_must_use_plain_java_or_bean_validation = classes()
             .should()
             .onlyAccessClassesThat()
-            .resideInAnyPackage("java..", "javax.validation..", "org.kore.blueprint.publishingcompany.entity..");
+            .resideInAnyPackage("java..", "jakarta.validation..", "org.kore.blueprint.publishingcompany.entity..");
 }

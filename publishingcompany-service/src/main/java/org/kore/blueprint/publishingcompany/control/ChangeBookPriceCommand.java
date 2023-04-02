@@ -8,8 +8,8 @@ package org.kore.blueprint.publishingcompany.control;
 import org.kore.blueprint.publishingcompany.entity.author.ISBN;
 import org.kore.blueprint.publishingcompany.entity.author.Price;
 import java.util.UUID;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *

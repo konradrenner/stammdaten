@@ -13,12 +13,11 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>2.16.4.Final</quarkus.platform.version>
-        <quarkus-plugin.version>2.16.4.Final</quarkus-plugin.version>
-        <myfaces.version>2.3-next-M7</myfaces.version>
-        <compiler-plugin.version>3.8.1</compiler-plugin.version>
-        <surefire-plugin.version>2.22.1</surefire-plugin.version>
-        <failsafe-plugin.version>2.22.2</failsafe-plugin.version>
+        <quarkus.platform.version>3.0.0.CR1</quarkus.platform.version>
+        <myfaces.version>4.0.0</myfaces.version>
+        <compiler-plugin.version>3.11.0</compiler-plugin.version>
+        <surefire-plugin.version>3.0.0</surefire-plugin.version>
+        <failsafe-plugin.version>3.0.0</failsafe-plugin.version>
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.4</asciidoctorj.version>
         <asciidoctorj.pdf.version>2.1.6</asciidoctorj.pdf.version>
@@ -38,17 +37,15 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- switch back to ...-jsonb when this one is closed https://github.com/quarkusio/quarkus/issues/29225 -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jsonb</artifactId>
+            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
         </dependency>
+        <!-- switch back to ...-jsonb when this one is closed https://github.com/quarkusio/quarkus/issues/29225 -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client-jsonb</artifactId>
+            <artifactId>quarkus-rest-client-reactive-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -127,7 +124,7 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus-plugin.version}</version>
+                <version>${quarkus.platform.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>

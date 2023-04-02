@@ -5,8 +5,8 @@ import org.kore.blueprint.publishingcompany.boundary.externalservice.jaxrs.Curre
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.kore.blueprint.publishingcompany.control.CurrencyService;
 import org.kore.blueprint.publishingcompany.entity.author.Currency;

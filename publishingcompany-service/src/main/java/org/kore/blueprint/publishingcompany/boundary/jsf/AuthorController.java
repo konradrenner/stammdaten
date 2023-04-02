@@ -7,12 +7,12 @@ package org.kore.blueprint.publishingcompany.boundary.jsf;
 
 import org.kore.blueprint.publishingcompany.control.AuthorRepository;
 import org.kore.blueprint.publishingcompany.entity.author.Author;
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 /**
  *

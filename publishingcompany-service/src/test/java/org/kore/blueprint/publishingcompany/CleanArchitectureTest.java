@@ -11,9 +11,9 @@ import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.*;
 import com.tngtech.archunit.core.importer.ImportOption;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.ws.rs.Path;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.ws.rs.Path;
 
 /**
  *

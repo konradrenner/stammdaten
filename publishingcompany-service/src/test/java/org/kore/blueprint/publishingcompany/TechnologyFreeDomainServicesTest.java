@@ -26,9 +26,9 @@ public class TechnologyFreeDomainServicesTest {
             .should()
             .onlyAccessClassesThat()
             .resideInAnyPackage("java..",
-                    "javax.validation..",
-                    "javax.enterprise..",
-                    "javax.inject..",
+                    "jakarta.validation..",
+                    "jakarta.enterprise..",
+                    "jakarta.inject..",
                     "org.kore.blueprint.publishingcompany.control..",
                     "org.kore.blueprint.publishingcompany.entity..");
 }

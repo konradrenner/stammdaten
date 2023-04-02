@@ -7,8 +7,8 @@ package org.kore.blueprint.publishingcompany.control;
 
 import org.kore.blueprint.publishingcompany.entity.author.Currency;
 import java.math.BigDecimal;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *

@@ -1,8 +1,5 @@
 package org.kore.blueprint.publishingcompany.boundary.jaxrs;
 
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.BookModel;
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.AuthorModel;
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.BlogPostModel;
 import org.kore.blueprint.publishingcompany.entity.author.Currency;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
