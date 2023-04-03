@@ -39,6 +39,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
+import java.util.Collections;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 @Path("/authors")
 public class AuthorsResource {
@@ -57,6 +61,8 @@ public class AuthorsResource {
     @Context
     UriInfo uriInfo;
 
+    @Timeout(250)
+    @Fallback(fallbackMethod = "getEmptyAuthors")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<@Valid AuthorModel> getAllAuthors() {
@@ -71,6 +77,12 @@ public class AuthorsResource {
         return models;
     }
 
+    public Collection<@Valid AuthorModel> getEmptyAuthors() {
+        return Collections.emptyList();
+    }
+
+    @Timeout(150)
+    @Retry(maxRetries = 2)
     @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -89,6 +101,7 @@ public class AuthorsResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @Timeout(200)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAuthor(@NotNull @Valid AuthorModel model) {
@@ -115,6 +128,7 @@ public class AuthorsResource {
         }
     }
 
+    @Timeout(200)
     @Path("/{uuid}/books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
@@ -136,6 +150,8 @@ public class AuthorsResource {
         }
     }
 
+    @Timeout(100)
+    @Retry(maxRetries = 2)
     @GET
     @Path("/{uuid}/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
