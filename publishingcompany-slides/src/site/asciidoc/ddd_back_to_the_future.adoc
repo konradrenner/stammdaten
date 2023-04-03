@@ -9,12 +9,7 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 <<<<
 == Before we start
 
-"ROI is in differentiated strategic innovation, not in a deployable container." - Vaughn Vernon
-
-[NOTE.speaker]
---
-ROI liegt in differenzierter strategischer Innovation, nicht in einem deploybaren Container.
---
+_ROI is in differentiated strategic innovation, not in a deployable container_ - Vaughn Vernon
 
 <<<<
 == Domain Driven Design
@@ -331,7 +326,7 @@ image::code.jpg[]
 [NOTE.speaker]
 --
 * Disclaimer: The link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example] has just little todo with back to the future :-) (one book entry)
-* This example "lives", so it is in parts unfinished an will change from time to time
+* This example "lives", so it is in parts unfinished and will change from time to time
 * It demonstrates all of the tools discussed, except context mapping
 ** It just contains the "Author Aggregate" from the "Author Context" (1:1 mapping)
 * It consists of an Web UI (JSF), REST API and an Cross Compiled Mobile/Desktop Companion App
