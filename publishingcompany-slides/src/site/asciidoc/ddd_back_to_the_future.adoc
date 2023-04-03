@@ -13,7 +13,7 @@ _ROI is in differentiated strategic innovation, not in a deployable container_ -
 
 [NOTE.speaker]
 --
-This roi relates not only to financial aspects, but also to the maintainability and attractiveness of the system from a developer's point of view (no one likes to work on a dusty and/or messy code base/architecture, which means that it will deteriorate into an increasingly bad state if not adequately (timely) is intervened)
+This ROI relates not only to financial aspects, but also to the maintainability and attractiveness of the system from a developer's point of view (no one likes to work on a dusty and/or messy code base/architecture, which means that it will deteriorate into an increasingly bad state if not adequately (timely) is intervened)
 --
 
 <<<<
