@@ -7,6 +7,16 @@ ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
 
 <<<<
+== Before we start
+
+_ROI is in differentiated strategic innovation, not in a deployable container_ - Vaughn Vernon
+
+[NOTE.speaker]
+--
+This ROI relates not only to financial aspects, but also to the maintainability and attractiveness of the system from a developer's point of view (no one likes to work on a dusty and/or messy code base/architecture, which means that it will deteriorate into an increasingly bad state if not adequately (timely) is intervened)
+--
+
+<<<<
 == Domain Driven Design
 
 image::ddd.jpg[]
@@ -321,7 +331,7 @@ image::code.jpg[]
 [NOTE.speaker]
 --
 * Disclaimer: The link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example] has just little todo with back to the future :-) (one book entry)
-* This example "lives", so it is in parts unfinished an will change from time to time
+* This example "lives", so it is in parts unfinished and will change from time to time
 * It demonstrates all of the tools discussed, except context mapping
 ** It just contains the "Author Aggregate" from the "Author Context" (1:1 mapping)
 * It consists of an Web UI (JSF), REST API and an Cross Compiled Mobile/Desktop Companion App
