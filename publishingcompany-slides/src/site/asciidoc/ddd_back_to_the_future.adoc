@@ -349,6 +349,14 @@ image::code.jpg[]
 <<<<
 === Team Topologies
 
+[%step]
+* Each service must be fully owned by a team with sufficient cognitive capacity to build and operate it
+* *So*: Limit the size of services to the cognitive load that the team can handle
+* *Because*: Software that ist "too big for our heads" works against organizational agility
+
+<<<<
+=== Team Topologies
+
 image::team-topologies.png[]
 
 // Press the `*s*` key to access speaker notes.
