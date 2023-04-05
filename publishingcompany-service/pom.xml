@@ -13,7 +13,7 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>3.0.0.CR1</quarkus.platform.version>
+        <quarkus.platform.version>3.0.0.CR2</quarkus.platform.version>
         <myfaces.version>4.0.0</myfaces.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <surefire-plugin.version>3.0.0</surefire-plugin.version>
@@ -66,6 +66,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
