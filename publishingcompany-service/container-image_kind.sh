@@ -6,4 +6,4 @@ mvn -Dquarkus.container-image.build=true install
 
 echo "loading docker-image into kind"
 
-kind load docker-image kore/publishingcompany-service:1.0-SNAPSHOT
+kind load docker-image kore/publishingcompany-service:2.0-SNAPSHOT

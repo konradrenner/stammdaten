@@ -19,6 +19,9 @@
 FROM rust as builder
 WORKDIR /app
 COPY . .
+# required for otel
+RUN apt-get update
+RUN apt-get install -y protobuf-compiler
 RUN cargo build --release
 
 FROM rust as runtime
@@ -26,4 +29,6 @@ WORKDIR /app
 COPY --from=builder /app/target/release/currency-service .
 COPY --from=builder /app/Rocket.toml .
 EXPOSE 8000
+# ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+ENV OTEL_RESOURCE_ATTRIBUTES=service.name=currency-service
 CMD ["./currency-service"]

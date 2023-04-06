@@ -19,7 +19,7 @@ public class Main extends Chart
     public Main(final Construct scope, final String id, final ChartProps options) {
         super(scope, id, options);
 
-        final String image = System.getProperty("containerImage", "kore/publishingcompany-service:1.0-SNAPSHOT");
+        final String image = System.getProperty("containerImage", "kore/publishingcompany-service:2.0-SNAPSHOT");
         final String name = "publishingcompany-service";
         final String pathPrefix = "/authors";
 
