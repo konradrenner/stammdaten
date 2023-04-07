@@ -5,6 +5,8 @@ link:https://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisio
 
 Don't forget to add a section "Compliance", so that one can understand how it is checked that the decision will be complied (code snippet to link:https://www.archunit.org/[ArchUnit Tests], four-eyes principle threw pull requests, and so on).
 
+It can also be useful to list options that were considered in the decision-making process and why one option was chosen. However, care should be taken that the decision record is not overly inflated (possibly moved to a supplementary document)
+
 For further Information see https://docs.arc42.org/section-9/[Architecture Decisions] in the arc42 documentation.
 
 There you will find links and examples about ADR.

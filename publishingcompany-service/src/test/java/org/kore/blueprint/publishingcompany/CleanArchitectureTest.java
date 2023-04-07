@@ -11,9 +11,9 @@ import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.*;
 import com.tngtech.archunit.core.importer.ImportOption;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.ws.rs.Path;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.ws.rs.Path;
 
 /**
  *
@@ -44,6 +44,6 @@ public class CleanArchitectureTest {
 
     @ArchTest
     static final ArchRule jaxrsresources_must_reside_in_a_jaxrs_package
-            = classes().that().areAnnotatedWith(Path.class).should().resideInAPackage("..boundary.jaxrs..")
+            = classes().that().areAnnotatedWith(Path.class).should().resideInAPackage("..jaxrs..")
                     .as("JAX RS Resources should reside in a package '..jaxrs..'");
 }

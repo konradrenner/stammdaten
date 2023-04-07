@@ -5,6 +5,7 @@
  */
 package org.kore.blueprint.publishingcompany.boundary.jpa;
 
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.kore.blueprint.publishingcompany.control.AuthorRepository;
 import org.kore.blueprint.publishingcompany.entity.author.Author;
 import org.kore.blueprint.publishingcompany.entity.author.AuthorFactory;
@@ -22,11 +23,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 /**
  *
@@ -34,6 +37,8 @@ import javax.transaction.Transactional;
  */
 @Dependent
 public class AuthorRepositoryJPAAdapter implements AuthorRepository {
+
+    private static final Logger LOG = Logger.getLogger(AuthorRepositoryJPAAdapter.class.getName());
 
     @Inject
     EntityManager entityManager;
@@ -55,12 +60,17 @@ public class AuthorRepositoryJPAAdapter implements AuthorRepository {
 
     @Override
     public Optional<Author> find(UUID id) {
+        LOG.log(Level.INFO, "searching author:{0}", id);
+
         return loadPersistentAuthor(id).map(this::mapAuthor);
     }
 
     @Override
     @Transactional
+    @WithSpan
     public Author insert(Author author) {
+        LOG.log(Level.INFO, "inserting author:{0}", author);
+
         PersistentAuthor newone = new PersistentAuthor();
         newone.mapFrom(author);
 
@@ -74,7 +84,10 @@ public class AuthorRepositoryJPAAdapter implements AuthorRepository {
 
     @Override
     @Transactional
+    @WithSpan
     public Optional<Author> update(Author origin) {
+        LOG.log(Level.INFO, "updating author:{0}", origin);
+
         Optional<PersistentAuthor> persistentAuthor = loadPersistentAuthor(origin.getId())
                 .map(author -> author.mapFrom(origin))
                 .map(entityManager::merge);

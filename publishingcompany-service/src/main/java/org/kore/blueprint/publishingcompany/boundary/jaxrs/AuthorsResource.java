@@ -19,27 +19,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
+import java.util.Collections;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 @Path("/authors")
 public class AuthorsResource {
+
+    private static final Logger LOG = Logger.getLogger(AuthorsResource.class.getName());
 
     @Inject
     AuthorRepository repo;
@@ -53,20 +61,39 @@ public class AuthorsResource {
     @Context
     UriInfo uriInfo;
 
+    @Timeout(250)
+    @Fallback(fallbackMethod = "getEmptyAuthors")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<@Valid AuthorModel> getAllAuthors() {
+
+        LOG.info("loading all authors");
+
         Collection<AuthorModel> models = new ArrayList<>();
         repo.findAll().stream().map(AuthorModel::new).forEach(models::add);
+
+        LOG.log(Level.INFO, "found authors:{0}", models);
 
         return models;
     }
 
+    public Collection<@Valid AuthorModel> getEmptyAuthors() {
+        return Collections.emptyList();
+    }
+
+    @Timeout(150)
+    @Retry(maxRetries = 2)
     @GET
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAuthor(@PathParam("uuid") @NotNull @Pattern(regexp = AuthorModel.UUID_REGEX) String uuid) {
+
+        LOG.log(Level.INFO, "searching for author with uuid:{0}", uuid);
+
         Optional<Author> author = repo.find(UUID.fromString(uuid));
+
+        LOG.log(Level.INFO, "found author:{0}", author.orElse(null));
+
 
         if (author.isPresent()) {
             return Response.ok(new AuthorModel(author.get())).build();
@@ -74,9 +101,13 @@ public class AuthorsResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @Timeout(200)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAuthor(@NotNull @Valid AuthorModel model) {
+
+        LOG.log(Level.INFO, "creating author:{0}", model);
+
         AuthorFactory.WithPublicationBuilder builder = authorFactory.createAuthor(UUID.randomUUID()).firstname(model.firstname).lastname(model.lastname);
 
         model.blogPosts.stream().map(this::mapBlogPost).forEach(builder::addBlogPost);
@@ -88,33 +119,51 @@ public class AuthorsResource {
             UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
             uriBuilder.path(createdAuthor.getId().toString());
 
+            LOG.log(Level.INFO, "author created with uuid:{0}", createdAuthor.getId());
+
             return Response.created(uriBuilder.build()).build();
         } catch (AuthorAlreadyCreated alreadyThere) {
+            LOG.log(Level.WARNING, "author already exists");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
+    @Timeout(200)
     @Path("/{uuid}/books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
-    public Response updateBook(@PathParam("uuid") String authorId, @PathParam("isbn") String isbn, BookModel book) {
+    public Response updateBook(@PathParam("uuid") String authorId, @PathParam("isbn") String isbn, @Valid @NotNull BookModel book) {
+
+        LOG.log(Level.INFO, "updating book => authorId: {0}; isbn: {1}; new book-data: {2}", new String[]{authorId, isbn, book.toString()});
+
         UpdateBookRequest request = new UpdateBookRequest(authorId, isbn, book.price, book.currency);
 
         try {
             bookService.changeBookPrice(request);
+
+            LOG.log(Level.INFO, "update done");
+
             return Response.ok().build();
         } catch (AuthorNotFound | BookNotFound nf) {
+            LOG.log(Level.WARNING, "book or author not found:{0}", nf);
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
+    @Timeout(100)
+    @Retry(maxRetries = 2)
     @GET
     @Path("/{uuid}/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(
             @PathParam("uuid") @NotNull @Pattern(regexp = AuthorModel.UUID_REGEX) String authorId,
             @PathParam("isbn") @NotNull @NotBlank @Size(min = 13, max = 13) String isbn) {
+
+        LOG.log(Level.INFO, "searching book => authorId: {0}; isbn: {1}", new String[]{authorId, isbn});
+
         Optional<Book> book = repo.find(UUID.fromString(authorId)).flatMap(author -> author.getBook(new ISBN(isbn)));
+
+        LOG.log(Level.INFO, "book:{0}", book.orElse(null));
 
         if (book.isPresent()) {
             return Response.ok(new BookModel(book.get())).build();
@@ -123,7 +172,7 @@ public class AuthorsResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    class UpdateBookRequest implements ChangeBookPriceCommand {
+    static class UpdateBookRequest implements ChangeBookPriceCommand {
 
         private final UUID authorId;
         private final ISBN isbn;

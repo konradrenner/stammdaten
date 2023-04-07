@@ -7,6 +7,16 @@ ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
 
 <<<<
+== Before we start
+
+_ROI is in differentiated strategic innovation, not in a deployable container_ - Vaughn Vernon
+
+[NOTE.speaker]
+--
+This ROI relates not only to financial aspects, but also to the maintainability and attractiveness of the system from a developer's point of view (no one likes to work on a dusty and/or messy code base/architecture, which means that it will deteriorate into an increasingly bad state if not adequately (timely) is intervened)
+--
+
+<<<<
 == Domain Driven Design
 
 image::ddd.jpg[]
@@ -16,7 +26,11 @@ image::ddd.jpg[]
 
 [%step]
 * Speaker of the day: *Konrad Renner*
+<<<<<<< HEAD
 * Profession: *Software Architect*
+=======
+* Profession: *Software Architecture*
+>>>>>>> 87145b75c7e096c9e1169b54729017bb8a1e3c85
 * Some personal things: *Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ* enthusiast
 * Direct link to digital life: *link:github.com/konradrenner[GitHub - konradrenner]*
 
@@ -76,6 +90,7 @@ image::ddd_overview.png[scaledwidth=100%]
 * *Tactical Design*
 ** Model within a Bounded Context
 ** Aggregates not just encapsulate, they are also important for consistency
+*** Aggregates map nicely to the concept of entities as described in the position paper link:https://www.ics.uci.edu/~cs223/papers/cidr07p15.pdf[Life beyond distributed transactions]
 * _Examples for technical communication possibilities will come in the next slides!_
 --
 
@@ -104,10 +119,25 @@ image::monolith.jpg[]
 [NOTE.speaker]
 --
 * Because *inappropriate cut Microservices can lead to unnecessary or even dangerous remote communication*
+<<<<<<< HEAD
 * In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
 ** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
 ** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
+=======
+* One might think that the "smaller" a microservice is, the less complex it is
+** This is true for the local complexity of this specific microservice, but it is not true for the whole system
+** The smaller a microservice is cut, the more communication with other services is necessary and this in turn increases the complexity of the overall system
+*** The much more important type of complexity is global complexity (the complexity of the whole system) because it has a much higher impact on different non-functional requirements on the whole system, than one part ot the whole system
+*** It's less about black and white thinking (monolith vs microservice) and more about creating a balance
+* In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
+** If you are faced with the need of distributed transactions, there is already a great comparison about link:https://developers.redhat.com/articles/2021/09/21/distributed-transaction-patterns-microservices-compared[different distributed transaction patterns]
+** As stated above: too high global complexity is worse then local complexity
+** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
+** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
+* Service Mesh Tooling (e.g. Istio, Linkerd, Consul) and similar solutions are often only symptom treatments, but do not solve the problems at the cause
+** But of course Service Mesh Tooling can solve many security problems (e.g. Zero Trust with mTLS) and link:https://devopscon.io/blog/service-mesh-vs-framework-resilience-in-distributed-systems-with-istio-or-hystrix/[resilience problems] on the infrastructure layer
+>>>>>>> 87145b75c7e096c9e1169b54729017bb8a1e3c85
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
 ** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
@@ -312,7 +342,7 @@ image::code.jpg[]
 [NOTE.speaker]
 --
 * Disclaimer: The link:https://github.com/konradrenner/stammdaten/blob/master/README.adoc[publishing-company example] has just little todo with back to the future :-) (one book entry)
-* This example "lives", so it is in parts unfinished an will change from time to time
+* This example "lives", so it is in parts unfinished and will change from time to time
 * It demonstrates all of the tools discussed, except context mapping
 ** It just contains the "Author Aggregate" from the "Author Context" (1:1 mapping)
 * It consists of an Web UI (JSF), REST API and an Cross Compiled Mobile/Desktop Companion App
@@ -326,6 +356,14 @@ image::code.jpg[]
 * Have a look at link:https://teamtopologies.com/[Team Topologies]
 ** Approach to modern software delivery with awareness of
 *** Conway’s Law, team cognitive load and responsive organization evolution
+
+<<<<
+=== Team Topologies
+
+[%step]
+* Each service must be fully owned by a team with sufficient cognitive capacity to build and operate it
+* *So*: Limit the size of services to the cognitive load that the team can handle
+* *Because*: Software that ist "too big for our heads" works against organizational agility
 
 <<<<
 === Team Topologies

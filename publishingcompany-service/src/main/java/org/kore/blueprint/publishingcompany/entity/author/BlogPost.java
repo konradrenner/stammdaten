@@ -8,7 +8,7 @@ package org.kore.blueprint.publishingcompany.entity.author;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *

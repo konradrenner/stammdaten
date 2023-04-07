@@ -1,8 +1,5 @@
 package org.kore.blueprint.publishingcompany.boundary.jaxrs;
 
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.BookModel;
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.AuthorModel;
-import org.kore.blueprint.publishingcompany.boundary.jaxrs.BlogPostModel;
 import org.kore.blueprint.publishingcompany.entity.author.Currency;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
@@ -103,14 +100,19 @@ public class AuthorsResourceIT {
     public void testCreateIncorrectTestauthorEndpoint() throws Exception {
         AuthorModel createTestdata = createTestdata();
         createTestdata.firstname = null;
+        createTestdata.lastname = " ";
 
         given().contentType(ContentType.JSON)
                 .body(createTestdata)
                 .when()
                 .post("/authors")
                 .then()
+                .log()
+                .body()
                 .assertThat()
-                .statusCode(400);
+                .statusCode(400)
+                .header("Content-Type", "application/problem+json")
+                .body(containsString("/validation-problem"));
     }
 
     AuthorModel createTestdata() throws MalformedURLException {
@@ -135,6 +137,7 @@ public class AuthorsResourceIT {
         book.isbn = "7893865801929";
         book.description = "Hallo Welt!";
         book.title = "Hallo";
+        book.pages = 1;
         book.publishingDate = LocalDateTime.now();
         book.price = new BigDecimal("10.00");
         book.currency = Currency.GCRDT.name();

@@ -1,6 +1,6 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
-In addition to risks and technical debts, it is also possible  to list security threats which are taken into account. But when you do this, be careful with the visibility of the document because it could be a security threat when some people know what defense strategties you are using.
+In addition to risks and technical debts, it is also possible  to list security threats which are taken into account. But when you do this, be careful with the visibility of the document because it could be a security threat when some people know what defense strategties you are using. No matter how, it is of enormous importance to make security a part of product development. Have a look at the link:https://pbom.dev/[Open Software Supply Chain Attack Reference] to have an overview on many different topics in the security context.
 
 For further Information see https://docs.arc42.org/section-11/[Risks and Technical Debt] in the arc42 documentation.

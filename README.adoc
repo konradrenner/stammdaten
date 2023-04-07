@@ -25,3 +25,9 @@ All 3 concepts mentioned complement each other perfectly, for the combination of
 Shown schematically, the application is structured as follows:
 
 image::./images/clean_architcture.png[]
+
+== Running
+
+The publishingcompany-service can be operated in Quarkus "dev" mode "standalone".
+
+Otherwise, a running instance of the link:./currency-service[currency-service] is required. So that this service can be operated in a kind cluster, for example, the repo contains a corresponding script for initializing the cluster and the corresponding Kubernetes manifests for installing the services in the *-infra folder.

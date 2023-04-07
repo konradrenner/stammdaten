@@ -9,10 +9,10 @@ import org.kore.blueprint.publishingcompany.entity.constraints.ValueObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *

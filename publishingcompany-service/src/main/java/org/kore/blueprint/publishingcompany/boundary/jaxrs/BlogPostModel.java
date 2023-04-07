@@ -8,9 +8,10 @@ package org.kore.blueprint.publishingcompany.boundary.jaxrs;
 import org.kore.blueprint.publishingcompany.entity.author.BlogPost;
 import java.net.URL;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -31,6 +32,7 @@ public class BlogPostModel {
     @Size(min = 1, max = 300)
     public String description;
     @NotNull
+    @PastOrPresent
     public LocalDateTime publishingDate;
     @NotNull
     public URL location;

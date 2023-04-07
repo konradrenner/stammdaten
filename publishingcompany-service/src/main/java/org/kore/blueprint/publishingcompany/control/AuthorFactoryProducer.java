@@ -6,10 +6,10 @@
 package org.kore.blueprint.publishingcompany.control;
 
 import org.kore.blueprint.publishingcompany.entity.author.AuthorFactory;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.validation.Validator;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.validation.Validator;
 
 /**
  *

@@ -12,10 +12,12 @@ import org.kore.blueprint.publishingcompany.entity.author.Price;
 import org.kore.blueprint.publishingcompany.entity.author.events.AuthorNotFound;
 import java.math.BigDecimal;
 import java.util.Optional;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 /**
  *
@@ -23,6 +25,8 @@ import javax.validation.constraints.NotNull;
  */
 @Dependent
 public class BookService {
+
+    private static final Logger LOG = Logger.getLogger(BookService.class.getName());
 
     @Inject
     CurrencyService service;
@@ -33,17 +37,26 @@ public class BookService {
     @NotNull
     @Valid
     public Book changeBookPrice(@NotNull @Valid ChangeBookPriceCommand command) {
+
+        LOG.log(Level.INFO, "got change book price command:{0}", command);
+
         Author author = repo.find(command.getAuthorId()).orElseThrow(AuthorNotFound::new);
 
         // Example business logic, strictly speaking, this should be in Author class (because it is the aggregate root), so it is just here for showcasing a service
         Book book = author.getBook(command.getISBN()).orElseThrow(BookNotFound::new);
         Price newPrice = command.getNewPrice();
 
+        LOG.log(Level.INFO, "calling currency-service");
+
         BigDecimal exchangeRatio = service.evaluateExchangeRatio(newPrice.currency(), book.getPrice().currency());
+
+        LOG.log(Level.INFO, "got exchangeRation:{0}", exchangeRatio);
 
         BigDecimal valueToAdd = newPrice.value().multiply(exchangeRatio).subtract(book.getPrice().value());
 
         book.addValueToPrice(valueToAdd);
+
+        LOG.log(Level.INFO, "updated book price:{0}", book.getPrice());
 
         //Um die Datenkonsistenz immer sicherstellen zu koennen, wird das gesamte Aggregate persistiert
         Optional<Author> update = repo.update(author);
