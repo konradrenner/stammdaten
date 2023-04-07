@@ -26,11 +26,7 @@ image::ddd.jpg[]
 
 [%step]
 * Speaker of the day: *Konrad Renner*
-<<<<<<< HEAD
-* Profession: *Software Architect*
-=======
 * Profession: *Software Architecture*
->>>>>>> 87145b75c7e096c9e1169b54729017bb8a1e3c85
 * Some personal things: *Linux / Java / DDD / Open Source / OpenHab / Star Wars / BBQ* enthusiast
 * Direct link to digital life: *link:github.com/konradrenner[GitHub - konradrenner]*
 
@@ -119,12 +115,6 @@ image::monolith.jpg[]
 [NOTE.speaker]
 --
 * Because *inappropriate cut Microservices can lead to unnecessary or even dangerous remote communication*
-<<<<<<< HEAD
-* In the worst case you transform a "local" monolithic app (local from a transactional view), to a distributed monolithic app (distributed transactions)
-** Sooner or later this will lead to a real resilience tragedy (e.g. Deadlocks)
-** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
-* Service Mesh and similar solutions are often only symptom treatments, but do not solve the problems at the cause
-=======
 * One might think that the "smaller" a microservice is, the less complex it is
 ** This is true for the local complexity of this specific microservice, but it is not true for the whole system
 ** The smaller a microservice is cut, the more communication with other services is necessary and this in turn increases the complexity of the overall system
@@ -137,7 +127,6 @@ image::monolith.jpg[]
 ** Beware: Local monoliths do not necessarily have to be bad, but distributed monoliths are problematic most of the time!
 * Service Mesh Tooling (e.g. Istio, Linkerd, Consul) and similar solutions are often only symptom treatments, but do not solve the problems at the cause
 ** But of course Service Mesh Tooling can solve many security problems (e.g. Zero Trust with mTLS) and link:https://devopscon.io/blog/service-mesh-vs-framework-resilience-in-distributed-systems-with-istio-or-hystrix/[resilience problems] on the infrastructure layer
->>>>>>> 87145b75c7e096c9e1169b54729017bb8a1e3c85
 * So this "time travel" to the 2004 book, can help us find more effective approach
 ** As the book subtitle states: Tackling complexity in the heart of software
 ** In the next couple of slides I will show you some of the concepts, to minimize the propability that such tragedies will occur
