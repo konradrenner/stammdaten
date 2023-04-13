@@ -1,7 +1,9 @@
 = Back to the future: How a 2004 book helps us design cloud native software
 Konrad Renner <github.com/konradrenner>
-2022-08-29
-:revnumber: {project-version}
+v1.1.0, {localdate}: Overhauled version
+:revnumber: v1.1.0
+:title-page:
+:title-logo-image: image:title_logo.png[top=25%,align=right,pdfwidth=5.0in]
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]

@@ -1,17 +1,19 @@
 Leitfaden zur Erstellung und Weiterentwicklung von Software Architekturen
 =========================================================================
 Konrad Renner
-v1.0.0, {localdate}: Überarbeitete Version
+v1.1.0, {localdate}: Überarbeitete Version
 :lang: de
 :description: Leitfaden für den Einsatz von Prozessen und Tools zur Konzeptionierung und Weiterentwicklung von Software Architekturen
 :toclevels: 1
+:title-page:
+:title-logo-image: image:images/title_logo.png[top=25%,align=right,pdfwidth=2.5in]
 
 Dieses Dokument kann als Leitfaden für den Einsatz von Prozessen und Tools zur Konzeptionierung und Weiterentwicklung von Software Architekturen verwendet werden.
 
 <<<<
 == Präambel
 
-Dokumentation ist kein Selbstzweck. Wirkungsvolle Architekturdokumentation unterstützt uns bei der Arbeit im Team und gegenüber Dritten, ohne uns zu lähmen. Gut gemachte Dokumentation hilft uns, wichtige Ziele innerhalb des Softwarevorhabens effizient zu erreichen.
+Dokumentation ist kein Selbstzweck. Wirkungsvolle Architekturdokumentation unterstützt bei der Arbeit im Team und gegenüber Dritten, ohne zu lähmen. Gut gemachte Dokumentation hilft, wichtige Ziele innerhalb des Softwarevorhabens effizient zu erreichen.
 
 Es geht dabei nicht darum, im Vorfeld alles auszudefinieren, vielmehr sollen Entscheidungen zu dem Zeitpunkt festgehalten werden, an dem sie getroffen wurden. Daraus ergibt sich in weiterer Folge eine Dokumentation wichtiger Entscheidungen inklusive deren Ursprung und somit wird die daraus resultierende Software Architektur nachvollziehbar. Diese Dokumentation hilft also den Aufbau eines Software Systems zu verstehen und zu kommunizieren.
 
@@ -23,7 +25,7 @@ In vielen Unternehmen werden Lastspitzen mithilfe von externen Entwicklern abgef
 * Mithilfe von <<ddd, Domain Driven Design>> wird ein fachliches Modell erstellt
 ** Dieses soll sich im Code widerspiegeln
 ** Mit den Mitteln des <<taktisch, taktischen Design>> wird innerhalb des <<bounded, Bounded Context>> modelliert
-** Mit den Mitteln des <<strategisch, strategischen Design>> werden die <<bounded, Bounded Context>>s definiert und auf einer <<map, Context Map>> dargestellt
+** Mit den Mitteln des <<strategisch, strategischen Design>> werden die <<bounded, Bounded Context>>s definiert und deren Kommunikationsstränge untereinander auf einer <<map, Context Map>> visualisiert
 ** <<event, Event Storming>> ist ein effizienter Workshop-Stil zur fachlichen Modellierung auf Basis von DDD
 * Der Einsatz der Konzepte von <<team, Team Topologies>> unterstützt bei der Optimierung der Teaminteraktionen über den gesamten Entwicklungs- und Deliveryprozess hinweg
 ** Mithilfe des <<popcorn, PopcornFlow>> lassen sich die Konzepte schrittweise und evolutionär einführen, sowie kontinuierlich an das eigene Umfeld anpassen
@@ -152,7 +154,7 @@ Die Dokumentation wird dabei unter den gleichen Voraussetzungen wie der Source C
 [#refactor]
 == Weiterentwicklung und Refactoring
 
-Dokumentation haftet der Beigeschmack an, veraltet zu sein, sobald sie erstellt wurde. Gestalten wir die Architekturdokumentation allerdings nicht als Dokumentation eines zu erreichend Zustandes, sondern als Sammlung von Entscheidungen, so erhalten wir ein Dokument, welches uns ein Software System verstehen lässt.
+Dokumentation haftet der Beigeschmack an, veraltet zu sein, sobald sie erstellt wurde. Gestalten man die Architekturdokumentation allerdings nicht als Dokumentation eines zu erreichend Zustandes, sondern als Sammlung von Entscheidungen, so erhält man ein Dokument, welches ein Software System verstehen lässt.
 
 Natürlich können auch Entscheidungen obsolet werden, deshalb ist es wichtig, diese laufend zu überarbeiten bzw. auf Aktualität zu überprüfen. Daher ist es sinnvoll zumindest einmal pro Monat (oder jeden 2. Sprint, falls mit Sprints gearbeitet wird) Architekturretrospektiven einzuplanen.
 
@@ -201,11 +203,15 @@ Entscheidend dabei ist, dass zwischen Entwickler und Fachexperten iterativ eine 
 
 DDD ist an keinen bestimmten Softwareentwicklungsprozess gebunden, orientiert sich aber an agiler Softwareentwicklung. Insbesondere setzt es iterative Softwareentwicklung und eine enge Zusammenarbeit zwischen Entwicklern und Fachexperten voraus.
 
+.Starter Process from https://github.com/ddd-crew/ddd-starter-modelling-process
+image::./images/ddd-starter-modelling-process-colored.png[]
+
 [#language]
 ==== Ubiquitous Language
 
-DDD basiert auf einer Reihe von Konzepten, welche bei der Modellierung – aber auch anderen Tätigkeiten der Softwareentwicklung – berücksichtigt werden sollten. Das Hauptaugenmerk hierbei fällt auf die Einführung einer gemeinsamen Sprache (Ubiquitous Language), welche in allen Bereichen der Softwareerstellung verwendet werden sollte. Also eine Sprache für die Beschreibung der Fachlichkeit, der Elemente des Domänenmodells, der Klassen und Methoden usw.
+DDD basiert auf einer Reihe von Konzepten, welche bei der Modellierung – aber auch anderen Tätigkeiten der Softwareentwicklung – berücksichtigt werden sollten. Das Hauptaugenmerk hierbei fällt auf die Einführung einer gemeinsamen/allgegenwärtigen Sprache (Ubiquitous Language), welche in allen Bereichen der Softwareerstellung verwendet werden sollte. Also eine Sprache für die Beschreibung der Fachlichkeit, der Elemente des Domänenmodells, der Klassen und Methoden usw.
 
+<<<<
 [#event]
 ==== Event Storming
 

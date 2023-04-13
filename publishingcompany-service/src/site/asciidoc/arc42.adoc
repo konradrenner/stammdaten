@@ -3,10 +3,14 @@
 //
 // ====================================
 
-= image:./images/arc42-logo.png[arc42] Template
+= arc42 - DDD connection hints
+Konrad Renner
+v1.1.0, {localdate}: Overhauled version
 // toc-title definition MUST follow document title without blank line!
 :toc-title: Table of Contents
 :includes-dir: arc42-includes/
+:title-page:
+:title-logo-image: image:images/title_logo.png[top=25%,align=right,pdfwidth=2.5in]
 
 //additional style for arc42 help callouts
 ifdef::backend-html5[]
