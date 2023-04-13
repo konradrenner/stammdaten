@@ -218,7 +218,9 @@ DDD basiert auf einer Reihe von Konzepten, welche bei der Modellierung – aber 
 link:http://ziobrando.blogspot.com/2013/11/introducing-event-storming.html[Event Storming] ist eine Workshop-basierte Methode, um herauszufinden, was in einem Softwareprogramms geschieht bzw. geschehen soll.
 Dabei werden die Ereignisse (domain events) innerhalb des Software Systems mithilfe von Klebezetteln auf eine Wand gepinnt und in eine chronologische Reihenfolge gebracht. In weiterer Folge werden noch weitere Details (bspw. Prozesse) definiert und ebenfalls an die Wand gepinnt.
 
-Am Ende eines Workshops sollte alle Beteiltigen das gleiche Verständnis über die Fachdomäne haben und fachliche Modell(e) können daraus relativ einfach abgeleitet werden.
+Am Ende eines Workshops sollten alle Beteiltigen das gleiche Verständnis über die Fachdomäne haben und fachliche Modell(e) können daraus relativ einfach abgeleitet werden.
+
+image::./images/event_storming.png[]
 
 <<<<
 [#strategisch]
