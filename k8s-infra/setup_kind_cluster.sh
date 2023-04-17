@@ -63,6 +63,10 @@ data:
     help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
 EOF
 
+echo "creating publishingcompany namespace"
+
+kubectl create ns publishingcompany
+
 echo "applying ingress"
 
 # Ingress

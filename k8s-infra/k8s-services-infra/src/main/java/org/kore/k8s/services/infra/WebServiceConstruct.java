@@ -79,6 +79,8 @@ public class WebServiceConstruct extends Construct {
 
         Builder withContainerPortNumber(int port);
 
+        Builder withNamespace(String namespace);
+
         void addToChart();
     }
 
@@ -94,6 +96,7 @@ public class WebServiceConstruct extends Construct {
         private String readinessProbePath = "/q/health/ready";
         private List<EnvVar> envVars = Collections.emptyList();
         private String ingressRulePath = "/";
+        private String namespace = "publishingcompany";
 
         private WebServiceConstructBuilder() {
             // just to make it private
@@ -103,6 +106,13 @@ public class WebServiceConstruct extends Construct {
         public WithContainerImage withName(String name) {
             Objects.requireNonNull(name);
             this.name = name;
+            return this;
+        }
+
+        @Override
+        public Builder withNamespace(String namespace) {
+            Objects.requireNonNull(namespace);
+            this.namespace = namespace;
             return this;
         }
 
@@ -175,6 +185,7 @@ public class WebServiceConstruct extends Construct {
 //        final String serviceType = "LoadBalancer";
             ObjectMeta serviceMetadata = new ObjectMeta.Builder()
                     .name(name)
+                    .namespace(namespace)
                     .build();
 
             final Map<String, String> selector = new HashMap<>();
@@ -221,7 +232,7 @@ public class WebServiceConstruct extends Construct {
                     .build();
 
             final LabelSelector labelSelector = new LabelSelector.Builder().matchLabels(selector).build();
-            final ObjectMeta objectMeta = new ObjectMeta.Builder().labels(selector).build();
+            final ObjectMeta objectMeta = new ObjectMeta.Builder().namespace(namespace).labels(selector).build();
             final List<ContainerPort> containerPorts = new ArrayList<>();
             final ContainerPort containerPort = new ContainerPort.Builder()
                     .containerPort(containerPortNumber)
