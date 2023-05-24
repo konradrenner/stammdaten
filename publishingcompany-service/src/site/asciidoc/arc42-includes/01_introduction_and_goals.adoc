@@ -15,4 +15,4 @@ Since plantuml diagrams, like asciidoc documents, are basically plain text files
 
 In the case of C4 models, the appropriate link:https://github.com/plantuml-stdlib/C4-PlantUML[extension for plantuml] is set so that these models can also be created with plantuml.
 
-For further Information see https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation.
+For further Information see https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation. A more detailed description of quality model defined by ISO standard 25000 ca be found here: https://iso25000.com/index.php/en/iso-25000-standards/iso-25010 .
